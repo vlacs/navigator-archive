@@ -1,12 +1,25 @@
 (ns aspire.core
-  (:require [jdbc-pg-init.core :as jpi]
-            [clojure.edn :as edn]))
+  (:require [aspire.conf :as a-conf]
+            [aspire.cli :as a-cli]
+            [aspire.util :as a-util]
+            [aspire.sql-db :as a-sql-db])
+  (:gen-class))
 
-(def schema (edn/read-string (slurp "schema.edn")))
+(defn aspire [conf]
+  (println :aspire "Do it. Do it now."))
 
-(comment
-  (use '[clojure.tools.namespace.repl :only (refresh)])
-  (def db (edn/read-string (slurp "sample-config.edn")))
-  (def db (assoc db :password "" :subname "//kirk.office.vlacs.org/moodletest2_vlacs_org"))
-  (jpi/init! db schema)
-  )
+(defn -main [& args]
+  ;; work around dangerous default behaviour in Clojure
+  (alter-var-root #'*read-eval* (constantly false))
+  (let [opts (a-cli/get-opts args)
+        conf (a-conf/getconf a-conf/configs opts)
+        db (:conf-sql-db conf)]
+    (a-util/output! :opts opts :conf conf :db db)
+
+    (cond
+     (:init-sql opts) (a-sql-db/init! db) 
+     (:zero-out opts) (a-sql-db/print-drop-sql!) 
+     :else (aspire conf))))
+
+
+
