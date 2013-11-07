@@ -11,4 +11,5 @@
                  ;;[org.clojure/java.jdbc "0.3.0-beta1"]
                  [org.clojure/tools.namespace "0.2.4"]
                  [postgresql/postgresql "8.4-702.jdbc4"]]
-  :main ^:skip-aot aspire.core)
+  :aot [aspire.core]
+  :main aspire.core)
