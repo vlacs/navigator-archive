@@ -73,7 +73,7 @@
                      ;; customized Moodle database. Therefore, the
                      ;; right reference for a user is
                      ;; mdl_sis_user.sis_user_idstr.
-                     [:sis_user_idstr :bigint]
+                     [:sis_user_idstr :varchar]
                      [:comp_id :bigint]
                      [:start_date "TIMESTAMP WITH TIME ZONE"]
                      [:iscomplete :bool "NOT NULL" "DEFAULT 'f'"]
