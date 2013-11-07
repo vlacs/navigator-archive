@@ -3,8 +3,10 @@
 
 ## Usage
 
-There's nothing much here, yet. But look at the 'comment in core if you want to
-load the schema into your DB by using your REPL.
+There's nothing much here, yet. This will tell you more:
+```
+./run dev --help
+```
 
 ## License
 
