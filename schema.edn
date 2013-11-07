@@ -1,4 +1,7 @@
-; TODO: add _hist tables
+;; This first version of Aspire schema is intended to be installed in
+;; VLACS' customized Moodle DB.
+
+;; TODO: add _hist tables
 {:tables
  {:comp {:cols [[:comp_id :bigserial]
                 [:comp_id_sk :varchar]
@@ -65,6 +68,11 @@
                    :foreign-keys {:comp2perf_asmt_c_fk [:comp_id :comp :comp_id]
                                   :comp2perf_asmt_pa_fk [:perf_asmt_id :perf_asmt :perf_asmt_id]}}
   :user2comp {:cols [[:user2comp_id :bigserial]
+
+                     ;; We will be using these tables inside VLACS'
+                     ;; customized Moodle database. Therefore, the
+                     ;; right reference for a user is
+                     ;; mdl_sis_user.sis_user_idstr.
                      [:sis_user_idstr :bigint]
                      [:comp_id :bigint]
                      [:start_date "TIMESTAMP WITH TIME ZONE"]
