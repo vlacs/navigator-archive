@@ -1,7 +1,5 @@
 (defproject aspire "0.1.0-SNAPSHOT"
-  :description "Create, read, and update a PostgreSQL DB for Aspire.
-  PostgreSQL will be replaced by Datomic in a future version of
-  Aspire."
+  :description "Aspire supports VLACS' vision for competency-based virtual education."
   :url "https://github.com/vlacs/aspire"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
