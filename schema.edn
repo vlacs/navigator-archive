@@ -1,0 +1,96 @@
+; TODO: add _hist tables
+{:tables
+ {:comp {:cols [[:comp_id :bigserial]
+                [:comp_id_sk :varchar]
+                [:name :varchar "NOT NULL"]
+                [:description :varchar]
+                [:version :varchar "NOT NULL"]
+                [:duration_rating_days :bigint]
+                [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+         :primary-key [:comp_id]
+         :indices {:comp_id_sk_ux [[:comp_id_sk] :unique]
+                   :comp_name_ix [[:name]]
+                   :comp_nameversion_ix [[:name :version] :unique]
+                   :comp_desc_ix [[:description]]
+                   :comp_tx_ix [[:date_created]]}}
+  :comp_tag {:cols [[:comp_tag_id :bigserial]
+                    [:name :varchar "NOT NULL"]
+                    [:description :varchar]
+                    [:version :varchar "NOT NULL"]
+                    [:type :varchar "NOT NULL"]
+                    [:disp_level_num :bigint "NOT NULL"]
+                    [:isfinal :bool "NOT NULL" "DEFAULT 'f'"]
+                    [:date_finalized "TIMESTAMP WITH TIME ZONE"]
+                    [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+             :primary-key [:comp_tag_id]
+             :indices {:comp_tag_name_ix [[:name]]
+                       :comp_tag_name_version_ix [[:name :version] :unique]
+                       :comp_tag_type_ix [[:type]]
+                       :comp_tag_displev_ix [[:disp_level_num]]}}
+  :comp2comp_tag {:cols [[:comp2comp_tag_id :bigserial]
+                         [:comp_id :bigint]
+                         [:comp_tag_id :bigint]
+                         [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+                  :foreign-keys {:comp2comp_tag_c_fk [:comp_id :comp :comp_id]
+                                 :comp2comp_tag_t_fk [:comp_tag_id :comp_tag :comp_tag_id]}
+                  :indices {:comp2comp_tag_id_ux [[:comp2comp_tag_id]]}}
+  :comp_tag_disp_ctx {:cols [[:comp_tag_disp_ctx_id :bigserial]
+                             [:name :varchar "NOT NULL"]
+                             [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+                      :primary-key [:comp_tag_disp_ctx_id]}
+  :comp_tag_disp_ctx2comp_tag {:cols [[:comp_tag_disp_ctx2comp_tag_id :bigserial]
+                                      [:comp_tag_disp_ctx_id :bigint]
+                                      [:comp_tag_id :bigint]]
+                               :primary-key [:comp_tag_disp_ctx_id :comp_tag_id]
+                               :foreign-keys {:comp_tag_disp_ctx2comp_tag_ctdc_fk
+                                              [:comp_tag_disp_ctx_id :comp_tag_disp_ctx :comp_tag_disp_ctx_id]
+                                              :comp_tag_disp_ctx2comp_tag_ct_fk
+                                              [:comp_tag_id :comp_tag :comp_tag_id]}
+                               :indices {:comp_tag_disp_ctx2comp_tag_id_ux [[:comp_tag_disp_ctx2comp_tag_id] :unique]}}
+  :perf_asmt {:cols [[:perf_asmt_id :bigserial]
+                     [:perf_asmt_id_sk :varchar]
+                     [:name :varchar]
+                     [:version :varchar "NOT NULL"]
+                     [:type :varchar "NOT NULL"]
+                     [:duration_rating_days :bigint]
+                     [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+              :primary-key [:perf_asmt_id]
+              :indices {:perf_asmt_nvt_ux [[:name :version :type] :unique]}}
+  :comp2perf_asmt {:cols [[:comp2perf_asmt_id :bigserial]
+                          [:comp_id :bigint]
+                          [:perf_asmt_id :bigint]
+                          [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+                   :primary-key [:comp_id :perf_asmt_id]
+                   :indices {:comp2perf_asmt_id_ux [[:comp2perf_asmt_id] :unique]}
+                   :foreign-keys {:comp2perf_asmt_c_fk [:comp_id :comp :comp_id]
+                                  :comp2perf_asmt_pa_fk [:perf_asmt_id :perf_asmt :perf_asmt_id]}}
+  :user2comp {:cols [[:user2comp_id :bigserial]
+                     [:sis_user_idstr :bigint]
+                     [:comp_id :bigint]
+                     [:start_date "TIMESTAMP WITH TIME ZONE"]
+                     [:iscomplete :bool "NOT NULL" "DEFAULT 'f'"]
+
+                     ;; In case we need to reach in and say "this one is done."
+                     [:isoverridden :bool "NOT NULL" "DEFAULT 'f'"]
+                     [:completion_date "TIMESTAMP WITH TIME ZONE"]
+                     [:proposed_completion_date "TIMESTAMP WITH TIME ZONE"]
+                     [:current_score :varchar]
+                     [:final_score :varchar]
+
+                     ;; If the :final_score is numeric, we need to know the scale.
+                     [:score_denominator :bigint]
+
+                     ;; Examples:
+                     ;; numeric
+                     ;; letter
+                     ;; pass-fail
+                     ;; qualitative
+                     [:score_type :varchar]
+                     [:qualitative_notes :text]
+                     [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+              :primary-key [:sis_user_idstr :comp_id :start_date]
+              :indices {:user2comp_id_ux [[:user2comp_id] :unique]
+                        :user2comp_u_ix [[:sis_user_idstr]]
+                        :user2comp_c_ix [[:comp_id]]}
+              :foreign-keys {:user2comp_u_fk [:sis_user_idstr :mdl_sis_user :sis_user_idstr]
+                             :user2comp_c_fk [:comp_id :comp :comp_id]}}}}
