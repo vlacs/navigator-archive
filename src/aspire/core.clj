@@ -2,8 +2,7 @@
   (:require [aspire.conf :as a-conf]
             [aspire.cli :as a-cli]
             [aspire.util :as a-util]
-            [aspire.sql-db :as a-sql-db])
-  (:gen-class))
+            [aspire.sql-db :as a-sql-db]))
 
 (defn aspire [conf]
   (println :aspire "Do it. Do it now."))
