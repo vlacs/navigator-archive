@@ -9,6 +9,35 @@
                  ;; see https://github.com/vlacs/jdbc-pg-init
                  [jdbc-pg-init "0.1.1-SNAPSHOT"]
                  ;;[org.clojure/java.jdbc "0.3.0-beta1"]
+
+                 [org.clojure/clojurescript "0.0-1896"]
+                 [ring "1.1.8"]
+                 [compojure "1.1.5"]
+                 [liberator "0.9.0"]
+
+                 ;; Do we want both dommy and tinsel? If not, which
+                 ;; one do we want?
+                 [prismatic/dommy "0.1.1"]
+                 [tinsel "0.4.0"]
+
                  [org.clojure/tools.namespace "0.2.4"]
+                 [hiccup "1.0.4"]
+                 ;[org.clojure/java.jdbc "0.3.0-beta1"]
+                 [honeysql "0.4.2"]
+                 [korma "0.3.0-RC5"]
                  [postgresql/postgresql "8.4-702.jdbc4"]]
-  :main ^:skip-aot aspire.core)
+  :plugins [[lein-cljsbuild "0.3.2"]
+            [lein-ring "0.8.7"]]
+  :hooks [leiningen.cljsbuild]
+  :source-paths ["src/clj"]
+  :cljsbuild { 
+    :builds {
+      :main {
+        :source-paths ["src/cljs"]
+        :compiler {:output-to "resources/public/js/cljs.js"
+                   :optimizations :simple
+                   :pretty-print true}
+        :jar true}}}
+
+  :main ^:skip-aot aspire.core
+  :ring {:handler stacker.server/app})
