@@ -29,11 +29,6 @@
   (.stop (:jetty-instance system))
   (dissoc system :sql-db-pool :jetty-instance))
 
-#_(defn aspire [{:keys [conf-sql-db] :as conf}]
-  (println :aspire "Do it. Do it now." (dissoc conf-sql-db :password))
-  (println (a-sqldb/select! {:select [:*] :from [:comp] :limit 2}))
-  (a-web/run!))
-
 (defn get-conf! [args]
   (let [opts (a-cli/get-opts args)
         conf (a-conf/getconf a-conf/configs opts)]
