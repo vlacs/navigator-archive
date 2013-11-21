@@ -7,8 +7,7 @@
                  [org.clojure/tools.cli "0.2.4"]
 
                  ;; see https://github.com/vlacs/jdbc-pg-init
-                 [jdbc-pg-init "0.1.1-SNAPSHOT"]
-                 ;;[org.clojure/java.jdbc "0.3.0-beta1"]
+                 [jdbc-pg-init "0.1.2-SNAPSHOT"]
 
                  [org.clojure/clojurescript "0.0-1896"]
                  [ring "1.1.8"]
