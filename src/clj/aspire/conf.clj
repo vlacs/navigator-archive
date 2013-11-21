@@ -3,12 +3,15 @@
             [clojure.edn :as edn])
   (:import [java.io File]))
 
-(def confdir "/etc/aspire/")
+(def confdir "/etc/aspire")
 
 ;; The --long-opt for each conf file must match the :conf-key.
 (def configs {:conf-sql-db
               {:file "conf-sql-db.edn"
-               :opts ["-s" "--conf-sql-db"]}})
+               :opts ["-s" "--conf-sql-db"]}
+              :conf-web
+              {:file "conf-web.edn"
+               :opts ["-w" "--conf-web"]}})
 
 (defn confpath-default [configs conf-key]
   (str confdir "/" (:file (configs conf-key))))
