@@ -12,6 +12,9 @@
                 ^{:hist true} [:name :varchar "NOT NULL"]
                 ^{:hist true} [:description :varchar]
                 ^{:hist true} [:version :varchar "NOT NULL"]
+
+                ;; status examples: active, archived
+                ^{:hist true} [:status :varchar "NOT NULL"]
                 ^{:hist true} [:duration_rating_days :bigint]
                 [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
          :primary-key [:id]
@@ -26,6 +29,10 @@
                     [:version :varchar "NOT NULL"]
                     [:type :varchar "NOT NULL"]
                     [:disp_level_num :bigint "NOT NULL"]
+
+                    ;; do we need both :isfinal and :status?
+                    ;; status examples: active, archived
+                    [:status :varchar "NOT NULL"]
                     [:isfinal :bool "NOT NULL" "DEFAULT 'f'"]
                     [:date_finalized "TIMESTAMP WITH TIME ZONE"]
                     [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
