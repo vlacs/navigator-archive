@@ -7,9 +7,8 @@
             [aspire.web :as a-web]))
 
 (defn system
-  "http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded"
+  "See http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded"
   [conf]
-  (println :hi)
   {:conf conf})
 
 (defn start!
