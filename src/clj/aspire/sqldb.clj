@@ -14,7 +14,9 @@ We're using Korma's connection management and query fns."}
             [clojure.string :refer [split]]))
 
 (defn default-connection! [db]
-  (kdb/default-connection (kdb/delay-pool db)))
+  (let [pool (kdb/delay-pool db)]
+    (kdb/default-connection pool)
+    pool))
 
 (def query-results-types
   {"SELECT" :results
