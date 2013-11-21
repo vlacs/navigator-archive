@@ -47,7 +47,7 @@ We're using Korma's connection management and query fns."}
        {:select [:id :name :description :version]
         :from [:comp]
         :where [:= :id (hsql/param :id)]}
-       :id 7)"
+       {:id 7})"
   [sqlmap & {:as paramsmap}]
   (let [[sql & params] (hsql/format sqlmap :params paramsmap)]
     (kdb/do-query {:results :results
