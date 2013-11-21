@@ -23,5 +23,6 @@
       (println usage)
       (System/exit 0)) 
     (when (:verbose opts)
+      ;; Global state!
       (alter-var-root #'a-util/*isverbose* (constantly true)))
     opts))
