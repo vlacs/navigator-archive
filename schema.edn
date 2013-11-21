@@ -1,8 +1,15 @@
 ;; This first version of Aspire schema is intended to be installed in
-;; VLACS' customized Moodle DB.
+;; VLACS' customized Moodle DB (postgres).
+;; Our long-term plan is to migrate all our custom data from our
+;; Moodle DB to Datomic, including this.
 
-;; see https://github.com/miner/herbert for schematizing this
+;; Conventions
+;; ---------------------------------
+;; * every table has an .id field that's a :bigserial
+;; * any table that may need to share an ID with a third-party system has an id_sk field for this purpose
+;; * 
 
+;; TODO: see https://github.com/miner/herbert for schematizing this
 ;; TODO: write fns to add _hist tables
 ;; TODO: write fns to output _hist-management triggers
 {:tables
@@ -49,6 +56,8 @@
                   :foreign-keys {:comp2comp_tag_c_fk [:comp_id :comp :id]
                                  :comp2comp_tag_t_fk [:comp_tag_id :comp_tag :id]}
                   :indices {:comp2comp_tag_id_ux [[:id]]}}
+
+  ;; example contexts: competency-map, transcript
   :comp_tag_disp_ctx {:cols [[:id :bigserial]
                              [:name :varchar "NOT NULL"]
                              [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
@@ -62,6 +71,10 @@
                                               :comp_tag_disp_ctx2comp_tag_ct_fk
                                               [:comp_tag_id :comp_tag :id]}
                                :indices {:comp_tag_disp_ctx2comp_tag_id_ux [[:id] :unique]}}
+
+  ;; All of VLACS old competencies will be represented in the
+  ;; perf_asmt table in order to show that students use[d] them to
+  ;; demonstrate competency.
   :perf_asmt {:cols [[:id :bigserial]
                      [:id_sk :varchar]
                      [:name :varchar]
@@ -79,6 +92,9 @@
                    :indices {:comp2perf_asmt_id_ux [[:id] :unique]}
                    :foreign-keys {:comp2perf_asmt_c_fk [:comp_id :comp :id]
                                   :comp2perf_asmt_pa_fk [:perf_asmt_id :perf_asmt :id]}}
+
+  ;; This table is deliberately NOT called "enrollment", but it
+  ;; represents a very similar relation.
   :user2comp {:cols [[:id :bigserial]
 
                      [:sis_user_id :bigint]
@@ -103,7 +119,15 @@
                      ;; qualitative
                      [:score_type :varchar]
                      [:qualitative_notes :text]
+
+                     ;; NOTE: no status field here; use our current
+                     ;; enrollments table for status for now.
+
                      [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+
+              ;; Note that a user may have more than one relationship
+              ;; to a comp, if she started and then decided to hold
+              ;; off and take it much later.
               :primary-key [:sis_user_id :comp_id :start_date]
               :indices {:user2comp_id_ux [[:id] :unique]
                         :user2comp_u_ix [[:sis_user_id]]
