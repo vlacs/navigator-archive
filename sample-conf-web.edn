@@ -1,0 +1,3 @@
+{:port 4001
+ ;; you might not want to join for dev
+ :join? true}
