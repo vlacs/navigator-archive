@@ -49,6 +49,7 @@
       (file-info/wrap-file-info)
       (wrap-trace :ui)))
 
-(defn run [& args]
-  (jetty/run-jetty #'app {:port 4001}))
+(defn run!
+  [& args]
+  (apply jetty/run-jetty #'app args))
 
