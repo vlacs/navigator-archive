@@ -7,7 +7,7 @@
 ;; ---------------------------------
 ;; * every table has an .id field that's a :bigserial
 ;; * any table that may need to share an ID with a third-party system has an id_sk field for this purpose
-;; * 
+;; * FKs are named <table>_id.
 
 ;; TODO: see https://github.com/miner/herbert for schematizing this
 ;; TODO: write fns to add _hist tables
