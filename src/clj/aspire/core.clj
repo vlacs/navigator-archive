@@ -47,7 +47,7 @@
   (let [[opts conf] (get-conf! args)
         db (:conf-sql-db conf)
         system (system conf)]
-    (a-util/output! :system system :conf conf :db db)
+    (a-util/output! (:verbose opts) :opts opts :system system :conf conf :db db)
 
     (cond
      (:init-sql opts) (a-sqldb-ddl/init! db) 
