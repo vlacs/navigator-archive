@@ -19,15 +19,14 @@
                  [prismatic/dommy "0.1.1"]
                  [tinsel "0.4.0"]
 
-                 [org.clojure/tools.namespace "0.2.4"]
                  [hiccup "1.0.4"]
-                 ;[org.clojure/java.jdbc "0.3.0-beta1"]
                  [honeysql "0.4.2"]
-                 [korma "0.3.0-RC5"]
-                 [postgresql/postgresql "8.4-702.jdbc4"]
-                 [org.clojure/core.async "0.1.242.0-44b1e3-alpha"]]
+                 [korma "0.3.0-RC5" :exclusions [org.clojure/java.jdbc]]
+                 [org.clojure/core.async "0.1.242.0-44b1e3-alpha"]
+                 ]
+  :pedantic? :warn ; :abort
   :plugins [[lein-cljsbuild "0.3.2"]
-            [lein-ring "0.8.7"]]
+            [lein-ring "0.8.8"]]
   :hooks [leiningen.cljsbuild]
   :source-paths ["src/clj"]
   :cljsbuild { 
