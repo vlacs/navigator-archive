@@ -23,6 +23,7 @@
                  [honeysql "0.4.2"]
                  [korma "0.3.0-RC5" :exclusions [org.clojure/java.jdbc]]
                  [org.clojure/core.async "0.1.242.0-44b1e3-alpha"]
+                 [org.clojure/core.incubator "0.1.3"]
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-cljsbuild "0.3.2"]
@@ -35,7 +36,8 @@
         :source-paths ["src/cljs"]
         :compiler {:output-to "resources/public/js/cljs.js"
                    :optimizations :simple
-                   :pretty-print true}
+                   :pretty-print true
+                   :source-map true}
         :jar true}}}
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
