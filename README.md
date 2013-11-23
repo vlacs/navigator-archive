@@ -5,7 +5,9 @@
 * We're using tools.namespace, so to start and restart Aspire safely in your REPL, say:
 ```(reset)```
 
-See http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded
+See these:
+* http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded
+* http://swannodette.github.io/2013/10/27/the-essence-of-clojurescript/
 
 ## Usage
 
