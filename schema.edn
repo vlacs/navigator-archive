@@ -37,6 +37,10 @@
                     [:type :varchar "NOT NULL"]
                     [:disp_level_num :bigint "NOT NULL"]
 
+                    ;; It seems like we'll want icons for some things.
+                    ;; No idea yet how to handle them.
+                    [:icon :varchar]
+
                     ;; do we need both :isfinal and :status?
                     ;; status examples: active, archived
                     [:status :varchar "NOT NULL"]
