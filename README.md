@@ -3,7 +3,7 @@
 ## Developer Workflow
 ### First
 ```bash
-lein repl
+$ lein repl
 ```
 ...or start your favorite nREPL.
 
@@ -12,21 +12,28 @@ We're using tools.namespace, so to start and restart Aspire safely in your REPL,
 ```clojure
 (reset)
 ```
+You'll want to ```(reset)``` any time you change your clj code, and your changes will
+take effect instantly.
 
 ### Third
 In another terminal, run this to rebuild your cljs automatically any time you
 change a source file:
 ```bash
-lein cljsbuild auto
+$ lein cljsbuild auto
 ```
-
-### Fourth
 Any time you change your cljs, you need to reload your browser page to pick up
 the new compiled .js.
 
-See these:
-* http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded
-* http://swannodette.github.io/2013/10/27/the-essence-of-clojurescript/
+### Fourth
+Open up user.clj. This is the place to add all the dev/debugging tools. It's
+evaluated automatically every time you open a REPL, and you're already in its
+namespace, so any tooling you put in user.clj is always available in your REPL
+without any extra effort.
+
+user.clj is NOT included in a compiled JAR or .js file.
+
+See http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded for
+background on this workflow.
 
 ## Usage
 
