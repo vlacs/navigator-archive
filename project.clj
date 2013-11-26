@@ -27,20 +27,19 @@
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-cljsbuild "0.3.2"]
-            [lein-ring "0.8.8"]]
+            [lein-ring "0.8.8" :exclusions [org.clojure/clojure]]]
   :hooks [leiningen.cljsbuild]
   :source-paths ["src/clj"]
-  :cljsbuild { 
-    :builds {
-      :main {
-        :source-paths ["src/cljs"]
-        :compiler {:output-to "resources/public/js/cljs.js"
-                   :optimizations :simple
-                   :pretty-print true
-                   :source-map true}
-        :jar true}}}
+  :cljsbuild {:crossovers [aspire.model]
+              :builds {:main {:source-paths ["src/client"]
+                              :crossover-path "cljsbuild-crossovers"
+                              :compiler {:pretty-print true
+                                         ;; :source-map is broken for some inexplicable reason. :( --moquist
+                                         ;;:source-map true
+                                         :output-to "resources/public/js/client.js"
+                                         :optimizations :simple}}}}
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
-
-  :main ^:skip-aot aspire.core
+  
+  :main ^{:skip-aot true} aspire.core
   :ring {:handler stacker.server/app})
