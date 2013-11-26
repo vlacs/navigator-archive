@@ -61,6 +61,20 @@
                                  :comp2comp_tag_t_fk [:comp_tag_id :comp_tag :id]}
                   :indices {:comp2comp_tag_id_ux [[:id]]}}
 
+  ;; comp_tag2parent represents a directed acyclic graph
+  ;; Any comp_tag with its .id in comp_tag2parent.child_comp_tag_id cannot also
+  ;; have its .id in comp2comp_tag.comp_tag_id.
+  ;; i.e., any tag that is a parent of another tag cannot also be
+  ;; applied directly to a comp.
+  :comp_tag2parent {:cols [[:id :bigserial]
+                      [:child_comp_tag_id :bigint]
+                      [:parent_comp_tag_id :bigint]
+                      [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+               :primary-key [:child_comp_tag_id :parent_comp_tag_id]
+               :foreign-keys {:comp_tag2parent_c_fk [:child_comp_tag_id :comp_tag :id]
+                              :comp_tag2parent_p_fk [:parent_comp_tag_id :comp_tag :id]}
+               :indices {:comp_tag2parent_id_ux [[:id]]}}
+  
   ;; example contexts: competency-map, transcript
   :comp_tag_disp_ctx {:cols [[:id :bigserial]
                              [:name :varchar "NOT NULL"]
