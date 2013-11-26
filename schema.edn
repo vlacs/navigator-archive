@@ -68,18 +68,25 @@
                   :indices {:comp2comp_tag_id_ux [[:id]]}}
 
   ;; comp_tag2parent represents a directed acyclic graph
-  ;; Any comp_tag with its .id in comp_tag2parent.child_comp_tag_id cannot also
-  ;; have its .id in comp2comp_tag.comp_tag_id.
-  ;; i.e., any tag that is a parent of another tag cannot also be
-  ;; applied directly to a comp.
+  ;; This graph is used for two purposes:
+  ;; 1. Suggest additional tags in the tagging UI. When tagging a
+  ;;    competency, parents of that tag should also be suggested to
+  ;;    the user.
+  ;; 2. When a user navigates through the competency map, selecting a
+  ;;    parent tag should be logically equivalent to adding
+  ;;    tag:<tag-name-version> to the search-filter, and the results
+  ;;    shown should be:
+  ;;    a) any tags that are children of <tag-name-version> that have competencies
+  ;;    b) any competencies tagged with <tag-name-version> that are
+  ;;       not tagged by a child of <tag-name-version>
   :comp_tag2parent {:cols [[:id :bigserial]
-                      [:child_comp_tag_id :bigint]
-                      [:parent_comp_tag_id :bigint]
-                      [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
-               :primary-key [:child_comp_tag_id :parent_comp_tag_id]
-               :foreign-keys {:comp_tag2parent_c_fk [:child_comp_tag_id :comp_tag :id]
-                              :comp_tag2parent_p_fk [:parent_comp_tag_id :comp_tag :id]}
-               :indices {:comp_tag2parent_id_ux [[:id]]}}
+                           [:child_comp_tag_id :bigint]
+                           [:parent_comp_tag_id :bigint]
+                           [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+                    :primary-key [:child_comp_tag_id :parent_comp_tag_id]
+                    :foreign-keys {:comp_tag2parent_c_fk [:child_comp_tag_id :comp_tag :id]
+                                   :comp_tag2parent_p_fk [:parent_comp_tag_id :comp_tag :id]}
+                    :indices {:comp_tag2parent_id_ux [[:id]]}}
   
   ;; example contexts: competency-map, transcript
   :comp_tag_disp_ctx {:cols [[:id :bigserial]
