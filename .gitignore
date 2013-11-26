@@ -11,4 +11,4 @@ out
 pom.xml
 pom.xml.asc
 repl
-resources/public/js/cljs.js
+resources/public/js/client.js
