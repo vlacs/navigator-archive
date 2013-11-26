@@ -35,7 +35,7 @@
                     [:description :varchar]
                     [:version :varchar "NOT NULL"]
                     [:type :varchar "NOT NULL"]
-                    [:disp_level_num :bigint "NOT NULL"]
+                    [:isrequestable :bool "NOT NULL" "DEFAULT 'f'"]
 
                     ;; It seems like we'll want icons for some things.
                     ;; No idea yet how to handle them.
