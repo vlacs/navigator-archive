@@ -6,17 +6,14 @@
             [dommy.core :as dommy]
             [dommy.attrs :as d-attrs]
             [goog.string :as gstring]
-            [goog.string.format :as gformat])
+            [goog.string.format :as gformat]
+            [aspire.model :as a-mdl]
+            )
   (:use-macros
    [dommy.macros :only [by-id sel1]]))
 
 (repl/connect "http://localhost:9000/repl")
 (def api-uri "http://localhost:4001/api")
-
-;; For now, we'll store app state in one atom.
-(def appstate (atom {:loading true}))
-(defn appstate-update! [f & args]
-  (apply swap! appstate f args))
 
 ;; Callbacks
 ;; --------------------------------------------------
