@@ -50,11 +50,17 @@
              :primary-key [:id]
              :indices {:comp_tag_name_ix [[:name]]
                        :comp_tag_name_version_ix [[:name :version] :unique]
-                       :comp_tag_type_ix [[:type]]
-                       :comp_tag_displev_ix [[:disp_level_num]]}}
+                       :comp_tag_type_ix [[:type]]}}
   :comp2comp_tag {:cols [[:id :bigserial]
                          [:comp_id :bigint]
                          [:comp_tag_id :bigint]
+
+                         ;; What does this tag mean for this competency?
+                         ;; Is this just a label (default), or does
+                         ;; this competency satisfy or
+                         ;; partially-satisfy this tag?
+                         ;; :rel_type
+
                          [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
                   :primary-key [:comp_id :comp_tag_id]
                   :foreign-keys {:comp2comp_tag_c_fk [:comp_id :comp :id]
