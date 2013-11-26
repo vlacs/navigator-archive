@@ -3,19 +3,22 @@
 ## Developer Workflow
 ### First
 ```bash
-lein repl```
+lein repl
+```
 ...or start your favorite nREPL.
 
 ### Second
 We're using tools.namespace, so to start and restart Aspire safely in your REPL, say:
 ```clojure
-(reset)```
+(reset)
+```
 
 ### Third
 In another terminal, run this to rebuild your cljs automatically any time you
 change a source file:
 ```bash
-lein cljsbuild auto```
+lein cljsbuild auto
+```
 
 ### Fourth
 Any time you change your cljs, you need to reload your browser page to pick up
