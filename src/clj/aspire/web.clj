@@ -23,7 +23,7 @@
                 [:body
                  [:div#main
                   [:div [:p#loading "Loading..."]]
-                 [:script {:src "js/cljs.js"}]]])))
+                 [:script {:src "js/aspire.js"}]]])))
 
 (defresource resource-api
   :available-media-types ["application/edn"]
