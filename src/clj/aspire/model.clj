@@ -4,15 +4,15 @@
 (def browser-model (atom {}))
 
 (defn update-in!
-  "Pass a fn to update a path within 'model.
-   Use this whenever you need to update the value of a path within 'model.
+  "Pass a fn to update a path within 'browser-model.
+   Use this whenever you need to update the value of a path within 'browser-model.
    Example: (update-in! [:ui :user2comp 1234 :current_score] (fn [old-val] (inc old-val)))
    Example: (update-in! [:ui :user2comp 1234] update-iscomplete requirements-spec)"
   [path fn & args]
   (apply swap! browser-model update-in path fn args))
 
 (defn get-in!
-  "Retrieve the value of a path within 'model.
+  "Retrieve the value of a path within 'browser-model.
    DO NOT retrieve the value, do some processing, and then assoc-in! a new value.
    Instead, see update-in! to avoid overwriting changes made between your calls to get-in! a subsequent assoc-in!.
    Example: (get-in! [:ui :comps 73 :name])"
@@ -20,8 +20,9 @@
   (get-in @browser-model path))
 
 (defn assoc-in!
-  "Set the value for a path within 'model.
-   DO NOT use assoc-in! to overwrite an existing value within 'model, unless overwriting is explicitly what you intend.
+  "Set the value for a path within 'browser-model.
+   DO NOT use assoc-in! to overwrite an existing value within
+   'browser-model, unless overwriting is explicitly what you intend.
    Instead, see update-in!.
    Example: (assoc-in! [:ui :comps 73] {:id 73 :name \"Some Competency\" :version \"v3\"})"
   [path val]
@@ -45,7 +46,7 @@
     (dissoc m k)))
 
 (defn dissoc-in!
-  "Remove the value of a path within 'model.
+  "Remove the value of a path within 'browser-model.
    Example: (dissoc-in! [:ui :comps 73])"
   [path]
   (swap! browser-model dissoc-in path))
