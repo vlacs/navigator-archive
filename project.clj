@@ -36,7 +36,7 @@
                               :compiler {:pretty-print true
                                          ;; :source-map is broken for some inexplicable reason. :( --moquist
                                          ;;:source-map true
-                                         :output-to "resources/public/js/client.js"
+                                         :output-to "resources/public/js/aspire.js"
                                          :optimizations :simple}}}}
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
