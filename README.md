@@ -8,7 +8,7 @@ $ lein repl
 ...or start your favorite nREPL.
 
 ### Second
-We're using tools.namespace, so to start and restart Aspire safely in your REPL, say:
+We're using tools.namespace, so to start and restart Aspire safely in your REPL, *stay in the* ```user``` *namespace* and say:
 ```clojure
 (reset)
 ```
