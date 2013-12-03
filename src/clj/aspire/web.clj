@@ -19,7 +19,8 @@
   :handle-ok (fn [_]
                (hiccup.page/html5
                 [:head
-                 [:link {:rel "stylesheet" :href "css/page.css"}]]
+                 ;; alt: page.css
+                 [:link {:rel "stylesheet" :href "css/global.css"}]]
                 [:body
                  [:div#main
                   [:div [:p#loading "Loading..."]]
