@@ -2,38 +2,22 @@
   (:require [clojure.browser.repl :as repl]
             [clojure.browser.net :as cb-net]
             [clojure.browser.event :as cb-event]
-            [cljs.reader :as edn]
-            [dommy.core :as dommy]
-            [dommy.attrs :as d-attrs]
+            [hickory.core :as hickory]
             [goog.string :as gstring]
             [goog.string.format :as gformat]
             [aspire.model :as a-mdl]
-            )
-  (:use-macros
-   [dommy.macros :only [by-id sel1]]))
+            [aspire.callbacks :as a-cb]
+            ))
 
 (repl/connect "http://localhost:9000/repl")
 (def api-uri "http://localhost:4001/api")
-
-;; Callbacks
-;; --------------------------------------------------
-;; If possible we'll get by with one err callback and one success
-;; callback for XHR, and use client-side routing and core.async
-;; instead of multiple XHR callbacks.
-(defn srv-callback-err [ev]
-  (.log js/console "Error: " ev))
-
-(defn srv-callback-success [ev]
-  (let [response-text (.getResponseText (.-target ev))]
-    (.log js/console (:now (edn/read-string response-text)))
-    (dommy/replace! (sel1 :#loading) [:p#loading (gstring/format "This is now: %s" (:now (edn/read-string response-text)))])))
 
 ;; xhr
 ;; --------------------------------------------------
 ;; Create and keep one xhr object that knows about our two XHR callbacks.
 (def xhr (cb-net/xhr-connection.)) ; additional state!
-(cb-event/listen xhr :error srv-callback-err)
-(cb-event/listen xhr :success srv-callback-success)
+(cb-event/listen xhr :error a-cb/err)
+(cb-event/listen xhr :success a-cb/success)
 
 (defn xhr-fetch!
   "Fetch the specified uri.
