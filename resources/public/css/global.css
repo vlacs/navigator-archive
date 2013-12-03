@@ -1,0 +1,637 @@
+/* line 4, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_root.css.scss */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* line 13, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_root.css.scss */
+html {
+  font: 0.66667rem "Helvetica Neue", Helvetica;
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%; }
+
+/* line 25, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_root.css.scss */
+body {
+  height: 100%;
+  margin: 0; }
+
+/* line 12, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_mixins.css.scss */
+.grid-row:before, .grid-row:after {
+  content: " ";
+  display: table; }
+/* line 17, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_mixins.css.scss */
+.grid-row:after {
+  clear: both; }
+
+/* line 4, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.one-column {
+  width: 5.71429%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 8, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.two-columns {
+  width: 14.28571%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 12, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.three-columns {
+  width: 22.85714%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 16, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.four-columns {
+  width: 31.42857%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 20, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.five-columns {
+  width: 40%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 24, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.six-columns {
+  width: 48.57143%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 28, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.seven-columns {
+  width: 57.14286%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 32, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.eight-columns {
+  width: 65.71429%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 36, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.nine-columns {
+  width: 74.28571%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 40, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.ten-columns {
+  width: 82.85714%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 44, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.eleven-columns {
+  width: 91.42857%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline; }
+
+/* line 47, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_grid.css.scss */
+.omega {
+  float: right;
+  margin-right: 0;
+  *margin-left: -2em;
+  display: inline; }
+
+/* line 11, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_code.css.scss */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif; }
+
+/* line 21, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_code.css.scss */
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word; }
+
+/* line 8, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_emphasis.css.scss */
+b,
+strong {
+  font-weight: bold; }
+
+/* line 13, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_emphasis.css.scss */
+i,
+em {
+  font-style: italic; }
+
+/* line 7, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_headings.css.scss */
+h1, .h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+/* line 12, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_headings.css.scss */
+h2, .h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0; }
+
+/* line 17, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_headings.css.scss */
+h3, .h3 {
+  font-size: 1.17em;
+  margin: 1em 0; }
+
+/* line 22, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_headings.css.scss */
+h4, .h4 {
+  font-size: 1em;
+  margin: 1.33em 0; }
+
+/* line 27, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_headings.css.scss */
+h5, .h5 {
+  font-size: 0.83em;
+  margin: 1.67em 0; }
+
+/* line 32, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_headings.css.scss */
+h6, .h6 {
+  font-size: 0.75em;
+  margin: 2.33em 0; }
+
+/* line 17, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_html5.css.scss */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+summary {
+  display: block; }
+
+/* line 25, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_html5.css.scss */
+audio,
+canvas,
+video {
+  display: inline-block; }
+
+/* line 36, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_html5.css.scss */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/* line 43, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_html5.css.scss */
+[hidden] {
+  display: none; }
+
+/* line 4, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_images.css.scss */
+img {
+  border: 0; }
+
+/* line 13, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_images.css.scss */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* line 23, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_images.css.scss */
+figure {
+  margin: 0; }
+
+/* line 11, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_links.css.scss */
+a:focus {
+  outline: thin dotted; }
+/* line 17, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_links.css.scss */
+a:hover, a:active {
+  outline: 0; }
+
+/* line 7, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_misc.css.scss */
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/* line 19, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_misc.css.scss */
+dfn {
+  font-style: italic; }
+
+/* line 25, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_misc.css.scss */
+mark {
+  background: #ff0;
+  color: #000; }
+
+/* line 32, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_misc.css.scss */
+small {
+  font-size: 80%; }
+
+/* line 40, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_misc.css.scss */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+/* line 47, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_misc.css.scss */
+sup {
+  top: -0.5em; }
+
+/* line 51, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_misc.css.scss */
+sub {
+  bottom: -0.25em; }
+
+/* line 4, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_paragraphs.css.scss */
+p {
+  margin: 0;
+  padding: 0 0 18px; }
+
+/* line 6, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_quotes.css.scss */
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019"; }
+
+/* line 22, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_quotes.css.scss */
+q:before,
+q:after {
+  content: '';
+  content: none; }
+
+/* line 7, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_tables.css.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 1, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+#top-bar {
+  background-color: #ccc;
+  height: 54px;
+  line-height: 54px;
+  padding: 0 18px 0 90px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000; }
+  /* line 11, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+  #top-bar h1 {
+    float: left;
+    margin: 0;
+    padding: 0; }
+  /* line 16, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+  #top-bar #side-nav-control {
+    background-color: #333;
+    height: 36px;
+    position: absolute;
+    top: 9px;
+    left: 18px;
+    width: 36px; }
+    /* line 23, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+    #top-bar #side-nav-control:after {
+      border-right: 1px dotted #333;
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: -18px;
+      bottom: 0; }
+  /* line 33, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+  #top-bar ul {
+    float: right;
+    font-size: 1.2rem;
+    line-height: 36px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 9px;
+    right: 18px;
+    bottom: 9px; }
+  /* line 45, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+  #top-bar li {
+    border-left: 1px dotted #333;
+    float: left;
+    margin-left: 12px;
+    padding-left: 12px;
+    position: relative; }
+    /* line 51, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+    #top-bar li:first-child {
+      border: 0;
+      margin: 0;
+      padding: 0; }
+    /* line 56, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+    #top-bar li a {
+      color: #333;
+      display: block;
+      text-decoration: none; }
+    /* line 61, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+    #top-bar li.profile a {
+      padding-left: 45px; }
+    /* line 64, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+    #top-bar li img {
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      -ms-border-radius: 6px;
+      -o-border-radius: 6px;
+      border-radius: 6px;
+      background-color: #333;
+      height: 36px;
+      position: absolute;
+      top: 0;
+      left: 12px;
+      width: 36px; }
+    /* line 74, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/header-top-nav.css.scss */
+    #top-bar li.alerts span {
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+      border-radius: 3px;
+      background-color: #333;
+      color: #fff;
+      font-size: .5em;
+      padding: 3px 6px; }
+
+/* line 1, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/side-nav.css.scss */
+#side-nav {
+  background-color: #333;
+  color: #ccc;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 216px; }
+
+/* line 1, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/competency-pods.css.scss */
+.competency-pod {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 18px;
+  padding: 18px 18px 72px;
+  position: relative; }
+  /* line 7, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/competency-pods.css.scss */
+  .competency-pod img {
+    background-color: #999;
+    float: left;
+    height: 72px;
+    margin-right: 18px;
+    width: 72px; }
+  /* line 14, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/competency-pods.css.scss */
+  .competency-pod h3 {
+    font-size: 2.2rem;
+    margin: 0;
+    padding: 0; }
+  /* line 19, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/competency-pods.css.scss */
+  .competency-pod footer {
+    background-color: #ccc;
+    height: 54px;
+    padding: 0 18px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0; }
+
+/* line 29, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/competency-pods.css.scss */
+.competency-pod-blank {
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  font-size: 1.6rem;
+  margin-bottom: 18px;
+  padding: 18px 18px 72px;
+  position: relative;
+  text-align: center; }
+
+/* line 39, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/competency-pods.css.scss */
+.button {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  background-color: #333;
+  color: #ccc;
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 9px;
+  padding: 12px 24px;
+  text-decoration: none; }
+
+/* line 1, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/status-bar.css.scss */
+.status-bar {
+  -webkit-border-radius: 18px;
+  -moz-border-radius: 18px;
+  -ms-border-radius: 18px;
+  -o-border-radius: 18px;
+  border-radius: 18px;
+  background-color: #fff;
+  height: 18px;
+  position: absolute;
+  top: 18px;
+  right: 54px;
+  left: 144px; }
+  /* line 9, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/status-bar.css.scss */
+  .status-bar .percent-complete {
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    -ms-border-radius: 18px;
+    -o-border-radius: 18px;
+    border-radius: 18px;
+    background-color: #666;
+    display: block;
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px; }
+    /* line 17, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/status-bar.css.scss */
+    .status-bar .percent-complete[style*="100%"] {
+      width: auto !important;
+      right: 3px; }
+  /* line 22, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/modules/status-bar.css.scss */
+  .status-bar .status-context {
+    float: right;
+    margin: 3px -42px 0 0; }
+
+/* line 43, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#content {
+  max-width: 70em;
+  _width: 70em;
+  padding-left: 18px;
+  padding-right: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #efefef;
+  max-width: 100%;
+  padding-top: 54px;
+  position: relative;
+  z-index: 1000;
+  min-height: 100%; }
+  /* line 38, /Library/Ruby/Gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+  #content:after {
+    content: "";
+    display: table;
+    clear: both; }
+  /* line 12, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_mixins.css.scss */
+  #content:before, #content:after {
+    content: " ";
+    display: table; }
+  /* line 17, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_mixins.css.scss */
+  #content:after {
+    clear: both; }
+
+/* line 55, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#dashboard header[role="banner"] {
+  font-size: 2rem;
+  margin: 72px auto;
+  max-width: 800px;
+  text-align: center; }
+  /* line 60, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #dashboard header[role="banner"] h1 {
+    font-weight: normal; }
+/* line 64, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#dashboard h2 {
+  font-size: 2rem; }
+/* line 67, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#dashboard section {
+  padding-bottom: 36px; }
+  /* line 12, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_mixins.css.scss */
+  #dashboard section:before, #dashboard section:after {
+    content: " ";
+    display: table; }
+  /* line 17, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_mixins.css.scss */
+  #dashboard section:after {
+    clear: both; }
+
+/* line 75, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#competency-index aside,
+#competency-index article {
+  margin-top: 36px; }
+/* line 78, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#competency-index aside {
+  border-right: 1px solid #ccc; }
+  /* line 80, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-index aside ul {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+  /* line 85, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-index aside a {
+    color: #333;
+    display: block;
+    font-size: 1.2rem;
+    padding: 12px;
+    text-decoration: none; }
+    /* line 91, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+    #competency-index aside a:hover {
+      background-color: #ccc; }
+/* line 96, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#competency-index section {
+  margin-bottom: 54px; }
+/* line 99, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#competency-index h2 {
+  font-size: 2rem; }
+
+/* line 105, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#competency-detail header[role="banner"] {
+  background-color: #999;
+  margin-top: 36px;
+  padding: 36px 36px 72px 126px;
+  position: relative; }
+  /* line 110, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail header[role="banner"] h1 {
+    margin: 0;
+    padding: 0; }
+  /* line 114, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail header[role="banner"] .site-map {
+    opacity: .5; }
+  /* line 117, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail header[role="banner"] p {
+    margin-top: 18px;
+    max-width: 500px; }
+  /* line 121, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail header[role="banner"] .badge {
+    background-color: #333;
+    height: 72px;
+    position: absolute;
+    top: 36px;
+    left: 36px;
+    width: 72px; }
+  /* line 129, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail header[role="banner"] footer {
+    background-color: #ccc;
+    height: 54px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0; }
+  /* line 137, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail header[role="banner"] .status-bar {
+    left: 54px;
+    top: 18px;
+    right: 90px; }
+/* line 143, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+#competency-detail .competencies {
+  border-top: 1px solid #ccc; }
+  /* line 12, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_mixins.css.scss */
+  #competency-detail .competencies:before, #competency-detail .competencies:after {
+    content: " ";
+    display: table; }
+  /* line 17, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/base/_mixins.css.scss */
+  #competency-detail .competencies:after {
+    clear: both; }
+  /* line 146, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail .competencies header {
+    padding: 36px; }
+  /* line 149, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail .competencies ul {
+    border-left: 1px solid #ccc;
+    list-style: none;
+    margin: 0;
+    min-height: 100%;
+    padding: 0; }
+  /* line 156, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+  #competency-detail .competencies li {
+    border-top: 1px solid #ccc; }
+    /* line 158, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+    #competency-detail .competencies li:first-child {
+      border: 0; }
+      /* line 160, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+      #competency-detail .competencies li:first-child .status-icon:before {
+        top: 0; }
+    /* line 165, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+    #competency-detail .competencies li:last-child .status-icon:before {
+      bottom: 0; }
+    /* line 169, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+    #competency-detail .competencies li a {
+      color: #333;
+      display: block;
+      font-size: 1.5rem;
+      padding: 18px 12px 18px 90px;
+      position: relative;
+      text-decoration: none; }
+    /* line 177, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+    #competency-detail .competencies li .status-icon {
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+      -ms-border-radius: 100px;
+      -o-border-radius: 100px;
+      border-radius: 100px;
+      background-color: #ccc;
+      display: block;
+      height: 36px;
+      position: absolute;
+      top: 9px;
+      left: 36px;
+      width: 36px; }
+      /* line 186, /Users/moquist/projects/aspire-static-prototype/source/assets/stylesheets/global.css.scss */
+      #competency-detail .competencies li .status-icon:before {
+        background-color: #ccc;
+        content: "";
+        display: block;
+        position: absolute;
+        top: -9px;
+        bottom: -9px;
+        left: 15px;
+        width: 6px; }
+
+
