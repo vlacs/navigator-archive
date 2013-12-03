@@ -5,7 +5,11 @@
             [clojure.repl :refer :all]
             [clojure.test :as test]
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
-            [aspire.core :as aspire.core]))
+            [hickory.core :as hickory]
+            [aspire.core :as aspire.core]
+            ))
+
+;; N.B.: (ns cljs.user (:use [clojure.zip :only [insert-child]])) (see http://stackoverflow.com/questions/12879027/cannot-use-in-clojurescript-repl)
 
 (def system nil)
 
@@ -39,3 +43,11 @@
 (defn reset []
   (stop!)
   (refresh :after 'user/go))
+
+;; Utility fns
+;; -----------------------
+(defn html->hiccup [html]
+  (-> html
+      hickory/parse-fragment
+      (->> (map hickory/as-hiccup))))
+
