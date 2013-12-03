@@ -29,15 +29,14 @@
 (defresource resource-api
   :available-media-types ["application/edn"]
   :handle-ok (fn [_]
-               (println :resource-api)
-               (str {:now (.getTime (java.util.Date.))})))
+               (str {:comp_tag {:name "tag name" :version "v7" :description "Herein shall be a description." :cnt-completed 9 :cnt-remaining 20}})
+               ))
 
 (defresource resource-comps
   ;; demo resource to select some comp records
   :available-media-types ["application/edn"]
   :handle-ok (fn [_]
-               (println :resource-comps)
-               (a-sqldb/select! {:select [:*] :from [:comp] :limit 2})))
+               (a-sqldb/select! {:select [:*] :from [:comp]})))
 
 (defroutes app-routes
   (ANY "/" [] resource-app)
