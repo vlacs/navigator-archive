@@ -8,22 +8,15 @@
 
                  ;; see https://github.com/vlacs/jdbc-pg-init
                  [jdbc-pg-init "0.1.2-SNAPSHOT"]
-
-                 [org.clojure/clojurescript "0.0-1896"]
+                 [clj-http "0.7.7" :exclusions [org.clojure/tools.reader]]
+                 [org.clojure/clojurescript "0.0-2080"]
                  [ring "1.1.8"]
                  [compojure "1.1.5"]
                  [liberator "0.9.0"]
-
-                 ;; Do we want both dommy and tinsel? If not, which
-                 ;; one do we want?
                  [prismatic/dommy "0.1.1"]
-                 [tinsel "0.4.0"]
-
-                 [hiccup "1.0.4"]
+                 [hickory "0.5.2" :exclusions [org.clojure/data.json]]
                  [honeysql "0.4.2"]
                  [korma "0.3.0-RC5" :exclusions [org.clojure/java.jdbc]]
-                 [org.clojure/core.async "0.1.242.0-44b1e3-alpha"]
-                 [org.clojure/core.incubator "0.1.3"]
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-cljsbuild "0.3.2"]
