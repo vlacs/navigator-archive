@@ -5,9 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/tools.cli "0.2.4"]
-
-                 ;; see https://github.com/vlacs/jdbc-pg-init
-                 [jdbc-pg-init "0.1.2-SNAPSHOT"]
+                 [jdbc-pg-init "0.1.2"]
                  [clj-http "0.7.7" :exclusions [org.clojure/tools.reader]]
                  [org.clojure/clojurescript "0.0-2080"]
                  [ring "1.1.8"]
