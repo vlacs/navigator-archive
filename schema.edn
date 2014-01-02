@@ -126,6 +126,7 @@
 
   ;; This table is deliberately NOT called "enrollment", but it
   ;; represents a very similar relation.
+  ;; For now, we're using classroom_enrolment to track status.
   :user2comp {:cols [[:id :bigserial]
 
                      [:sis_user_id :bigint]
