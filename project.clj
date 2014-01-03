@@ -18,7 +18,8 @@
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-cljsbuild "0.3.2"]
-            [lein-ring "0.8.8" :exclusions [org.clojure/clojure]]]
+            [lein-ring "0.8.8" :exclusions [org.clojure/clojure]]
+            [test2junit "1.0.1"]]
   :hooks [leiningen.cljsbuild]
   :source-paths ["src/clj"]
   :cljsbuild {:crossovers [aspire.model]
