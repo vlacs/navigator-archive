@@ -31,7 +31,8 @@
                                          :output-to "resources/public/js/aspire.js"
                                          :optimizations :simple}}}}
   :profiles {:dev {:source-paths ["dev"]
-                   :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
+                   :dependencies [[org.clojure/tools.namespace "0.2.4"]
+                                  [ring-mock "0.1.5"]]}}
   
   :main ^{:skip-aot true} aspire.core
   :ring {:handler stacker.server/app})
