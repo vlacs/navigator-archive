@@ -6,6 +6,8 @@
             [clojure.test :as test]
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
             [hickory.core :as hickory]
+            [hiccup.core :as hiccup]
+            [net.cgrand.enlive-html :as en]
             [aspire.core :as aspire.core]
             ))
 
