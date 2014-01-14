@@ -24,9 +24,8 @@
             [test2junit "1.0.1"]]
   :hooks [leiningen.cljsbuild]
   :source-paths ["src/clj"]
-  :cljsbuild {:crossovers [aspire.model]
+  :cljsbuild {:repl-listen-port 9010
               :builds {:main {:source-paths ["src/client"]
-                              :crossover-path "cljsbuild-crossovers"
                               :compiler {:pretty-print true
                                          ;; :source-map is broken for some inexplicable reason. :( --moquist
                                          ;;:source-map true
@@ -37,4 +36,4 @@
                                   [ring-mock "0.1.5"]]}}
   
   :main ^{:skip-aot true} aspire.core
-  :ring {:handler stacker.server/app})
+  :ring {:handler aspire.web/app})

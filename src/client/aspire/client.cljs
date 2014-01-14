@@ -5,11 +5,11 @@
             [hickory.core :as hickory]
             [goog.string :as gstring]
             [goog.string.format :as gformat]
-            [aspire.model :as a-mdl]
+            #_[aspire.model :as a-mdl]
             [aspire.callbacks :as a-cb]
             ))
 
-(repl/connect "http://localhost:9000/repl")
+(repl/connect "http://localhost:9010/repl")
 (def api-uri "http://localhost:4001/api")
 
 ;; xhr
