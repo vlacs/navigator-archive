@@ -8,6 +8,7 @@
             [liberator.dev :refer [wrap-trace]]
             [compojure.core :refer [defroutes ANY]]
             [hiccup.page]
+            [aspire.templates :as a-tpl]
             [aspire.sqldb :as a-sqldb])
   (:gen-class))
 
@@ -26,10 +27,20 @@
                   [:div [:p#loading "Loading..."]]
                  [:script {:src "js/aspire.js"}]]])))
 
+(defresource resource-app2
+  ;; This is intended to load up the very first page, and kick
+  ;; everything off.
+  ;; All other templating should be handled client-side.
+  :available-media-types ["text/html"]
+  :handle-ok (fn [_]
+               (reduce str (a-tpl/index "hi"))
+               #_"<p>hi there</p>"
+               ))
+
 (defresource resource-api
   :available-media-types ["application/edn"]
   :handle-ok (fn [_]
-               (str {:comp_tag {:name "tag name" :version "v7" :description "Herein shall be a description." :cnt-completed 9 :cnt-remaining 20}})
+               (str {:comp_tag {:name "tag name" :version "v7" :description "Yarp shall be a description." :cnt-completed 9 :cnt-remaining 20}})
                ))
 
 (defresource resource-comps
@@ -40,6 +51,7 @@
 
 (defroutes app-routes
   (ANY "/" [] resource-app)
+  (ANY "/app2" [] resource-app2)
   (ANY "/api" [] resource-api)
   (ANY "/comps" [] resource-comps))
 
