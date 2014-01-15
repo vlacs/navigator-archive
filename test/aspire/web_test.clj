@@ -1,13 +1,12 @@
 (ns aspire.web-test
   (:use aspire.web
         clojure.test
-        ring.mock.request))
+        ring.mock.request
+        aspire.web-test-config))
 
-(def api-response (resource-api (request :get "/api")))
-
-(def app-response (resource-app (request :get "/")))
-
-(def comps-response (resource-app (request :get "/comps")))
+;; web-test-config makes the mock ring requests to the resources
+;; defined in web.clj. The resulting vars are available for testing here.
+(use-fixtures :once web-test-config) 
 
 (deftest resource-api-test
   (def keyed-headers
