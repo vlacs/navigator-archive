@@ -33,9 +33,7 @@
   ;; All other templating should be handled client-side.
   :available-media-types ["text/html"]
   :handle-ok (fn [_]
-               (reduce str (a-tpl/index "hi"))
-               #_"<p>hi there</p>"
-               ))
+               (a-tpl/render (a-tpl/index "hi"))))
 
 (defresource resource-api
   :available-media-types ["application/edn"]
