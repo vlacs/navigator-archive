@@ -26,37 +26,18 @@
                   [:div [:p#loading "Loading..."]]
                  [:script {:src "js/aspire.js"}]]])))
 
-(defresource resource-app2
-  ;; This is intended to load up the very first page, and kick
-  ;; everything off.
-  ;; All other templating should be handled client-side.
+(defresource resource-base
   :available-media-types ["text/html"]
   :handle-ok (fn [_]
                (a-tpl/render (a-tpl/index "hi"))))
 
-(defresource resource-api
-  :available-media-types ["application/edn"]
-  :handle-ok (fn [_]
-               (str {:comp_tag {:name "tag name" :version "v7" :description "Yarp shall be a description." :cnt-completed 9 :cnt-remaining 20}})
-               ))
-
-(defresource resource-comps
-  ;; demo resource to select some comp records
-  :available-media-types ["application/edn"]
-  :handle-ok (fn [_]
-               (a-sqldb/select! {:select [:*] :from [:comp]})))
-
 (defroutes app-routes
-  (ANY "/" [] resource-app)
-  (ANY "/app2" [] resource-app2)
-  (ANY "/api" [] resource-api)
-  (ANY "/comps" [] resource-comps))
+  (ANY "/" [] resource-base))
 
 (def app
   (-> app-routes
       (ring-resource/wrap-resource "public")
-      (file-info/wrap-file-info)
-      (wrap-trace :ui)))
+      (file-info/wrap-file-info)))
 
 (defn run!
   [& args]
