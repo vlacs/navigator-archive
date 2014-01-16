@@ -1,7 +1,6 @@
 (ns aspire.web
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.resource :as ring-resource]
-            [ring.middleware.content-type :as content-type]
             [ring.middleware.file-info :as file-info]
             [ring.util.response :as response]
             [liberator.core :refer [resource defresource]]
