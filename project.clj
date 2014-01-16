@@ -7,10 +7,9 @@
                  [org.clojure/tools.cli "0.2.4"]
                  [jdbc-pg-init "0.1.2"]
                  [clj-http "0.7.7" :exclusions [org.clojure/tools.reader]]
-                 [org.clojure/clojurescript "0.0-2080"]
                  [enlive "1.1.5"]
                  [hiccup "1.0.4"]
-                 [ring "1.2.1"]
+                 [ring "1.2.1" :exclusions [org.clojure/tools.reader]]
                  [compojure "1.1.5"]
                  [liberator "0.9.0"]
                  [prismatic/dommy "0.1.1"]
@@ -19,18 +18,8 @@
                  [korma "0.3.0-RC5" :exclusions [org.clojure/java.jdbc]]
                  ]
   :pedantic? :warn ; :abort
-  :plugins [[lein-cljsbuild "0.3.2"]
-            [lein-ring "0.8.8" :exclusions [org.clojure/clojure]]
+  :plugins [[lein-ring "0.8.8" :exclusions [org.clojure/clojure]]
             [test2junit "1.0.1"]]
-  :hooks [leiningen.cljsbuild]
-  :source-paths ["src/clj"]
-  :cljsbuild {:repl-listen-port 9010
-              :builds {:main {:source-paths ["src/client"]
-                              :compiler {:pretty-print true
-                                         ;; :source-map is broken for some inexplicable reason. :( --moquist
-                                         ;;:source-map true
-                                         :output-to "resources/public/js/aspire.js"
-                                         :optimizations :simple}}}}
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [ring-mock "0.1.5"]]}}
