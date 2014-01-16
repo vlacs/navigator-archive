@@ -19,5 +19,3 @@
 (deftest resource-app-test
   (is (= (:status app-response) 200)))
 
-(deftest resource-comps-test
-  (is (= (:status comps-response) 200)))
