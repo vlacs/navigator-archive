@@ -8,7 +8,7 @@
 ;; defined in web.clj. The resulting vars are available for testing here.
 (use-fixtures :once web-test-config) 
 
-(deftest resource-api-test
+#_(deftest resource-api-test
   (def keyed-headers
     (into {}
       (for [[k v] (:headers api-response)]
