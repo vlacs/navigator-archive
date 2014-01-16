@@ -4,16 +4,11 @@
         ring.mock.request))
 
 (defn setup-test []
-
   ;; this is where we would also initialize and populate test db
 
   ;; the following vars containing the various responses are available to the
   ;; tests defined in web_test.clj
-  (def api-response (resource-api (request :get "/api")))
-
-  (def app-response (resource-app (request :get "/")))
-
-  (def comps-response (resource-app (request :get "/comps"))))
+  (def app-response (resource-app (request :get "/"))))
   
 (defn teardown-test []
   (comment
