@@ -24,6 +24,12 @@ You'll want to ```(reset)``` any time you change your clj code, and your changes
 take effect instantly.
 
 ### Fourth
+```bash
+$ cat test.sql | psql yourdb
+```
+...to create some testing data in your DB.
+
+### Fifth
 Open up user.clj. This is the place to add all the dev/debugging tools. It's
 evaluated automatically every time you open a REPL, and you're already in its
 namespace, so any tooling you put in user.clj is always available in your REPL
