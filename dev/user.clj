@@ -6,9 +6,8 @@
             [clojure.test :as test]
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
             [hickory.core :as hickory]
-            [hiccup.core :as hiccup]
-            [net.cgrand.enlive-html :as en]
             [aspire.core :as aspire.core]
+            [aspire.conf :as aspire.conf]
             ))
 
 ;; N.B.: (ns cljs.user (:use [clojure.zip :only [insert-child]])) (see http://stackoverflow.com/questions/12879027/cannot-use-in-clojurescript-repl)
@@ -17,11 +16,10 @@
 
 (defn init! []
   (let [home (System/getProperty "user.home")
-        mydir (format "%s/.aspire/" home)
+        mydir (format "%s/.aspire" home)
         args ["--verbose"
-              "--conf-sql-db" (format "%s/conf-sql-db.edn" mydir)
-              "--conf-web" (format "%s/conf-web.edn" mydir)]
-        [opts conf] (aspire.core/get-conf! args)]
+              "--config-path" mydir]
+        [opts conf] (aspire.core/opts-and-conf-from-args args)]
     (alter-var-root #'system (constantly (aspire.core/system conf)))
     system))
 
