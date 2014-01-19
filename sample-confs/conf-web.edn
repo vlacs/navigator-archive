@@ -1,3 +1,5 @@
-{:port 4001
+{:https false
+ :host "www.yourservergoeshere.com"
+ :port 4001
  ;; you might not want to join for dev
  :join? true}

@@ -6,6 +6,9 @@
             [aspire.sqldb :as a-sqldb]
             [aspire.web :as a-web]))
 
+(def jetty-args
+  [:port :join?])
+
 (defn system
   "See http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded"
   [conf]
@@ -13,7 +16,8 @@
 
 (defn start-database!
   [system]
-  (a-sqldb/default-connection! (get-in system [:conf :conf-sql-db])))
+  (assoc system :sql-db-pool
+         (a-sqldb/default-connection! (get-in system [:conf :conf-sql-db]))))
 
 (defn stop-database!
   [system]
@@ -22,8 +26,8 @@
 
 (defn start-http!
   [system]
-  (prn system)
-  (a-web/run! (get-in system [:conf :conf-web])))
+  (let [args (select-keys (get-in system [:conf :conf-web]) jetty-args)]
+    (assoc system :jetty-instance (a-web/run! args))))
 
 (defn stop-http!
   [system]
@@ -31,7 +35,7 @@
   (dissoc system :jetty-instance))
 
 ;; This defines how the system should be started and stopped.
-(def sub-systems
+(def all-sub-systems
   {:jetty-instance {:startup start-http!
                     :shutdown stop-http!}
    :sql-db-pool {:startup start-database!
@@ -42,31 +46,44 @@
   [:sql-db-pool :jetty-instance])
 
 ;; This defines the order in which the system is shutdown.
-(def shutdown-order (vector (reverse startup-order)))
+(def shutdown-order (into [] (reverse startup-order)))
 
-(defn sub-system-interact!
+(defn process-single-interaction!
   "Causes side-effects, such as stopping or starting the HTTP server
   or connecting or disconnecting from a database. Whatever task gets
   called has full access to the global state of the system (third arg
   passed becomes the first and only arg passed to the task fn.)"
-  [task sub-sys system]
-  ((get-in sub-systems [sub-sys task]) system))
+  [sub-sys task system]
+  (a-util/output! true (str "Interactions with [" sub-sys "] executing [" task "]"))
+  ((get-in all-sub-systems [sub-sys task]) system))
+
+(defn process-ordered-interaction!
+  "Does the same task to several sub systems in the order that they're
+  provided. Uses sub-system task map for calling task fns."
+  [ordered-sub-systems task system]
+  (loop [remaining-sub-systems ordered-sub-systems
+         system-state system]
+    (if (empty? remaining-sub-systems)
+      system-state
+      (let [sub-sys (first remaining-sub-systems)]
+        (recur (rest remaining-sub-systems)
+               (process-single-interaction! sub-sys task system-state))))))
 
 (defn start!
   "Performs side effects to initialize the system, acquire resources,
   and start it running. Returns an updated instance of the system."
-  [system]
-  (let [startup-fn (partial sub-system-interact! :startup)]
-    (apply hash-map (flatten (map (fn [x] [x (startup-fn x system)]) startup-order)))))
+  ([system] 
+   (process-ordered-interaction! startup-order :startup system))
+  ([system sub-sys]
+   (process-single-interaction! sub-sys :startup system)))
 
 (defn stop!
   "Performs side effects to shut down the system and release its
   resources. Returns an updated instance of the system."
-  [system]
-  ;;; TODO: Refactor this to use shutdown list.
-  (-> system
-      (stop-http!)
-      (stop-database!)))
+  ([system]
+   (process-ordered-interaction! shutdown-order :shutdown system))
+  ([system sub-sys]
+   (process-single-interaction! sub-sys :shutdown system)))
 
 (defn opts-and-conf-from-args
   [args]
@@ -85,7 +102,7 @@
     (a-util/output! (:verbose opts) :opts opts :system system :conf conf :db db)
 
     (cond
-     (:init-sql opts) (a-sqldb-ddl/init! db) 
-     (:zero-out-sql-db opts) (a-sqldb-ddl/print-drop-sql!) 
-     :else (start! system))))
+      (:init-sql opts) (a-sqldb-ddl/init! db) 
+      (:zero-out-sql-db opts) (a-sqldb-ddl/print-drop-sql!) 
+      :else (start! system))))
 
