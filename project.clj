@@ -10,7 +10,7 @@
                  [enlive "1.1.5"]
                  [hiccup "1.0.4"]
                  [ring "1.2.1" :exclusions [org.clojure/tools.reader]]
-                 [compojure "1.1.5"]
+                 [compojure "1.1.5" :exclusions [org.clojure/core.incubator]]
                  [liberator "0.10.0"]
                  [prismatic/dommy "0.1.1"]
                  [hickory "0.5.2" :exclusions [org.clojure/data.json]]
