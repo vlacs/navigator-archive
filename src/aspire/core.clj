@@ -45,7 +45,7 @@
 (def startup-order
   [:sql-db-pool :jetty-instance])
 
-;; This defines the order in which the system is shutdown.
+;; This defines the order in which the system is shut down.
 (def shutdown-order (into [] (reverse startup-order)))
 
 (defn process-single-interaction!
