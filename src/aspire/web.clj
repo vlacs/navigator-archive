@@ -29,7 +29,7 @@
 (defresource resource-base
   :available-media-types ["text/html"]
   :handle-ok (fn [_]
-               (a-tpl/render (a-tpl/index "hi"))))
+               (a-tpl/render (a-tpl/index "hiya"))))
 
 (defroutes app-routes
   (ANY "/" [] resource-base))
