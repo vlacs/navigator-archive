@@ -29,7 +29,7 @@
 (defresource resource-base
   :available-media-types ["text/html"]
   :handle-ok (fn [_]
-               (a-tpl/render (a-tpl/index "hi"))))
+               (a-tpl/render (a-tpl/base (rand-int 100) "http://google.com" "Bo Jackson"))))
 
 (defroutes app-routes
   (ANY "/" [] resource-base))
