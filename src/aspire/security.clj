@@ -19,23 +19,26 @@
   user instead of a clojure entity"
   [user]
   (get-valid-user (:username user) (md5 (:password user))))
+ 
+(def friend-options
+  {:allow-anon? false
+   :unauthenticated-handler #(workflows/http-basic-deny "Login with your VLACS user account" %)
+   :workflows [(workflows/http-basic
+                 :credential-fn md5-credential-fn
+                 :realm "Aspire")]})
 
-(defn saml20-credential-fn
-  [saml-mutable-timeouts x509-cert saml-response]
-  ;;; TODO: Write this using the saml20-clj library.
-  nil
-  ) 
+(defn require-login
+  [ring-routes]
+  (friend/authenticate ring-routes friend-options))
 
-(defn authorize-saml
-  [ring-routes roles]
-  nil
+(defn has-role?
+  [role]
   )
 
-(defn authorize-http-basic
-  [ring-routes roles]
-  (friend/authorize ring-routes roles
-                    {:credential-fn md5-credential-fn
-                     :workflows [(workflows/http-basic)]}))
+(defn require-roles
+  "Requires roles based on the output of a predicate."
+  [pred]
+  )
 
 (defn logout-route
   [ring-route]

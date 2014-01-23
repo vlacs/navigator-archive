@@ -8,7 +8,8 @@
             [compojure.core :refer [defroutes ANY]]
             [hiccup.page]
             [aspire.templates :as a-tpl]
-            [aspire.sqldb :as a-sqldb])
+            [aspire.sqldb :as a-sqldb]
+            [aspire.security :as a-sec])
   (:gen-class))
 
 (defresource resource-app
@@ -32,10 +33,12 @@
                (a-tpl/render (a-tpl/index "hi"))))
 
 (defroutes app-routes
+  (ANY "/debug" req (prn-str req))
   (ANY "/" [] resource-base))
 
 (def app
   (-> app-routes
+      (a-sec/require-login)
       (ring-resource/wrap-resource "public")
       (file-info/wrap-file-info)))
 
