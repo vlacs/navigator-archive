@@ -54,7 +54,7 @@
 
 ;; Templates
 ;; -----------------------
-(en/deftemplate base "public/index.html"
+(en/deftemplate onboarding "public/index.html"
   [alert-count profile-url user-disp-name welcome-head welcome-msg steps]
   (get-in selectors [:onboarding :header]) (en/substitute (onboarding-header alert-count profile-url user-disp-name))
   (get-in selectors [:onboarding :intro]) (en/substitute (onboarding-intro welcome-head welcome-msg))
