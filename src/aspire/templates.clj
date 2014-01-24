@@ -2,12 +2,31 @@
   (:require [net.cgrand.enlive-html :as en]
             [hiccup.core :as hc]))
 
-(def header-sel [:nav#top-bar])
+;; Selectors
+;; -----------------------
+(def selectors {:onboarding {:header [:nav#top-bar]
+                             :intro [:main#content :div.intro]
+                             :steps [:main#content :ol.onboarding-steps]
+                             :step [:main#content :ol.onboarding-steps :li.step-1]}})
 
+;; Utility fns
+;; -----------------------
 (defn render [template]
   (reduce str template))
 
-(en/defsnippet header "public/index.html" header-sel
+(defmacro maybe-substitute
+  "Shamelessly borrowed from https://github.com/swannodette/enlive-tutorial/blob/master/src/tutorial/utils.clj"
+  ([expr] `(if-let [x# ~expr] (html/substitute x#) identity))
+  ([expr & exprs] `(maybe-substitute (or ~expr ~@exprs))))
+
+(defmacro maybe-content
+  "Shamelessly borrowed from https://github.com/swannodette/enlive-tutorial/blob/master/src/tutorial/utils.clj"
+  ([expr] `(if-let [x# ~expr] (html/content x#) identity))
+    ([expr & exprs] `(maybe-content (or ~expr ~@exprs))))
+
+;; Template Snippets
+;; -----------------------
+(en/defsnippet onboarding-header "public/index.html" (get-in selectors [:onboarding :header])
   [alert-count profile-url user-disp-name]
   [:li.alerts :a] (en/set-attr :href "/alerts")
   [:li.alerts :a :span.alert-count] (en/content (str alert-count))
@@ -16,17 +35,29 @@
                     (en/content user-disp-name))
   [:li.logout :a] (en/set-attr :href "/logout"))
 
-(en/defsnippet intro "public/index.html" [:main#content :div.intro]
+(en/defsnippet onboarding-intro "public/index.html" (get-in selectors [:onboarding :intro])
   [title desc]
   [:h2] (en/content title)
-  [:h2 :> :p] (en/content desc))
+  [:p] (en/content desc))
+
+(en/defsnippet onboarding-step "public/index.html"
+  (get-in selectors [:onboarding :step])
+  [n desc]
+  [:strong] (en/content (str "Step " n))
+  [:span] (en/content desc))
 
 #_(en/defsnippet onboarding-steps "public/index.html"
-  [:main#content {[:ol.onboarding-steps] [[:li.step-1 (en/nth-of-type 1)]]}]
+    (get-in selectors [:onboarding :steps])
   [steps]
+  [:strong]
   )
 
+;; Templates
+;; -----------------------
 (en/deftemplate base "public/index.html"
-  [alert-count profile-url user-disp-name]
-  [header-sel] (en/content (header alert-count profile-url user-disp-name)))
+  [alert-count profile-url user-disp-name welcome-head welcome-msg steps]
+  (get-in selectors [:onboarding :header]) (en/substitute (onboarding-header alert-count profile-url user-disp-name))
+  (get-in selectors [:onboarding :intro]) (en/substitute (onboarding-intro welcome-head welcome-msg))
+  (get-in selectors [:onboarding :steps]) (en/content (map-indexed (fn dostep [n desc] (onboarding-step (inc n) desc)) steps)))
+
 
