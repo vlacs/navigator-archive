@@ -1,6 +1,7 @@
 (ns aspire.templates
   (:require [net.cgrand.enlive-html :as en]
-            [hiccup.core :as hc]))
+            [hiccup.core :as hc]
+            [aspire.util :as a-util]))
 
 ;; Selectors
 ;; -----------------------
@@ -59,5 +60,15 @@
   (get-in selectors [:onboarding :header]) (en/substitute (onboarding-header alert-count profile-url user-disp-name))
   (get-in selectors [:onboarding :intro]) (en/substitute (onboarding-intro welcome-head welcome-msg))
   (get-in selectors [:onboarding :steps]) (en/content (map-indexed (fn dostep [n desc] (onboarding-step (inc n) desc)) steps)))
+
+(en/deftemplate admin "public/admin/index.html"
+  [alert-count profile-url user-disp-name]
+  (get-in selectors [:onboarding :header]) (en/substitute (onboarding-header alert-count profile-url user-disp-name))
+  [:div#config-onboarding :h2] (en/content "Configure Page: Onboarding")
+  [:main#content :h1] (en/content "Aspire Administration")
+  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
+  [:form#config-onboarding :input#greeting] (en/set-attr :value (a-util/get-config! "onboarding/greeting"))
+  [:form#config-onboarding :textarea#steps] (en/content (a-util/get-config! "onboarding/steps"))
+  )
 
 
