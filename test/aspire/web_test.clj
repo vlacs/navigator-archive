@@ -17,5 +17,5 @@
   (is (= (:Content-Type keyed-headers) "application/edn;charset=UTF-8" )))
  
 (deftest resource-app-test
-  (is (= (:status app-response) 200)))
+  (is (= (:status onboarding-response) 200)))
 
