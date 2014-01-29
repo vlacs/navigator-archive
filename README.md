@@ -41,6 +41,10 @@ user.clj is NOT included in a compiled JAR or .js file.
 See http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded for
 background on this workflow.
 
+### Sixth
+Go to http://localhost:port/ in your browser.
+Go to http://localhost:port/admin in your browser.
+
 ## Usage
 
 There's nothing much here, yet. This will tell you more:
