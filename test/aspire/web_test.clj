@@ -1,8 +1,8 @@
 (ns aspire.web-test
-  (:use aspire.web
-        clojure.test
-        ring.mock.request
-        aspire.web-test-config))
+  (:require [aspire.web :as a-web]
+            [clojure.test :refer :all]
+            [ring.mock.request :as rmr]
+            [aspire.web-test-config :refer :all]))
 
 ;; web-test-config makes the mock ring requests to the resources
 ;; defined in web.clj. The resulting vars are available for testing here.
