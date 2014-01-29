@@ -1,14 +1,14 @@
 (ns aspire.web-test-config
-  (:use aspire.web
-        clojure.test
-        ring.mock.request))
+  (:require [aspire.web :as a-web]
+            [clojure.test :refer :all]
+            [ring.mock.request :as rmr]))
 
-(defn setup-test []
+(defn set-up-test []
   ;; this is where we would also initialize and populate test db
 
   ;; the following vars containing the various responses are available to the
   ;; tests defined in web_test.clj
-  (def app-response (resource-app (request :get "/"))))
+  (def onboarding-response (a-web/handle-onboarding (rmr/request :get "/"))))
   
 (defn teardown-test []
   (comment
@@ -17,7 +17,7 @@
 
 (defn web-test-config
   [web-tests]
-  (setup-test)
+  (set-up-test)
   (web-tests)
   (try
     (teardown-test)
