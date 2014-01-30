@@ -1,5 +1,5 @@
 # aspire
-[![Build Status](https://travis-ci.org/vlacs/aspire.png?branch=master)](https://travis-ci.org/vlacs/aspire)
+Build Status](https://travis-ci.org/vlacs/aspire.png?branch=master)](https://travis-ci.org/vlacs/aspire)
 
 ## Developer Workflow
 ### First
