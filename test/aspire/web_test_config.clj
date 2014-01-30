@@ -8,7 +8,7 @@
 
   ;; the following vars containing the various responses are available to the
   ;; tests defined in web_test.clj
-  (def onboarding-response (a-web/handle-onboarding (rmr/request :get "/"))))
+  (def onboarding-response (a-web/onboarding (rmr/request :get "/"))))
   
 (defn teardown-test []
   (comment
