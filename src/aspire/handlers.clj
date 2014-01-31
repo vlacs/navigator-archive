@@ -26,9 +26,12 @@
   [ctx]
   (let [page (get-in ctx [:request :route-params :page])
         params (get-in ctx [:request :form-params])]
+    #_[:params params]
     (map (fn do-config-page! [[k v]]
            (a-util/set-config! (str page "/" k) v))
          (whitelist-config-page-keys (keyword page) params))))
 
-(defn admin [_]
-  (a-tpl/render (a-tpl/admin (rand-int 100) "http://google.com" "Jo Backson")))
+(defn admin! [_]
+  (let [greeting (a-util/get-config! "onboarding/greeting")
+        steps (a-util/get-config! "onboarding/steps")]
+    (a-tpl/render (a-tpl/admin (rand-int 100) "http://google.com" "Jo Backson" greeting steps))))

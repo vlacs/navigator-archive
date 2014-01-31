@@ -27,6 +27,20 @@ jQuery(document).ready(function($) {
     event.preventDefault();
   });
 
+  $('#side-nav-control').on('click', function (event) {
+    var sideNavControl = $(this),
+        sideNavBlock    = $('#side-nav');
+
+    if (sideNavControl.attr('data-active') == "true") {
+      sideNavControl.attr('data-active', "false");
+      sideNavBlock.attr('data-active', "false");
+    } else {
+      sideNavControl.attr('data-active', "true");
+      sideNavBlock.attr('data-active', "true");
+    }
+    event.preventDefault();
+  });
+
   $('.result-details').find('.show-children').on('click', function(event){
     var childrenItems = $(this).parent().next();
     childrenItems.toggle();

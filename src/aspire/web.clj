@@ -14,6 +14,7 @@
   (:gen-class))
 
 (defresource onboarding
+  :available-media-types ["text/html"]
   :handle-ok (a-tpl/render (a-tpl/onboarding (rand-int 100) "http://google.com" "Bo Jackson"
                                              "Welcome to VLACS! (make me configurable)" "Check out our learning options below. You'll find projects, courses, and opportunities to learn by pursuing your interests. Join us in your learning adventure! Actually, this text needs to be configured by the admin in some reasonable kind of interface."
                                              ["Actually, these steps should be configured by the admin in some reasonable kind of interface." "Maybe there will be a step here." "Possibly another step?"])))
@@ -21,7 +22,7 @@
 (defresource admin
   :allowed-methods [:get]
   :available-media-types ["text/html"]
-  :handle-ok a-hdl/admin
+  :handle-ok a-hdl/admin!
   )
 
 (defresource config-key [key]
