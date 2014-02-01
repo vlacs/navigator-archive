@@ -1,6 +1,8 @@
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Aspire project running on Windows Environments.
 
+For *UX instructions, see [README.md](https://github.com/vlacs/aspire).
+
 <b>NOTE</b>:  This is not complete at this time.  You are more than welcome to attempt to muddle through it yourself, or contact me at shipkiss@gmail.com for assistance.
 ###Prerequisites
 See README.md for core Prerequisites
