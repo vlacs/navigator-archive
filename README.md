@@ -5,7 +5,7 @@
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Aspire project running on *UX Environments.
 
-######NOTE: Windows Users: Modifications to install an Aspire development environment using Eclipse can be found in win-eclipse.md.  Steps which require modification below are indicated with following symbol<sup>(M$)</sup>
+######NOTE: Windows Users: Modifications to install an Aspire development environment using Eclipse can be found in [win-eclipse.md](https://github.com/vlacs/aspire/blob/master/win-eclipse.md).  Steps which require modification below are indicated with following symbol<sup>(M$)</sup>
 
 ###Prerequisites
 ####Core:
