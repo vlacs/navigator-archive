@@ -1,7 +1,7 @@
 # aspire
 [![Build Status](https://travis-ci.org/vlacs/aspire.png?branch=master)](https://travis-ci.org/vlacs/aspire)
 
-#M$ Windows Users: Instructions on running the aspire environment using Eclipse can be found here: https://github.com/vlacs/aspire/win-eclipse.md
+###M$ Windows Users: Instructions on running the aspire environment using Eclipse can be found in win-eclipse.md
 
 ## Developer Workflow
 ### First
