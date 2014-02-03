@@ -4,8 +4,10 @@
             [aspire.util :as a-util]
             [aspire.sqldb-ddl :as a-sqldb-ddl]
             [aspire.sqldb :as a-sqldb]
-            [aspire.web :as a-web]))
+            [aspire.web :as a-web]
+            [saml20-clj.sp]))
 
+;;; These are web configs unique to starting up jetty.
 (def jetty-args
   [:port :join?])
 
@@ -15,37 +17,70 @@
   {:conf conf})
 
 (defn start-database!
+  "Spins up the database pool and gets it ready to accept queries."
   [system]
   (assoc system :sql-db-pool
          (a-sqldb/default-connection! (get-in system [:conf :conf-sql-db]))))
 
 (defn stop-database!
+  "Spins down the database pool and closes database connections."
   [system]
   (.close (:datasource @(:sql-db-pool system)))
   (dissoc system :sql-db-pool))
 
 (defn start-http!
+  "Starts up the Jetty server."
   [system]
   (let [args (select-keys (get-in system [:conf :conf-web]) jetty-args)]
     (assoc system :jetty-instance (a-web/run! args))))
 
 (defn stop-http!
+  "Stops the Jetty server."
   [system]
   (.stop (:jetty-instance system))
   (dissoc system :jetty-instance))
+
+(defn start-saml-service!
+  "Configures SAML service and fns that mutate state."
+  [system]
+  (let [mutables (saml20-clj.sp/generate-mutables)
+        saml-config (get-in system [:conf :conf-saml20])
+        web-config (get-in system [:conf :conf-web])
+
+        request-factory (saml20-clj.sp/create-request-factory
+                          mutables
+                          (:format saml-config)
+                          (:host web-config)
+                          (str
+                            (if (:https web-config) "https" "http")
+                            "://" (:host web-config)
+                            ":" (:port web-config) "/"))]
+    (assoc system :saml20-service-instance
+           {:mutable-state mutables
+            :saml-request-factory request-factory})))
+
+(defn stop-saml-service!
+  "Halts saml service and releases SAML-specific resources."
+  [system]
+  (dissoc system :saml20-service-instance))
 
 ;; This defines how the system should be started and stopped.
 (def all-sub-systems
   {:jetty-instance {:startup start-http!
                     :shutdown stop-http!}
    :sql-db-pool {:startup start-database!
-                 :shutdown stop-database!}})
+                 :shutdown stop-database!}
+   :saml20-service-instance  {:startup start-saml-service!
+                              :shutdown stop-saml-service!}})
 
 ;; This defines the order in which the system is started up.
 (def startup-order
-  [:sql-db-pool :jetty-instance])
+  [:sql-db-pool
+   :saml20-service-instance
+   :jetty-instance])
 
 ;; This defines the order in which the system is shut down.
+;; Right now this is the opposite order that the system is starting up.
 (def shutdown-order (into [] (reverse startup-order)))
 
 (defn process-single-interaction!

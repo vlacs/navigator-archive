@@ -18,6 +18,7 @@
                  [korma "0.3.0-RC5" :exclusions [org.clojure/java.jdbc]]
                  [com.cemerick/friend "0.2.0"]
                  [digest "1.4.3"]
+                 [saml20-clj "0.1.3"]
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-ring "0.8.8" :exclusions [org.clojure/clojure]]

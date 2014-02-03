@@ -6,10 +6,12 @@
 (def default-config-path "/etc/aspire")
 
 (def config-associations {:jetty-instance [:conf-web]
-                          :sql-db-pool [:conf-sql-db]})
+                          :sql-db-pool [:conf-sql-db]
+                          :saml20-service-instance [:conf-saml20]})
 
 (def default-configs {:conf-web "conf-web.edn"
-                      :conf-sql-db "conf-sql-db.edn"})
+                      :conf-sql-db "conf-sql-db.edn"
+                      :conf-saml20 "conf-saml20-clj.edn"})
 
 (defn determine-path
   "Converts an option to a usable path. In other words, if the
@@ -58,6 +60,5 @@
   ([path sub-system-list]
    (let [required-configs (find-required-configs sub-system-list)
          handler-fn (partial make-keyed-conf (determine-path path))]
-    (prn required-configs)
     (apply hash-map (flatten (map handler-fn required-configs))))))
 

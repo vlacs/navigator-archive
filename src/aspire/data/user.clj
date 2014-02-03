@@ -1,7 +1,7 @@
 (ns aspire.data.user
   ^{:author "Jon Doane <jdoane@vlacs.org"
     :doc "This library knows how to get user data."}
-  (:require [aspire.sqldb :refer [select! update!]]
+  (:require [aspire.sqldb :refer [select! select-one! update!]]
             [honeysql.core :refer [param]]))
 
 (def roles {::admin "ADMIN"
@@ -18,7 +18,7 @@
             ::student "STUDENT"
             ::teacher "TEACHER"})
 
-(def sis-user-table :mdl_sis_user)
+(def user-table :mdl_sis_user)
 (def sis-user-fields [:id
                       :sis_user_idstr
                       :sis_user_id
@@ -37,20 +37,26 @@
 
 (def select-user-sql
   {:select sis-user-fields
-   :from [sis-user-table]})
+   :from [user-table]})
+
+(defn field-equals
+  [field]
+  [:= field (param field)])
+
+(def user-by-sis-user-idstr-sql
+  (assoc select-user-sql :where [(field-equals :sis_user_idstr)]))
 
 (def valid-user-sql
   (assoc select-user-sql :where [:and
-                          [:= :username (param :username)]
-                          [:= :password (param :password)]]))
+                                 (field-equals :username)
+                                 (field-equals :password)]))
 
-(def user-by-id-sql
-  (assoc select-user-sql :where [:= :id (param :id)]))
+(defn get-user-by-sis-user-id
+  [sis-user-idstr]
+  (select! user-by-sis-user-idstr-sql :sis_user_idstr sis-user-idstr))
 
 (defn get-valid-user
   "Get user when username and password match."
   [username password]
-  (let [result (select! valid-user-sql :username username :password password)]
-    (if (not (empty? result))
-      (first result)
-      nil)))
+  (select-one! valid-user-sql :username username :password password))
+

@@ -4,7 +4,7 @@
             [aspire.util :refer [keywords->ns]]
             [cemerick.friend :as friend]
             [cemerick.friend.workflows :as workflows]
-            ))
+            [saml20-clj.sp :as saml20-sp]))
 
 (def active-roles
   (set (keywords->ns 'aspire.data.user
@@ -19,6 +19,25 @@
   user instead of a clojure entity"
   [user]
   (get-valid-user (:username user) (md5 (:password user))))
+
+(defn saml20-workflow
+  "Produces a workflow fn that takes in a ring request and handles SAML appropriately."
+  [saml-request-factory-fn! credential-fn idp-url]
+  (fn saml20-workflow-instance
+    [request]
+    ;;; We need SAMLResponse and RelayState. They will be POSTed.
+    (let [params (:params request)
+          http-method (:request-method request)]
+      (if (and (:SAMLResponse params) (:RelayState params) (= http-method :post))
+        (let [parsed-response (saml20-sp/parse-saml-response (:SAMLResponse params))]
+          ;; Was it successful? If it was, log them in!  
+          (if (:success? parsed-response)
+            (if-let [user-record (credential-fn (:user-identifier parsed-response))]
+              (workflows/make-auth user-record {::friend/workflow :saml20
+                                             ::friend/redirect-on-auth? false})
+              ({:status 500 :body "The SAML response contained an unknown user."}))
+            ({:status 500 :body "The SAML response could not be verified."})))
+        (saml20-sp/get-idp-redirect idp-url (saml-request-factory-fn!) (:current-url request))))))
  
 (def friend-options
   {:allow-anon? false
@@ -30,15 +49,6 @@
 (defn require-login
   [ring-routes]
   (friend/authenticate ring-routes friend-options))
-
-(defn has-role?
-  [role]
-  )
-
-(defn require-roles
-  "Requires roles based on the output of a predicate."
-  [pred]
-  )
 
 (defn logout-route
   [ring-route]
