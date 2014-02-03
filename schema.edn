@@ -165,4 +165,12 @@
                         :user2comp_u_ix [[:sis_user_id]]
                         :user2comp_c_ix [[:comp_id]]}
               :foreign-keys {:user2comp_u_fk [:sis_user_id :mdl_sis_user :sis_user_id]
-                             :user2comp_c_fk [:comp_id :comp :id]}}}}
+                             :user2comp_c_fk [:comp_id :comp :id]}}
+  :config {:cols [[:id :bigserial]
+                  [:key :varchar "NOT NULL"]
+                  [:value :varchar]
+                  [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
+           :primary-key [:id]
+           :indices {:config_key_ux [[:key] :unique]
+                     :config_value_ix [[:value]]
+                     :config_date_ix [[:date_created]]}}}}
