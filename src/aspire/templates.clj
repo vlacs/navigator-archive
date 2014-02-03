@@ -70,7 +70,7 @@
   (let [tf (if tf true false)]
     (liven nodes
            [:form#search] (en/set-attr :data-active tf)
-           [:body#onboarding] (en/set-attr :data-search-active tf))))
+           [:body] (en/set-attr :data-search-active tf))))
 
 ;; Templates
 ;; -----------------------
