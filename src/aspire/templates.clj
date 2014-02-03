@@ -11,13 +11,15 @@
                              :steps [:main#content :ol.onboarding-steps]
                              :step [:main#content :ol.onboarding-steps :li.step-1]}})
 
-;; Utility fns
+;; Utilities
 ;; -----------------------
-(defn render [template]
-  (reduce str template))
-
-(defn resnippet [template]
-  (en/html-snippet (render template)))
+(defmacro liven
+  "Trades the caching done by en/snippet and en/template for the
+   flexibility and composability of:
+   (1) taking in nodes at runtime and
+   (2) returning nodes instead of strings."
+  [nodes & forms]
+  `(en/flatmap (en/transformation ~@forms) (en/html-resource ~nodes)))
 
 (defmacro maybe-substitute
   "Shamelessly borrowed from https://github.com/swannodette/enlive-tutorial/blob/master/src/tutorial/utils.clj"
@@ -28,6 +30,11 @@
   "Shamelessly borrowed from https://github.com/swannodette/enlive-tutorial/blob/master/src/tutorial/utils.clj"
   ([expr] `(if-let [x# ~expr] (html/content x#) identity))
     ([expr & exprs] `(maybe-content (or ~expr ~@exprs))))
+
+(defn render
+  "Shamelessly borrowed from https://github.com/swannodette/enlive-tutorial/blob/master/src/tutorial/utils.clj"
+  [template]
+  (apply str template))
 
 ;; Template Snippets
 ;; -----------------------
@@ -57,48 +64,37 @@
   [:strong]
   )
 
+;; Transformers
+;; -----------------------
+(defn search-toggle [nodes tf]
+  (let [tf (if tf true false)]
+    (liven nodes
+           [:form#search] (en/set-attr :data-active tf)
+           [:body#onboarding] (en/set-attr :data-search-active tf))))
 
 ;; Templates
 ;; -----------------------
-(en/deftemplate onboarding "public/index.html"
-  [alert-count profile-url user-disp-name welcome-head welcome-msg steps]
-  (get-in selectors [:common :header]) (en/substitute (common-header alert-count profile-url user-disp-name))
-  (get-in selectors [:onboarding :intro]) (en/substitute (onboarding-intro welcome-head welcome-msg))
-  (get-in selectors [:onboarding :steps]) (en/content (map-indexed (fn dostep [n desc] (onboarding-step (inc n) desc)) steps))
-  ;(search-active)
-  [:form#search] (en/set-attr :data-active true)
-  [:body#onboarding] (en/set-attr :data-search-active true)
-  )
+(defn onboarding [alert-count profile-url user-disp-name welcome-head welcome-msg steps]
+  (-> (liven "public/index.html"
+             (get-in selectors [:common :header])
+             (en/substitute (common-header alert-count profile-url user-disp-name))
+             (get-in selectors [:onboarding :intro])
+             (en/substitute (onboarding-intro welcome-head welcome-msg))
+             (get-in selectors [:onboarding :steps])
+             (en/content (map-indexed (fn dostep [n desc] (onboarding-step (inc n) desc)) steps)))
+      (search-toggle true)
+      (en/emit*)
+      (render)))
 
-(en/deftemplate onboarding "public/index.html"
-  [alert-count profile-url user-disp-name welcome-head welcome-msg steps]
-  (get-in selectors [:common :header]) (en/substitute (common-header alert-count profile-url user-disp-name))
-  (get-in selectors [:onboarding :intro]) (en/substitute (onboarding-intro welcome-head welcome-msg))
-  (get-in selectors [:onboarding :steps]) (en/content (map-indexed (fn dostep [n desc] (onboarding-step (inc n) desc)) steps))
-  ;(search-active)
-  [:form#search] (en/set-attr :data-active true)
-  [:body#onboarding] (en/set-attr :data-search-active true)
-  )
-
-(defmacro template-mauler [name & forms]
-  `(en/deftemplate ~name ~@forms))
-
-(defn search-on []
-  [[:form#search] (en/set-attr :data-active true)
-   [:body#onboarding] (en/set-attr :data-search-active true)])
-
-(template-mauler yerp "public/admin/index.html"
-                 [alert-count profile-url user-disp-name greeting steps]
-                 (get-in selectors [:common :header]) (en/substitute (common-header alert-count profile-url user-disp-name))
-                 [:body#admin] (en/set-attr :data-search-active false)
-                 [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
-                 [:main#content :h1] (en/content "Aspire Administration")
-                 [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
-                 [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
-                 [:form#config-onboarding :textarea#steps] (en/content steps)
-                 (:+mauling search-on)
-                 ;;[:form#search] (en/set-attr :data-active true)
-                 ;;[:body#onboarding] (en/set-attr :data-search-active true)
-                 )
-
-
+(defn admin [header greeting steps]
+  (-> (liven "public/admin/index.html"
+             (get-in selectors [:common :header]) (en/substitute header)
+             [:body#admin] (en/set-attr :data-search-active false)
+             [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
+             [:main#content :h1] (en/content "Aspire Administration")
+             [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
+             [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
+             [:form#config-onboarding :textarea#steps] (en/content steps))
+      (search-toggle false)
+      (en/emit*)
+      (render)))

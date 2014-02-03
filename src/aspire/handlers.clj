@@ -32,6 +32,7 @@
          (whitelist-config-page-keys (keyword page) params))))
 
 (defn admin! [_]
-  (let [greeting (a-util/get-config! "onboarding/greeting")
+  (let [header (a-tpl/common-header (rand-int 100) "http://google.com" "Jo Backson")
+        greeting (a-util/get-config! "onboarding/greeting")
         steps (a-util/get-config! "onboarding/steps")]
-    (a-tpl/render (a-tpl/admin (rand-int 100) "http://google.com" "Jo Backson" greeting steps))))
+    (a-tpl/admin header greeting steps)))

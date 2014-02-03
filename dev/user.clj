@@ -8,6 +8,8 @@
             [hickory.core :as hickory]
             [aspire.core :as aspire.core]
             [aspire.conf :as aspire.conf]
+            [aspire.templates :as a-tpl]
+            [net.cgrand.enlive-html :as en]
             ))
 
 ;; N.B.: (ns cljs.user (:use [clojure.zip :only [insert-child]])) (see http://stackoverflow.com/questions/12879027/cannot-use-in-clojurescript-repl)
@@ -51,3 +53,7 @@
       hickory/parse-fragment
       (->> (map hickory/as-hiccup))))
 
+(defn renode
+  "Take a rendered enlive template (html) and turn it back into a seq of enlive nodes"
+  [template]
+  (en/html-snippet (a-tpl/render template)))
