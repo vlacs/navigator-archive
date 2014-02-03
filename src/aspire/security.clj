@@ -6,6 +6,12 @@
             [cemerick.friend.workflows :as workflows]
             [saml20-clj.sp :as saml20-sp]))
 
+(def http-static-results
+  {:unknown-user {:status 500
+                  :body "The SAML response contained an unknown user."}
+   :invalid-saml {:status 500
+                  :body "The SAML response could not be verified."}})
+
 (def active-roles
   (set (keywords->ns 'aspire.data.user
                      :admin
@@ -34,9 +40,11 @@
           (if (:success? parsed-response)
             (if-let [user-record (credential-fn (:user-identifier parsed-response))]
               (workflows/make-auth user-record {::friend/workflow :saml20
-                                             ::friend/redirect-on-auth? false})
-              ({:status 500 :body "The SAML response contained an unknown user."}))
-            ({:status 500 :body "The SAML response could not be verified."})))
+                                                ;;; We have a relay state, we
+                                                ;;; should redirect if we can.
+                                                ::friend/redirect-on-auth? false})
+              (:unknown-user http-static-results))
+            (:invalid-saml http-static-results)))
         (saml20-sp/get-idp-redirect idp-url (saml-request-factory-fn!) (:current-url request))))))
  
 (def friend-options
