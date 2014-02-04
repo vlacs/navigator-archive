@@ -86,6 +86,23 @@
       (en/emit*)
       (render)))
 
+(defn search-toggle2 [tf]
+  (let [tf (if tf true false)]
+    #(assoc % :attrs (apply assoc (:attrs % {}) [:data-active tf :data-search-active tf]))
+    ))
+
+(en/deftemplate admin2 "public/admin/index.html"
+  [header greeting steps]
+  (get-in selectors [:common :header]) (en/substitute header)
+  [:body#admin] (en/set-attr :data-search-active false)
+  [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
+  [:main#content :h1] (en/content "Aspire Administration")
+  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
+  [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
+  [:form#config-onboarding :textarea#steps] (en/content steps)
+  [#{[:form#search (en/attr? :data-active)] [:body (en/attr? :data-search-active)]}] (search-toggle2 false)
+  )
+
 (defn admin [header greeting steps]
   (-> (liven "public/admin/index.html"
              (get-in selectors [:common :header]) (en/substitute header)
