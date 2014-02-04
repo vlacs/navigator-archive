@@ -7,9 +7,9 @@
 (deftest onboarding-templates-test
   (testing "onboarding"
     (testing "snippets"
-      (testing "onboarding-header"
-        (is (= (onboarding-header 1 "a" "b")
-               '({:tag :nav, :attrs {:id "top-bar"}, :content ["\n        " {:tag :header, :attrs {:id "logo"}, :content ["\n          " {:tag :h1, :attrs nil, :content ["\n            Logo\n          "]} "\n        "]} "\n        " {:tag :a, :attrs {:id "side-nav-control", :href "#", :data-active "false"}, :content ["Menu"]} {:tag :a, :attrs {:id "search-control", :href "#", :data-active "true"}, :content ["Search"]} "\n        " {:tag :ul, :attrs nil, :content ["\n          " {:tag :li, :attrs {:class "alerts"}, :content ["\n            " {:tag :a, :attrs {:href "/alerts"}, :content ["Alerts " {:tag :span, :attrs {:class "alert-count"}, :content ["1"]}]} "\n          "]} "\n          " {:tag :li, :attrs {:class "profile"}, :content ["\n            " {:tag :img, :attrs {:src "", :alt ""}, :content []} {:tag :a, :attrs {:href "a"}, :content ["b"]} "\n          "]} "\n          " {:tag :li, :attrs {:class "logout"}, :content ["\n            " {:tag :a, :attrs {:href "/logout"}, :content ["Logout"]} "\n          "]} "\n        "]} "\n      "]}))))
+      (testing "common-header"
+        (is (= (common-header 1 "a" "b")
+               '({:tag :nav, :attrs {:id "top-bar"}, :content ["\n        " {:tag :header, :attrs {:id "logo"}, :content ["\n          " {:tag :h1, :attrs nil, :content ["\n            Logo\n          "]} "\n        "]} "\n        " {:tag :a, :attrs {:id "side-nav-control", :href "#", :data-active "false"}, :content ["Menu"]} {:tag :a, :attrs {:id "search-control", :href "#", :data-active "false"}, :content ["Search"]} "\n        " {:tag :ul, :attrs nil, :content ["\n          " {:tag :li, :attrs {:class "alerts"}, :content ["\n            " {:tag :a, :attrs {:href "/alerts"}, :content ["Alerts " {:tag :span, :attrs {:class "alert-count"}, :content ["1"]}]} "\n          "]} "\n          " {:tag :li, :attrs {:class "profile"}, :content ["\n            " {:tag :img, :attrs {:src "", :alt ""}, :content []} {:tag :a, :attrs {:href "a"}, :content ["b"]} "\n          "]} "\n          " {:tag :li, :attrs {:class "logout"}, :content ["\n            " {:tag :a, :attrs {:href "/logout"}, :content ["Logout"]} "\n          "]} "\n        "]} "\n      "]}))))
 
       (testing "onboarding-intro"
         (is (= (onboarding-intro "a" "b")
