@@ -49,7 +49,7 @@
  
 (def friend-options
   {:allow-anon? false
-   :unauthenticated-handler #(workflows/http-basic-deny "Login with your VLACS user account" %)
+   :unauthenticated-handler #(workflows/http-basic-deny "Authenticate with your VLACS user account" %)
    :workflows [(workflows/http-basic
                  :credential-fn md5-credential-fn
                  :realm "Aspire")]})
