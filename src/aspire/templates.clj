@@ -13,7 +13,7 @@
 
 ;; Utilities
 ;; -----------------------
-(defmacro liven
+(defmacro transformer
   "Intended for preprocessing before handing results to en/snippet and
    en/template for caching.
    Takes in and returns nodes."
@@ -71,7 +71,7 @@
    Performs the requested transforms on the specified nodes and return the transformed nodes."
   [nodes tf]
   (let [tf (if tf true false)]
-    (liven nodes
+    (transformer nodes
            [[:form#search (en/attr? :data-active)]] (en/set-attr :data-active tf)
            [[:body (en/attr? :data-search-active)]] (en/set-attr :data-search-active tf))))
 
@@ -92,7 +92,7 @@
    selectors are duplicated (or at least complected) here and in the caller."
   [tf]
   (let [tf (if tf true false)]
-    #(liven %
+    #(transformer %
             [[:form#search (en/attr? :data-active)]] (en/set-attr :data-active tf)
             [[:body (en/attr? :data-search-active)]] (en/set-attr :data-search-active tf))))
 
@@ -110,7 +110,7 @@
 ;; Templates
 ;; -----------------------
 (defn onboarding [alert-count profile-url user-disp-name welcome-head welcome-msg steps]
-  (-> (liven "public/index.html"
+  (-> (transformer "public/index.html"
              (get-in selectors [:common :header])
              (en/substitute (common-header alert-count profile-url user-disp-name))
              (get-in selectors [:onboarding :intro])
@@ -126,7 +126,7 @@
 ;; step along the way. :(
 ;; Probably not the best long-term trade-off.
 (defn admin [header greeting steps]
-  (-> (liven "public/admin/index.html"
+  (-> (transformer "public/admin/index.html"
              (get-in selectors [:common :header]) (en/substitute header)
              [:body#admin] (en/set-attr :data-search-active false)
              [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
