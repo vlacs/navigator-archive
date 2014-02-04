@@ -66,13 +66,46 @@
 ;; Transformers
 ;; -----------------------
 (defn search-toggle
-  "A proof-of-concept.
+  "Best option IMO.
+   A proof-of-concept.
    Performs the requested transforms on the specified nodes and return the transformed nodes."
   [nodes tf]
   (let [tf (if tf true false)]
     (liven nodes
-           [:form#search] (en/set-attr :data-active tf)
-           [:body] (en/set-attr :data-search-active tf))))
+           [[:form#search (en/attr? :data-active)]] (en/set-attr :data-active tf)
+           [[:body (en/attr? :data-search-active)]] (en/set-attr :data-search-active tf))))
+
+(defn search-toggle2
+  "Third-best option, IMO.
+   Same functionality as search-toggle, but caches the nodes. search-toggle is simpler."
+  [nodes tf]
+  (let [tf (if tf true false)]
+    ((en/snippet*
+      (en/html-resource nodes) []
+      [[:form#search (en/attr? :data-active)]] (en/set-attr :data-active tf)
+      [[:body (en/attr? :data-search-active)]] (en/set-attr :data-search-active tf)))))
+
+(defn search-toggle3-hof
+  "Second-best option, IMO.
+   Returns a fn that takes in nodes and performs the specified transforms.
+   Not bad, but re-selects what needs to be changed, meaning that the
+   selectors are duplicated (or at least complected) here and in the caller."
+  [tf]
+  (let [tf (if tf true false)]
+    #(liven %
+            [[:form#search (en/attr? :data-active)]] (en/set-attr :data-active tf)
+            [[:body (en/attr? :data-search-active)]] (en/set-attr :data-search-active tf))))
+
+(defn search-toggle4-hof
+  "Fourth-best option, IMO.
+   Same functionality as search-toggle3-hof (the node-caching happens
+   uselessly at runtime). Not as simple as search-toggle3-hof."
+  [tf]
+  (let [tf (if tf true false)]
+    #((en/snippet*
+       (en/html-resource %) []
+       [[:form#search (en/attr? :data-active)]] (en/set-attr :data-active tf)
+       [[:body (en/attr? :data-search-active)]] (en/set-attr :data-search-active tf)))))
 
 ;; Templates
 ;; -----------------------
@@ -119,18 +152,40 @@
   [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
   [:form#config-onboarding :textarea#steps] (en/content steps))
 
-(comment
-  ;; Trying to generically handle :body's :data-search-active and
-  ;; :form's :data-active without 'liven was ugly at best, as far as I
-  ;; could figure it out, and I gave up. Consider the selector/transform
-  ;; pair in the deftemplate:
-  [#{[:form#search (en/attr? :data-active)] [:body (en/attr? :data-search-active)]}] (search-toggle2 false)
+;; admin3 uses search-toggle2 to do the same as admin2.
+(en/deftemplate admin3 (search-toggle2 "public/admin/index.html" false)
+  [header greeting steps]
+  (get-in selectors [:common :header]) (en/substitute header)
+  [:body#admin] (en/set-attr :data-search-active false)
+  [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
+  [:main#content :h1] (en/content "Aspire Administration")
+  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
+  [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
+  [:form#config-onboarding :textarea#steps] (en/content steps))
 
-  ;; ...and then search-toggle2 was going to involve something like
-  ;; this (the implementation of set-attr in enlive), except that it
-  ;; also had to check for the existence of the given attribute before
-  ;; assoc'ing it in, and that was going to be so comparatively ugly I
-  ;; just stopped:
-  #(assoc % :attrs (apply assoc (:attrs % {}) kvs))
+;; admin4 selects the parts of the document we want to change to
+;; toggle the search form, and uses search-toggle3-hof to re-select
+;; and transform the relevant bits.
+(en/deftemplate admin4 "public/admin/index.html"
+  [header greeting steps]
+  (get-in selectors [:common :header]) (en/substitute header)
+  [:body#admin] (en/set-attr :data-search-active false)
+  [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
+  [:main#content :h1] (en/content "Aspire Administration")
+  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
+  [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
+  [:form#config-onboarding :textarea#steps] (en/content steps)
+  [#{[:form#search (en/attr? :data-active)] [:body (en/attr? :data-search-active)]}] (search-toggle3-hof false))
 
-)
+;; admin5 is the same as admin4, but uses search-toggle4-hof.
+(en/deftemplate admin5 "public/admin/index.html"
+  [header greeting steps]
+  (get-in selectors [:common :header]) (en/substitute header)
+  [:body#admin] (en/set-attr :data-search-active false)
+  [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
+  [:main#content :h1] (en/content "Aspire Administration")
+  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
+  [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
+  [:form#config-onboarding :textarea#steps] (en/content steps)
+  [#{[:form#search (en/attr? :data-active)] [:body (en/attr? :data-search-active)]}] (search-toggle4-hof false))
+
