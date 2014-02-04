@@ -66,7 +66,10 @@
 
 ;; Transformers
 ;; -----------------------
-(defn search-toggle [nodes tf]
+(defn search-toggle
+  "A proof-of-concept.
+   Performs the requested transforms on the specified nodes and return the transformed nodes."
+  [nodes tf]
   (let [tf (if tf true false)]
     (liven nodes
            [:form#search] (en/set-attr :data-active tf)
@@ -86,23 +89,10 @@
       (en/emit*)
       (render)))
 
-(defn search-toggle2 [tf]
-  (let [tf (if tf true false)]
-    #(assoc % :attrs (apply assoc (:attrs % {}) [:data-active tf :data-search-active tf]))
-    ))
-
-(en/deftemplate admin2 "public/admin/index.html"
-  [header greeting steps]
-  (get-in selectors [:common :header]) (en/substitute header)
-  [:body#admin] (en/set-attr :data-search-active false)
-  [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
-  [:main#content :h1] (en/content "Aspire Administration")
-  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
-  [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
-  [:form#config-onboarding :textarea#steps] (en/content steps)
-  [#{[:form#search (en/attr? :data-active)] [:body (en/attr? :data-search-active)]}] (search-toggle2 false)
-  )
-
+;; admin is cool because it demonstrates threading with generic
+;; transformation fns... but there's no caching of the template at any
+;; step along the way. :(
+;; Probably not the best long-term trade-off.
 (defn admin [header greeting steps]
   (-> (liven "public/admin/index.html"
              (get-in selectors [:common :header]) (en/substitute header)
@@ -115,3 +105,33 @@
       (search-toggle false)
       (en/emit*)
       (render)))
+
+;; admin2 is cooler b/c it does the search-toggle transformations
+;; (which can really be any desired combination of transforms in one
+;; or more fns) on the template source, and the result is then cached
+;; by deftemplate.
+(en/deftemplate admin2 (search-toggle "public/admin/index.html" false)
+  [header greeting steps]
+  (get-in selectors [:common :header]) (en/substitute header)
+  [:body#admin] (en/set-attr :data-search-active false)
+  [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
+  [:main#content :h1] (en/content "Aspire Administration")
+  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
+  [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
+  [:form#config-onboarding :textarea#steps] (en/content steps))
+
+(comment
+  ;; Trying to generically handle :body's :data-search-active and
+  ;; :form's :data-active without 'liven was ugly at best, as far as I
+  ;; could figure it out, and I gave up. Consider the selector/transform
+  ;; pair in the deftemplate:
+  [#{[:form#search (en/attr? :data-active)] [:body (en/attr? :data-search-active)]}] (search-toggle2 false)
+
+  ;; ...and then search-toggle2 was going to involve something like
+  ;; this (the implementation of set-attr in enlive), except that it
+  ;; also had to check for the existence of the given attribute before
+  ;; assoc'ing it in, and that was going to be so comparatively ugly I
+  ;; just stopped:
+  #(assoc % :attrs (apply assoc (:attrs % {}) kvs))
+
+)
