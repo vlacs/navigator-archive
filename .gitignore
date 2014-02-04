@@ -12,3 +12,5 @@ pom.xml
 pom.xml.asc
 repl
 resources/public/js*
+*#*#
+*.#*
