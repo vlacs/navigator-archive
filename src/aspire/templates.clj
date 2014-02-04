@@ -14,10 +14,9 @@
 ;; Utilities
 ;; -----------------------
 (defmacro liven
-  "Trades the caching done by en/snippet and en/template for the
-   flexibility and composability of:
-   (1) taking in nodes at runtime and
-   (2) returning nodes instead of strings."
+  "Intended for preprocessing before handing results to en/snippet and
+   en/template for caching.
+   Takes in and returns nodes."
   [nodes & forms]
   `(en/flatmap (en/transformation ~@forms) (en/html-resource ~nodes)))
 

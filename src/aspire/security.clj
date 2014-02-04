@@ -4,7 +4,13 @@
             [aspire.util :refer [keywords->ns]]
             [cemerick.friend :as friend]
             [cemerick.friend.workflows :as workflows]
-            ))
+            [saml20-clj.sp :as saml20-sp]))
+
+(def http-static-results
+  {:unknown-user {:status 500
+                  :body "The SAML response contained an unknown user."}
+   :invalid-saml {:status 500
+                  :body "The SAML response could not be verified."}})
 
 (def active-roles
   (set (keywords->ns 'aspire.data.user
@@ -20,22 +26,37 @@
   [user]
   (get-valid-user (:username user) (md5 (:password user))))
 
-(defn saml20-credential-fn
-  [saml-mutable-timeouts x509-cert saml-response]
-  ;;; TODO: Write this using the saml20-clj library.
-  nil
-  ) 
+(defn saml20-workflow
+  "Produces a workflow fn that takes in a ring request and handles SAML appropriately."
+  [saml-request-factory-fn! credential-fn idp-url]
+  (fn saml20-workflow-instance
+    [request]
+    ;;; We need SAMLResponse and RelayState. They will be POSTed.
+    (let [params (:params request)
+          http-method (:request-method request)]
+      (if (and (:SAMLResponse params) (:RelayState params) (= http-method :post))
+        (let [parsed-response (saml20-sp/parse-saml-response (:SAMLResponse params))]
+          ;; Was it successful? If it was, log them in!  
+          (if (:success? parsed-response)
+            (if-let [user-record (credential-fn (:user-identifier parsed-response))]
+              (workflows/make-auth user-record {::friend/workflow :saml20
+                                                ;;; We have a relay state, we
+                                                ;;; should redirect if we can.
+                                                ::friend/redirect-on-auth? false})
+              (:unknown-user http-static-results))
+            (:invalid-saml http-static-results)))
+        (saml20-sp/get-idp-redirect idp-url (saml-request-factory-fn!) (:current-url request))))))
+ 
+(def friend-options
+  {:allow-anon? false
+   :unauthenticated-handler #(workflows/http-basic-deny "Login with your VLACS user account" %)
+   :workflows [(workflows/http-basic
+                 :credential-fn md5-credential-fn
+                 :realm "Aspire")]})
 
-(defn authorize-saml
-  [ring-routes roles]
-  nil
-  )
-
-(defn authorize-http-basic
-  [ring-routes roles]
-  (friend/authorize ring-routes roles
-                    {:credential-fn md5-credential-fn
-                     :workflows [(workflows/http-basic)]}))
+(defn require-login
+  [ring-routes]
+  (friend/authenticate ring-routes friend-options))
 
 (defn logout-route
   [ring-route]

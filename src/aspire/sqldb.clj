@@ -54,6 +54,16 @@ We're using Korma's connection management and query fns."}
                    :sql-str sql
                    :params params})))
 
+(defn select-one!
+  "*** See the select! fn. ***
+  Queries the database for a single row.
+  It alters the query to return only 1 row, then takes the first and only result.
+  If there is no result, nil is returned."
+  [& all-params]
+  (if-let [result (apply select! all-params)]
+    (first result)
+    nil))
+
 ;; Just an example. Basic parts of common SQL queries can be written
 ;; in HoneySQL-compatible structures, and then composed together.
 (def sel-comp-by-id

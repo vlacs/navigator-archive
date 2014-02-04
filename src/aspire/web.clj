@@ -3,15 +3,20 @@
             [ring.middleware.params :as ring-params]
             [ring.middleware.resource :as ring-resource]
             [ring.middleware.file-info :as file-info]
+            [ring.middleware.params :refer [wrap-params]]
             [ring.util.response :as response]
             [liberator.core :refer [resource defresource]]
             [liberator.dev :refer [wrap-trace]]
-            [compojure.core :refer [defroutes ANY GET POST PUT]]
+            [compojure.core :refer [defroutes context ANY GET POST PUT]]
             [hiccup.page]
             [aspire.templates :as a-tpl]
             [aspire.sqldb :as a-sqldb]
-            [aspire.handlers :as a-hdl])
+            [aspire.security :as a-sec]
+            [aspire.handlers :as a-hdl]
+            [aspire.web.http :refer [wrap-host-urls]]
+            )
   (:gen-class))
+
 
 (defresource onboarding
   :available-media-types ["text/html"]
@@ -28,7 +33,15 @@
 (defresource config-key [key]
   :allowed-methods [:put]
   :available-media-types ["text/html"]
-  :put! a-hdl/config-key!)
+  :handle-ok (fn [_]
+               (hiccup.page/html5
+                [:head
+                 ;; alt: page.css
+                 [:link {:rel "stylesheet" :href "css/global.css"}]]
+                [:body
+                 [:div#main
+                  [:div [:p#loading "Loading..."]]
+                 [:script {:src "js/aspire.js"}]]])))
 
 (defresource config-page
   :allowed-methods [:post]
@@ -37,13 +50,17 @@
   ;; TODO: Display a user-friendly "Your changes were saved" message.
   :post-redirect? (fn [_] {:location "/admin"}))
 
+(defroutes admin-routes
+  (GET "/" [] admin)
+  (PUT "/key/:key" [] config-key)
+  (POST "/page/:page" [] config-page)
+  (ANY "/debug" req (prn-str req)))
+
 (defroutes app-routes
   ;; just for now, send everybody to /welcome
   (ANY "/" [] (response/redirect "/welcome"))
   (GET "/welcome" [] onboarding)
-  (GET "/admin" [] admin)
-  (PUT "/config/key/:key" [] config-key)
-  (POST "/config/page/:page" [] config-page)
+  (context "/admin" [] admin-routes)
   (ANY "/logout" [] "Nothing here yet but us chickens."))
 
 (def app
@@ -51,7 +68,11 @@
       (wrap-trace :header :ui)
       (ring-params/wrap-params)
       (ring-resource/wrap-resource "public")
-      (file-info/wrap-file-info)))
+      (file-info/wrap-file-info)  
+      (wrap-params)
+      (wrap-host-urls)
+      (a-sec/require-login)
+      ))
 
 (defn run!
   [& args]

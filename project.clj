@@ -18,6 +18,8 @@
                  [korma "0.3.0-RC5" :exclusions [org.clojure/java.jdbc]]
                  [com.cemerick/friend "0.2.0"]
                  [digest "1.4.3"]
+                 [saml20-clj "0.1.3"]
+                 [com.taoensso/timbre "3.0.0" :exclusions [org.clojure/tools.macro]]
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-ring "0.8.8" :exclusions [org.clojure/clojure]]
@@ -25,6 +27,6 @@
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [ring-mock "0.1.5"]]}}
-  
+
   :main ^{:skip-aot true} aspire.core
   :ring {:handler aspire.web/app})
