@@ -1,5 +1,6 @@
 (ns aspire.security
   (:require [digest :refer [md5]]
+            [clojure.string :as str]
             [aspire.data.user :refer [get-valid-user]]
             [aspire.util :refer [keywords->ns]]
             [cemerick.friend :as friend]
@@ -62,3 +63,34 @@
   [ring-route]
   nil
   )
+
+(defn authorized?
+  "low-granularity, page-level authorization checker
+   Returns a fn that takes in a ring request and checks that the
+   currently authenticated user has at least one of the specified
+   roles."
+  [& roles]
+  (fn authorized?* [request]
+    (let [ca (friend/current-authentication request)
+          privilege (-> ca :privilege str/lower-case keyword)]
+      (some #{privilege} roles))))
+
+;; This menu stuff is a total hack, and probably doesn't even belong
+;; in this file. (Putting it in util.clj causes circular deps...)
+;; TODO: Somehow combine this with our actual routes.
+;; TODO: How to combine this page-level access with more granular
+;; access based on parameters in the route (e.g., you can update
+;; *your* profile, but not just any profile)?
+(def menu-items
+  {:admin {:route "/admin" :name "Admin" :weight 100 :authorized? (authorized? :admin)}
+   :home {:route "/" :name "Home" :weight 0 :authorized? (constantly true)}
+   :onboarding {:route "/welcome" :name "Competency Map" :weight 10 :authorized? (constantly true)}})
+
+(defn menu [request]
+  (let [ca (friend/current-authentication request)]
+    (->> menu-items
+         (filter (fn menu-f* [[k v]]
+                   (let [f (:authorized? v)]
+                     (f request))))
+         (sort (fn menu-s* [& _] true)))))
+
