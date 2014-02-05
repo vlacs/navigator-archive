@@ -10,7 +10,7 @@
 (def config-page-keys
   ;; List all the config keys we expect to receive from a particular
   ;; config page.
-  {:onboarding ["greeting" "steps"]})
+  {:onboarding ["greeting" "greeting-msg" "steps"]})
 
 (defn- whitelist-config-page-keys
   "Ensure we do not process browser parameters other than those we expect from a given config page."
@@ -31,8 +31,17 @@
            (a-util/set-config! (str page "/" k) v))
          (whitelist-config-page-keys (keyword page) params))))
 
+(defn onboarding! [ctx]
+  (let [header (a-tpl/common-header (rand-int 100) "http://google.com" "Bo Jackson")
+        greeting (a-util/get-config! "onboarding/greeting")
+        greeting-msg (a-util/get-config! "onboarding/greeting-msg")
+        steps (a-util/split-paragraphs (a-util/get-config! "onboarding/steps"))
+        request (:request ctx)]
+    (a-tpl/render (a-tpl/onboarding header greeting greeting-msg steps))))
+
 (defn admin! [_]
   (let [header (a-tpl/common-header (rand-int 100) "http://google.com" "Jo Backson")
         greeting (a-util/get-config! "onboarding/greeting")
-        steps (a-util/get-config! "onboarding/steps")]
-    (a-tpl/admin header greeting steps)))
+        greeting-msg (a-util/get-config! "onboarding/greeting-msg")
+        steps-str (a-util/get-config! "onboarding/steps")]
+    (a-tpl/render (a-tpl/admin header greeting greeting-msg steps-str))))

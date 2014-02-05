@@ -1,5 +1,6 @@
 (ns aspire.util
-  (:require [aspire.sqldb :as a-sql]))
+  (:require [clojure.string :as str]
+            [aspire.sqldb :as a-sql]))
 
 (defn output!
   "Call output! instead of using prn. Respects --verbose. Returns nil."
@@ -29,3 +30,10 @@
   (if-let [_ (get-config! key)]
     (a-sql/update! "UPDATE config SET value = ? WHERE key = ?" [value key])
     (a-sql/update! "INSERT INTO config (value, key) VALUES (?, ?)" [value key])))
+
+(defn split-paragraphs
+  "Split the given text into a vector of paragraphs."
+  [text]
+  (filter #(not (str/blank? %))
+          (str/split text #"[\n\r]")))
+

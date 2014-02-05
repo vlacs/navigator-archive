@@ -18,17 +18,14 @@
   (:gen-class))
 
 
-(defresource onboarding
+(defresource onboarding!
   :available-media-types ["text/html"]
-  :handle-ok (a-tpl/render (a-tpl/onboarding (rand-int 100) "http://google.com" "Bo Jackson"
-                                             "Welcome to VLACS! (make me configurable)" "Check out our learning options below. You'll find projects, courses, and opportunities to learn by pursuing your interests. Join us in your learning adventure! Actually, this text needs to be configured by the admin in some reasonable kind of interface."
-                                             ["Actually, these steps should be configured by the admin in some reasonable kind of interface." "Maybe there will be a step here." "Possibly another step?"])))
+  :handle-ok a-hdl/onboarding!)
 
 (defresource admin
   :allowed-methods [:get]
   :available-media-types ["text/html"]
-  :handle-ok a-hdl/admin!
-  )
+  :handle-ok a-hdl/admin!)
 
 (defresource config-key [key]
   :allowed-methods [:put]
@@ -52,15 +49,18 @@
 
 (defroutes admin-routes
   (GET "/" [] admin)
-  (PUT "/key/:key" [] config-key)
-  (POST "/page/:page" [] config-page)
   (ANY "/debug" req (prn-str req)))
+
+(defroutes config-routes
+  (PUT "/key/:key" [] config-key)
+  (POST "/page/:page" [] config-page))
 
 (defroutes app-routes
   ;; just for now, send everybody to /welcome
   (ANY "/" [] (response/redirect "/welcome"))
-  (GET "/welcome" [] onboarding)
+  (GET "/welcome" [] onboarding!)
   (context "/admin" [] admin-routes)
+  (context "/config" [] config-routes)
   (ANY "/logout" [] "Nothing here yet but us chickens."))
 
 (def app
