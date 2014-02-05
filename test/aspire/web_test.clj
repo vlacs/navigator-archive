@@ -16,6 +16,7 @@
   (is (= (:status api-response) 200))
   (is (= (:Content-Type keyed-headers) "application/edn;charset=UTF-8" )))
  
-(deftest resource-app-test
+;; Disabling this temporarily; see my comments in web_test_config. --moquist
+#_(deftest resource-app-test
   (is (= (:status onboarding-response) 200)))
 
