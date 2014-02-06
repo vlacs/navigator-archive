@@ -13,16 +13,14 @@
             [aspire.sqldb :as a-sqldb]
             [aspire.security :as a-sec]
             [aspire.handlers :as a-hdl]
-            [aspire.web.http :refer [wrap-host-urls]]
-            )
+            [aspire.web.http :refer [wrap-host-urls]])
   (:gen-class))
-
 
 (defresource onboarding!
   :available-media-types ["text/html"]
   :handle-ok a-hdl/onboarding!)
 
-(defresource admin
+(defresource admin!
   :allowed-methods [:get]
   :available-media-types ["text/html"]
   :handle-ok a-hdl/admin!)
@@ -37,10 +35,9 @@
                  [:link {:rel "stylesheet" :href "css/global.css"}]]
                 [:body
                  [:div#main
-                  [:div [:p#loading "Loading..."]]
-                 [:script {:src "js/aspire.js"}]]])))
+                  [:div [:p#loading "This isn't implemented yet."]]]])))
 
-(defresource config-page
+(defresource config-page!
   :allowed-methods [:post]
   :available-media-types ["text/html"]
   :post! a-hdl/config-page!
@@ -48,12 +45,12 @@
   :post-redirect? (fn [_] {:location "/admin"}))
 
 (defroutes admin-routes
-  (GET "/" [] admin)
+  (GET "/" [] admin!)
   (ANY "/debug" req (prn-str req)))
 
 (defroutes config-routes
   (PUT "/key/:key" [] config-key)
-  (POST "/page/:page" [] config-page))
+  (POST "/page/:page" [] config-page!))
 
 (defroutes app-routes
   ;; just for now, send everybody to /welcome
