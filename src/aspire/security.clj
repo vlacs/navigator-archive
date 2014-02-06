@@ -82,9 +82,13 @@
 ;; access based on parameters in the route (e.g., you can update
 ;; *your* profile, but not just any profile)?
 (def menu-items
-  {:admin {:route "/admin" :name "Admin" :weight 100 :authorized? (authorized? :admin)}
-   :home {:route "/" :name "Home" :weight 0 :authorized? (constantly true)}
-   :onboarding {:route "/welcome" :name "Competency Map" :weight 10 :authorized? (constantly true)}})
+  {:admin {:route "/admin" :name "Admin" :weight 100 :desc "Perform administrative functions" :authorized? (authorized? :admin)}
+   :home {:route "/" :name "Home" :weight 0 :desc "Main Aspire page" :authorized? (constantly true)}
+   :onboarding {:route "/welcome"
+                :name "Competency Map"
+                :weight 10
+                :desc "Add learning to your playlist"
+                :authorized? (constantly true)}})
 
 (defn menu [request]
   (let [ca (friend/current-authentication request)]
