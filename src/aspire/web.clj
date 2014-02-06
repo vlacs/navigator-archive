@@ -5,57 +5,28 @@
             [ring.middleware.file-info :as file-info]
             [ring.middleware.params :refer [wrap-params]]
             [ring.util.response :as response]
-            [liberator.core :refer [resource defresource]]
             [liberator.dev :refer [wrap-trace]]
             [compojure.core :refer [defroutes context ANY GET POST PUT]]
             [hiccup.page]
             [aspire.templates :as a-tpl]
             [aspire.sqldb :as a-sqldb]
             [aspire.security :as a-sec]
-            [aspire.handlers :as a-hdl]
+            [aspire.web.resources :as a-res]
             [aspire.web.http :refer [wrap-host-urls]])
   (:gen-class))
 
-(defresource onboarding!
-  :available-media-types ["text/html"]
-  :handle-ok a-hdl/onboarding!)
-
-(defresource admin!
-  :allowed-methods [:get]
-  :available-media-types ["text/html"]
-  :handle-ok a-hdl/admin!)
-
-(defresource config-key [key]
-  :allowed-methods [:put]
-  :available-media-types ["text/html"]
-  :handle-ok (fn [_]
-               (hiccup.page/html5
-                [:head
-                 ;; alt: page.css
-                 [:link {:rel "stylesheet" :href "css/global.css"}]]
-                [:body
-                 [:div#main
-                  [:div [:p#loading "This isn't implemented yet."]]]])))
-
-(defresource config-page!
-  :allowed-methods [:post]
-  :available-media-types ["text/html"]
-  :post! a-hdl/config-page!
-  ;; TODO: Display a user-friendly "Your changes were saved" message.
-  :post-redirect? (fn [_] {:location "/admin"}))
-
 (defroutes admin-routes
-  (GET "/" [] admin!)
+  (GET "/" [] a-res/admin!)
   (ANY "/debug" req (prn-str req)))
 
 (defroutes config-routes
-  (PUT "/key/:key" [] config-key)
-  (POST "/page/:page" [] config-page!))
+  (PUT "/key/:key" [] a-res/config-key)
+  (POST "/page/:page" [] a-res/config-page!))
 
 (defroutes app-routes
   ;; just for now, send everybody to /welcome
   (ANY "/" [] (response/redirect "/welcome"))
-  (GET "/welcome" [] onboarding!)
+  (GET "/welcome" [] a-res/onboarding!)
   (context "/admin" [] admin-routes)
   (context "/config" [] config-routes)
   (ANY "/logout" [] "Nothing here yet but us chickens."))
