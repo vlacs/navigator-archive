@@ -1,12 +1,13 @@
 (ns aspire.templates
   (:require [net.cgrand.enlive-html :as en]
-            [hiccup.core :as hc]
             [aspire.util :as a-util]))
 
 ;; Selectors
 ;; -----------------------
 (def selectors {:common {:header [:nav#top-bar]
-                         :side-nav [:nav#side-nav]}
+                         :title [:head :title]
+                         :menu [:nav#side-nav]
+                         :main [:main#content]}
                 :onboarding {:intro [:main#content :div.intro]
                              :steps [:main#content :ol.onboarding-steps]
                              :step [:main#content :ol.onboarding-steps :li.step-1]}})
@@ -51,13 +52,34 @@
   [:h2] (en/content title)
   [:p] (en/content desc))
 
-(en/defsnippet onboarding-step "public/index.html"
-  (get-in selectors [:onboarding :step])
+(en/defsnippet onboarding-step "public/index.html" (get-in selectors [:onboarding :step])
   [n desc]
   [:strong] (en/content (str "Step " n))
   [:span] (en/content desc))
 
-#_(en/defsnippet menu "public/index.html" {})
+(en/defsnippet onboarding-main "public/index.html" (get-in selectors [:common :main])
+  [greeting greeting-msg steps]
+  (get-in selectors [:onboarding :intro]) (en/substitute (onboarding-intro greeting greeting-msg))
+  (get-in selectors [:onboarding :steps]) (en/content (map-indexed (fn dostep* [n desc] (onboarding-step (inc n) desc)) steps)))
+
+(en/defsnippet admin-main "public/admin/index.html" (get-in selectors [:common :main])
+  [greeting greeting-msg steps-str]
+  [:h1] (en/content "Aspire Administration")
+  [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
+  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
+  [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
+  [:form#config-onboarding :input#greeting-msg] (en/set-attr :value greeting-msg)
+  [:form#config-onboarding :textarea#steps] (en/content steps-str))
+
+(en/defsnippet menu-item "public/index.html" [:nav#side-nav :ul :> en/first-child]
+  [{:keys [name href]}]
+  [:a] (en/do->
+        (en/content name)
+        (en/set-attr :href href)))
+
+(en/defsnippet common-menu "public/index.html" [:nav#side-nav]
+  [menu-items]
+  [:ul] (en/content (map menu-item menu-items)))
 
 ;; Transformers
 ;; -----------------------
@@ -69,22 +91,37 @@
            [[:form#search (en/attr? :data-active)]] (en/set-attr :data-active tf)
            [[:body (en/attr? :data-search-active)]] (en/set-attr :data-search-active tf))))
 
-;; Templates
+(en/defsnippet common-head "public/index.html" [:head]
+  [title desc]
+  [:title] (en/content title)
+  [[:meta (en/attr-has :name "description")]] (en/set-attr :content desc))
+
+;; Template
 ;; -----------------------
-(en/deftemplate onboarding (search-toggle "public/index.html" true)
-  [header greeting greeting-msg steps]
+(en/deftemplate base "public/index.html"
+  ;; Do things in this order. main [probably] pulls in head, header,
+  ;; and menu, so those transforms must follow main.
+  [{:keys [head header menu]} main search-toggle]
+  (get-in selectors [:common :main]) (en/substitute main)
   (get-in selectors [:common :header]) (en/substitute header)
-  (get-in selectors [:onboarding :intro]) (en/substitute (onboarding-intro greeting greeting-msg))
-  (get-in selectors [:onboarding :steps]) (en/content (map-indexed (fn dostep [n desc] (onboarding-step (inc n) desc)) steps)))
+  (get-in selectors [:common :menu]) (en/substitute menu)
+  [:head] (en/substitute head)
+  [[:form#search (en/attr? :data-active)]] (en/set-attr :data-active search-toggle)
+  [[:body (en/attr? :data-search-active)]] (en/set-attr :data-search-active search-toggle))
 
-(en/deftemplate admin (search-toggle "public/admin/index.html" false)
-  [header greeting greeting-msg steps-str]
-  (get-in selectors [:common :header]) (en/substitute header)
-  [:body#admin] (en/set-attr :data-search-active false)
-  [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
-  [:main#content :h1] (en/content "Aspire Administration")
-  [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
-  [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
-  [:form#config-onboarding :input#greeting-msg] (en/set-attr :value greeting-msg)
-  [:form#config-onboarding :textarea#steps] (en/content steps-str))
+;; Templaters
+;; -----------------------
+(defn common-snippets [ctx]
+  {:head (common-head "TODO: Get the title out of the request." "TODO: Also get a description out of the request.")
+   :header (common-header (rand-int 100) "http://google.com" "Bo Jackson")
+   :menu (common-menu [{:name "Admin" :href "/admin"}
+                       {:name "Home" :href "/"}
+                       {:name "Add to your playlist" :href "/welcome"}])})
 
+(defn onboarding [common-snippets & args]
+  (let [main (apply onboarding-main args)]
+    (render (base common-snippets main true))))
+
+(defn admin [common-snippets & args]
+  (let [main (apply admin-main args)]
+    (render (base common-snippets main false))))
