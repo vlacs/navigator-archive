@@ -116,7 +116,8 @@
    :header (common-header (rand-int 100) "http://google.com" "Bo Jackson")
    :menu (common-menu [{:name "Admin" :href "/admin"}
                        {:name "Home" :href "/"}
-                       {:name "Add to your playlist" :href "/welcome"}])})
+                       {:name "Add to your playlist" :href "/welcome"}
+                       {:name "Google" :href "http://google.com"}])})
 
 (defn onboarding [common-snippets & args]
   (let [main (apply onboarding-main args)]
