@@ -23,8 +23,7 @@
     ;; this is where we would dismantle the test db
     (println "tearing down test ...")))
 
-(defn web-test-config
-  [web-tests]
+(defn web-test-config [web-tests]
   (set-up-test)
   (web-tests)
   (try

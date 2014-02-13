@@ -1,0 +1,13 @@
+;; "All entities in a database have an internal key, the entity id.
+;; You can use :db/unique and :db/index together to define an
+;; attribute to represent an external key." quoted from
+;; http://docs.datomic.com/schema.html
+{:comp [[:id_sk "Shared key for 3rd parties" :string :one :identity :indexed]
+        [:name :string :one :indexed]
+        [:desc :string :one :indexed]
+
+        ;; TODO: We need a fn here to ensure that #{:name :version} is unique
+        [:version :string :one]
+        [:status :enum [:active :archived] :one]
+        [:duration_rating_days :long :one]
+        [:date_created :instant :one]]}

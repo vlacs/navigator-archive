@@ -10,19 +10,17 @@
 ;; * FKs are named <table>_id.
 
 ;; TODO: see https://github.com/miner/herbert for schematizing this
-;; TODO: write fns to add _hist tables
-;; TODO: write fns to output _hist-management triggers
 {:tables
  {:comp {:cols [[:id :bigserial]
                 ;; Idea: use metadata to mark the fields that, when changed, require a new _hist row?
-                ^{:hist true} [:id_sk :varchar]
-                ^{:hist true} [:name :varchar "NOT NULL"]
-                ^{:hist true} [:description :varchar]
-                ^{:hist true} [:version :varchar "NOT NULL"]
+                [:id_sk :varchar]
+                [:name :varchar "NOT NULL"]
+                [:description :varchar]
+                [:version :varchar "NOT NULL"]
 
                 ;; status examples: active, archived
-                ^{:hist true} [:status :varchar "NOT NULL"]
-                ^{:hist true} [:duration_rating_days :bigint]
+                [:status :varchar "NOT NULL"]
+                [:duration_rating_days :bigint]
                 [:date_created "TIMESTAMP WITH TIME ZONE" "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]]
          :primary-key [:id]
          :indices {:comp_id_sk_ux [[:id_sk] :unique]
