@@ -1,5 +1,5 @@
-(ns aspire.web-test-config
-  (:require [aspire.web :as a-web]
+(ns navigator.web-test-config
+  (:require [navigator.web :as a-web]
             [clojure.test :refer :all]
             [ring.mock.request :as rmr]))
 

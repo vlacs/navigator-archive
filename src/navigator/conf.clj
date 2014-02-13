@@ -1,9 +1,9 @@
-(ns aspire.conf
-  (:require [aspire.util :as a-util]
+(ns navigator.conf
+  (:require [navigator.util :as a-util]
             [clojure.edn :as edn])
   (:import [java.io File]))
 
-(def default-config-path "/etc/aspire")
+(def default-config-path "/etc/navigator")
 
 (def config-associations {:jetty-instance [:conf-web]
                           :sql-db-pool [:conf-sql-db]

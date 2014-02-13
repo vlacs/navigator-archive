@@ -1,7 +1,7 @@
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Aspire project running on Windows Environments.
 
-For *UX instructions, see [README.md](https://github.com/vlacs/aspire).
+For *UX instructions, see [README.md](https://github.com/vlacs/navigator).
 
 <b>NOTE</b>:  This is not complete at this time.  You are more than welcome to attempt to muddle through it yourself, or contact me at shipkiss@gmail.com for assistance.
 ###Prerequisites
@@ -28,7 +28,7 @@ C:\Users\[username]\
 ```
 Make a new Directory named
 ```
-.aspire.
+.navigator.
 ```
 Copy the following configurations files from the projects '/sample-confs' directory.
 - conf-sql-db.edn
@@ -42,14 +42,14 @@ Now that the project bones are in place, it is time to configure the test data s
 
 Now open a command prompt and type the following command
 ```
-cd [aspireprojectroot]
+cd [navigatorprojectroot]
 ```
 At the prompt
 ```
-[aspireprojectroot]>lein run --config-path c:\Users\[username]\.aspire\ --init-sql
+[navigatorprojectroot]>lein run --config-path c:\Users\[username]\.navigator\ --init-sql
 ```
 
-<b>NOTE</b>: Replace ```[aspireprojectroot]``` and ```[username]``` with the appropriate information
+<b>NOTE</b>: Replace ```[navigatorprojectroot]``` and ```[username]``` with the appropriate information
 <b>NOTE</b>: You may get a Java exception stack trace.  I am not sure exactly why, but the command seems to execute correctly.
 You can verify that the operation was a success by viewing the tables defined in the PostgresSQL database that you are using.  It should be similiar to:
 <table>

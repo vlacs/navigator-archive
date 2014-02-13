@@ -1,6 +1,6 @@
-(ns aspire.core-test
+(ns navigator.core-test
   (:require [clojure.test :refer :all]
-            [aspire.core :refer :all]))
+            [navigator.core :refer :all]))
 
 (deftest pass-test
   (testing "I pass"

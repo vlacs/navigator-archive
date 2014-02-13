@@ -1,8 +1,8 @@
-(ns aspire.security
+(ns navigator.security
   (:require [digest :refer [md5]]
             [clojure.string :as str]
-            [aspire.data.user :refer [get-valid-user]]
-            [aspire.util :refer [keywords->ns]]
+            [navigator.data.user :refer [get-valid-user]]
+            [navigator.util :refer [keywords->ns]]
             [cemerick.friend :as friend]
             [cemerick.friend.workflows :as workflows]
             [saml20-clj.sp :as saml20-sp]))
@@ -14,7 +14,7 @@
                   :body "The SAML response could not be verified."}})
 
 (def active-roles
-  (set (keywords->ns 'aspire.data.user
+  (set (keywords->ns 'navigator.data.user
                      :admin
                      :adult-ed
                      :guardian

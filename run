@@ -4,9 +4,9 @@
 [[ -z $1 ]] && profile="dev" || profile=$1
 
 # How to run the uberjar:
-# java -cp target/aspire-0.1.0-SNAPSHOT-standalone.jar clojure.main -m aspire.core
+# java -cp target/navigator-0.1.0-SNAPSHOT-standalone.jar clojure.main -m navigator.core
 
-mydir=~/.aspire/
+mydir=~/.navigator/
 shift
 case $profile in
     dev) lein run --config-path $mydir $*

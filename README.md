@@ -1,11 +1,11 @@
-# aspire
-[![Build Status](https://travis-ci.org/vlacs/aspire.png?branch=master)](https://travis-ci.org/vlacs/aspire)
+# navigator
+[![Build Status](https://travis-ci.org/vlacs/navigator.png?branch=master)](https://travis-ci.org/vlacs/navigator)
 
 
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Aspire project running on *UX Environments.
 
-######NOTE: Windows Users: Modifications to install an Aspire development environment using Eclipse can be found in [win-eclipse.md](https://github.com/vlacs/aspire/blob/master/win-eclipse.md).  Steps which require modification below are indicated with following symbol<sup>(M$)</sup>
+######NOTE: Windows Users: Modifications to install an Aspire development environment using Eclipse can be found in [win-eclipse.md](https://github.com/vlacs/navigator/blob/master/win-eclipse.md).  Steps which require modification below are indicated with following symbol<sup>(M$)</sup>
 
 ###Prerequisites
 ####Core:
@@ -39,9 +39,9 @@ and Jetty Web Server (Runtime included in project).
 ### 3. Populating the Test Datastore with Data
 Now that the project bones are in place, it is time to configure the test data schema and load it with some test data.
 
-Run the following command to install the database schema that has be pre-defined in 'schema.edn' at the aspire project root<sup>(M$)</sup>.
+Run the following command to install the database schema that has be pre-defined in 'schema.edn' at the navigator project root<sup>(M$)</sup>.
 ```
-$lein run --config-path ~/.aspire/ --init-sql
+$lein run --config-path ~/.navigator/ --init-sql
 ```
 
 You can verify that the operation was a success by viewing the tables defined in the PostgresSQL database that you are using.  It should be similiar to:

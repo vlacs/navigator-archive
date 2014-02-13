@@ -1,6 +1,6 @@
-(ns aspire.templates-test
+(ns navigator.templates-test
   (:require [net.cgrand.enlive-html :as en]
-            [aspire.templates :refer :all]
+            [navigator.templates :refer :all]
             [clojure.test :refer :all]))
 
 ;; TODO: en/emit* and beautify the HTML in each test for human readability here?

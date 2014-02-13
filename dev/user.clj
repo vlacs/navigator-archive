@@ -6,9 +6,9 @@
             [clojure.test :as test]
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
             [hickory.core :as hickory]
-            [aspire.core :as a-core]
-            [aspire.conf :as a-conf]
-            [aspire.templates :as a-tpl]
+            [navigator.core :as a-core]
+            [navigator.conf :as a-conf]
+            [navigator.templates :as a-tpl]
             [net.cgrand.enlive-html :as en]
             ))
 
@@ -18,7 +18,7 @@
 
 (defn init! []
   (let [home (System/getProperty "user.home")
-        mydir (format "%s/.aspire" home)
+        mydir (format "%s/.navigator" home)
         args ["--verbose"
               "--config-path" mydir]
         [opts conf] (a-core/opts-and-conf-from-args args)]

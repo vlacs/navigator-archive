@@ -1,5 +1,5 @@
 (ns ^{:doc "A library for keeping and updating browser state"}
-  aspire.model)
+  navigator.model)
 
 (def browser-model (atom {}))
 

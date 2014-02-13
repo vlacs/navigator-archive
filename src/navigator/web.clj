@@ -1,4 +1,4 @@
-(ns aspire.web
+(ns navigator.web
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.params :as ring-params]
             [ring.middleware.resource :as ring-resource]
@@ -8,11 +8,11 @@
             [liberator.dev :refer [wrap-trace]]
             [compojure.core :refer [defroutes context ANY GET POST PUT]]
             [hiccup.page]
-            [aspire.templates :as a-tpl]
-            [aspire.sqldb :as a-sqldb]
-            [aspire.security :as a-sec]
-            [aspire.web.resources :as a-res]
-            [aspire.web.http :refer [wrap-host-urls]])
+            [navigator.templates :as a-tpl]
+            [navigator.sqldb :as a-sqldb]
+            [navigator.security :as a-sec]
+            [navigator.web.resources :as a-res]
+            [navigator.web.http :refer [wrap-host-urls]])
   (:gen-class))
 
 (defroutes admin-routes

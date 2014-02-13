@@ -6,7 +6,7 @@ Our long-term plan for Aspire is to use Datomic for storage. For now,
 this file just has some examples of how to use HoneySQL.
 
 We're using Korma's connection management and query fns."}
-  aspire.sqldb
+  navigator.sqldb
   (:require [clojure.edn :as edn]
             [honeysql.core :as hsql]
             [honeysql.helpers :as hsql-h]
@@ -82,7 +82,7 @@ We're using Korma's connection management and query fns."}
 
 (comment
   (def schema (edn/read-string (slurp "schema.edn")))
-  (def db (edn/read-string (slurp (format "%s/.aspire/conf-sql-db.edn" (System/getProperty "user.home")))))
+  (def db (edn/read-string (slurp (format "%s/.navigator/conf-sql-db.edn" (System/getProperty "user.home")))))
   (default-connection! db)
 
   (select! sel-comp-by-id :id 1)

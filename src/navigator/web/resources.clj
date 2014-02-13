@@ -1,6 +1,6 @@
-(ns aspire.web.resources
+(ns navigator.web.resources
   (:require [liberator.core :refer [defresource]]
-            [aspire.handlers :as a-hdl]))
+            [navigator.handlers :as a-hdl]))
 
 (defresource onboarding!
   :available-media-types ["text/html"]

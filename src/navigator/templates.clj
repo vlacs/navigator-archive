@@ -1,6 +1,6 @@
-(ns aspire.templates
+(ns navigator.templates
   (:require [net.cgrand.enlive-html :as en]
-            [aspire.util :as a-util]))
+            [navigator.util :as a-util]))
 
 ;; Selectors
 ;; -----------------------

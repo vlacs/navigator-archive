@@ -1,6 +1,6 @@
-(ns aspire.handlers
-  (:require [aspire.templates :as a-tpl]
-            [aspire.util :as a-util]))
+(ns navigator.handlers
+  (:require [navigator.templates :as a-tpl]
+            [navigator.util :as a-util]))
 
 (def config-page-keys
   ;; List all the config keys we expect to receive from a particular

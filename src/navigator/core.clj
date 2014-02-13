@@ -1,10 +1,10 @@
-(ns aspire.core
-  (:require [aspire.conf :as a-conf]
-            [aspire.cli :as a-cli]
-            [aspire.util :as a-util]
-            [aspire.sqldb-ddl :as a-sqldb-ddl]
-            [aspire.sqldb :as a-sqldb]
-            [aspire.web :as a-web]
+(ns navigator.core
+  (:require [navigator.conf :as a-conf]
+            [navigator.cli :as a-cli]
+            [navigator.util :as a-util]
+            [navigator.sqldb-ddl :as a-sqldb-ddl]
+            [navigator.sqldb :as a-sqldb]
+            [navigator.web :as a-web]
             [saml20-clj.sp]))
 
 ;;; These are web configs unique to starting up jetty.

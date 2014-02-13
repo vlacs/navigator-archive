@@ -1,4 +1,4 @@
-(ns aspire.web.http
+(ns navigator.web.http
   (:require [ring.util.response :refer [response]]))
 
 (def default-ports

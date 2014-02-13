@@ -1,6 +1,6 @@
-(ns aspire.util
+(ns navigator.util
   (:require [clojure.string :as str]
-            [aspire.sqldb :as a-sql]))
+            [navigator.sqldb :as a-sql]))
 
 (defn output!
   "Call output! instead of using prn. Respects --verbose. Returns nil."

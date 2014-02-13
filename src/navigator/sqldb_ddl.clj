@@ -1,4 +1,4 @@
-(ns aspire.sqldb-ddl
+(ns navigator.sqldb-ddl
   (:require [jdbc-pg-init.core :as jpi]
             [clojure.edn :as edn]))
 
@@ -25,5 +25,5 @@
 ;       (jdbc/db-do-commands db true sql)))
 
 (comment
-  (def db (edn/read-string (slurp (format "/home/%s/.aspire/conf-sql-db.edn" "username"))))
+  (def db (edn/read-string (slurp (format "/home/%s/.navigator/conf-sql-db.edn" "username"))))
   )

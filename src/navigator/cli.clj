@@ -1,6 +1,6 @@
-(ns aspire.cli
+(ns navigator.cli
   (:require [clojure.tools.cli :as cli]
-            [aspire.util :as a-util]))
+            [navigator.util :as a-util]))
 
 (def cli-options
   [["-p" "--config-path" "Specify a non-default config directory"]

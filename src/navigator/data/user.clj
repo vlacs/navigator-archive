@@ -1,7 +1,7 @@
-(ns aspire.data.user
+(ns navigator.data.user
   ^{:author "Jon Doane <jdoane@vlacs.org"
     :doc "This library knows how to get user data."}
-  (:require [aspire.sqldb :refer [select! select-one! update!]]
+  (:require [navigator.sqldb :refer [select! select-one! update!]]
             [honeysql.core :refer [param]]))
 
 (def roles {::admin "ADMIN"

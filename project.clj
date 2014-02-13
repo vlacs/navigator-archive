@@ -1,6 +1,6 @@
-(defproject aspire "0.1.0-SNAPSHOT"
+(defproject navigator "0.1.0-SNAPSHOT"
   :description "Aspire supports VLACS' vision for competency-based virtual education."
-  :url "https://github.com/vlacs/aspire"
+  :url "https://github.com/vlacs/navigator"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
@@ -28,5 +28,7 @@
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [ring-mock "0.1.5"]]}}
 
-  :main ^{:skip-aot true} aspire.core
-  :ring {:handler aspire.web/app})
+  :main ^{:skip-aot true} navigator.core
+  :ring {:handler navigator.web/app}
+  :repl-options {:init-ns user
+                 :welcome (println "Anchors aweigh, and push the boat out. Please no panic stations.")})
