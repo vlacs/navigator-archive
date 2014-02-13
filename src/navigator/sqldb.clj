@@ -1,8 +1,8 @@
 ; TODO: see http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded
 (ns ^{:author "Matt Oquist <moquist@vlacs.org>"
-      :doc "A work-in-progress/experimental SQL abstraction library for Aspire
+      :doc "A work-in-progress/experimental SQL abstraction library for Navigator
 
-Our long-term plan for Aspire is to use Datomic for storage. For now,
+Our long-term plan for Navigator is to use Datomic for storage. For now,
 this file just has some examples of how to use HoneySQL.
 
 We're using Korma's connection management and query fns."}

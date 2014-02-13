@@ -1,5 +1,5 @@
 (defproject navigator "0.1.0-SNAPSHOT"
-  :description "Aspire supports VLACS' vision for competency-based virtual education."
+  :description "Navigator supports VLACS' vision for competency-based virtual education."
   :url "https://github.com/vlacs/navigator"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}

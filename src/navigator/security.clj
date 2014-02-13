@@ -53,7 +53,7 @@
    :unauthenticated-handler #(workflows/http-basic-deny "Authenticate with your VLACS user account" %)
    :workflows [(workflows/http-basic
                  :credential-fn md5-credential-fn
-                 :realm "Aspire")]})
+                 :realm "Navigator")]})
 
 (defn require-login
   [ring-routes]
@@ -83,7 +83,7 @@
 ;; *your* profile, but not just any profile)?
 (def menu-items
   {:admin {:route "/admin" :name "Admin" :weight 100 :desc "Perform administrative functions" :authorized? (authorized? :admin)}
-   :home {:route "/" :name "Home" :weight 0 :desc "Main Aspire page" :authorized? (constantly true)}
+   :home {:route "/" :name "Home" :weight 0 :desc "Main Navigator page" :authorized? (constantly true)}
    :onboarding {:route "/welcome"
                 :name "Competency Map"
                 :weight 10

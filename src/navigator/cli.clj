@@ -9,7 +9,7 @@
     "Initialize the SQL DB, and then exit"
     :flag true]
    ["-z" "--zero-out-sql-db"
-    "Print out SQL to drop the Aspire tables from the DB, and then exit"
+    "Print out SQL to drop the Navigator tables from the DB, and then exit"
     :flag true]
    ["-v" "--verbose" "Print info to stdout while running" :flag true]])
 

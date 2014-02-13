@@ -1,4 +1,4 @@
-;; This first version of Aspire schema is intended to be installed in
+;; This first version of Navigator schema is intended to be installed in
 ;; VLACS' customized Moodle DB (postgres).
 ;; Our long-term plan is to migrate all our custom data from our
 ;; Moodle DB to Datomic, including this.

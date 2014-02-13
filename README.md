@@ -3,9 +3,9 @@
 
 
 ## Project Environment Set-Up
-The following instructions provide the steps needed to get the Aspire project running on *UX Environments.
+The following instructions provide the steps needed to get the Navigator project running on *UX Environments.
 
-######NOTE: Windows Users: Modifications to install an Aspire development environment using Eclipse can be found in [win-eclipse.md](https://github.com/vlacs/navigator/blob/master/win-eclipse.md).  Steps which require modification below are indicated with following symbol<sup>(M$)</sup>
+######NOTE: Windows Users: Modifications to install an Navigator development environment using Eclipse can be found in [win-eclipse.md](https://github.com/vlacs/navigator/blob/master/win-eclipse.md).  Steps which require modification below are indicated with following symbol<sup>(M$)</sup>
 
 ###Prerequisites
 ####Core:
@@ -17,7 +17,7 @@ The following instructions provide the steps needed to get the Aspire project ru
 It is assumed that your environment has VI or a comparable Text Editor installed
 
 ### 1. Setting up the Test Datastore
-Set up a PostgreSQL DB for your dev/testing instance of Aspire.
+Set up a PostgreSQL DB for your dev/testing instance of Navigator.
 
 <b>TODO</b>: Provide Installation Instructions for Unix / Creating a new Database / Creating a new Role
 
@@ -104,7 +104,7 @@ You can verify that the operation was a success by viewing the tables defined in
 </table>
 
 
-Now that the table has been created it is time to load it with some dummy data.  Now load and execute the 'test.sql' file found in the root of the Aspire project<sup>(M$)</sup>.
+Now that the table has been created it is time to load it with some dummy data.  Now load and execute the 'test.sql' file found in the root of the Navigator project<sup>(M$)</sup>.
 ```bash
 $ cat test.sql | psql yourdb
 ```
@@ -118,13 +118,13 @@ $ cat test.sql | psql yourdb
 - comp_tag2parent
       
       
-### 4. Running the Aspire Project    
+### 4. Running the Navigator Project    
 Start a REPL(ReadEvalPrintLoop)<sup>(M$)</sup>
 ```bash
 $ lein repl
 ```
 
-<b>NOTE</b>: The Aspire project is using tools.namespace, so to start and restart Aspire safely in your REPL, *stay in the* ```user``` *namespace*
+<b>NOTE</b>: The Navigator project is using tools.namespace, so to start and restart Navigator safely in your REPL, *stay in the* ```user``` *namespace*
 
 Type the following command to 'start' the environment.
 ```clojure
@@ -145,7 +145,7 @@ Using your Web Browser go to the following URL's:
 
 
 ### 6. Rejoice
-At this point you should have a development environment running the Aspire project, so get to work and enjoy!
+At this point you should have a development environment running the Navigator project, so get to work and enjoy!
 
 
 ## Customizing your Development Environment

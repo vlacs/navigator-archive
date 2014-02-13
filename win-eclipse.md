@@ -1,5 +1,5 @@
 ## Project Environment Set-Up
-The following instructions provide the steps needed to get the Aspire project running on Windows Environments.
+The following instructions provide the steps needed to get the Navigator project running on Windows Environments.
 
 For *UX instructions, see [README.md](https://github.com/vlacs/navigator).
 
@@ -14,7 +14,7 @@ See README.md for core Prerequisites
 - CounterClockwise 
 
 ### 1. Setting up the Test Datastore
-Set up a PostgreSQL DB for your dev/testing instance of Aspire.
+Set up a PostgreSQL DB for your dev/testing instance of Navigator.
 
 <b>TODO</b>: Provide Installation Instructions for Windows / Creating a new Database / Creating a new Role
 
@@ -111,7 +111,7 @@ You can verify that the operation was a success by viewing the tables defined in
 </table>
 
 
-Now that the table has been created it is time to load it with some dummy data.  Open the SQL Editor of your choice and load and execute the 'test.sql' file found in the root of the Aspire project.
+Now that the table has been created it is time to load it with some dummy data.  Open the SQL Editor of your choice and load and execute the 'test.sql' file found in the root of the Navigator project.
 
 <b>NOTE</b>:  The test.sql script is not set up to run multiple times.  If you need to refresh your test data, truncate the contents of the following tables prior to re-running the script:
 - comp
@@ -120,13 +120,13 @@ Now that the table has been created it is time to load it with some dummy data. 
 - comp_tag2parent
       
       
-### 4. Running the Aspire Project    
+### 4. Running the Navigator Project    
 Start a REPL(ReadEvalPrintLoop)<sup>(M$)</sup>
 ```bash
 $ lein repl
 ```
 
-<b>NOTE</b>: The Aspire project is using tools.namespace, so to start and restart Aspire safely in your REPL, *stay in the* ```user``` *namespace*
+<b>NOTE</b>: The Navigator project is using tools.namespace, so to start and restart Navigator safely in your REPL, *stay in the* ```user``` *namespace*
 
 Type the following command to 'start' the environment.
 ```clojure
@@ -147,7 +147,7 @@ Using your Web Browser go to the following URL's:
 
 
 ### 6. Rejoice
-At this point you should have a development environment running the Aspire project, so get to work and enjoy!
+At this point you should have a development environment running the Navigator project, so get to work and enjoy!
 
 
 ## Customizing your Development Environment

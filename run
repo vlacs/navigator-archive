@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run the Aspire app with typical args for test/dev
+# Run the Navigator app with typical args for test/dev
 
 [[ -z $1 ]] && profile="dev" || profile=$1
 

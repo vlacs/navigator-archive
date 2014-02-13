@@ -64,7 +64,7 @@
 
 (en/defsnippet admin-main "public/admin/index.html" (get-in selectors [:common :main])
   [greeting greeting-msg steps-str]
-  [:h1] (en/content "Aspire Administration")
+  [:h1] (en/content "Navigator Administration")
   [:div.config-onboarding :h2] (en/content "Configure Page: Onboarding")
   [:form#config-onboarding] (en/set-attr :action "/config/page/onboarding")
   [:form#config-onboarding :input#greeting] (en/set-attr :value greeting)
