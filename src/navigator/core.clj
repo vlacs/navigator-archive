@@ -1,10 +1,10 @@
 (ns navigator.core
-  (:require [navigator.conf :as a-conf]
-            [navigator.cli :as a-cli]
-            [navigator.util :as a-util]
-            [navigator.sqldb-ddl :as a-sqldb-ddl]
-            [navigator.sqldb :as a-sqldb]
-            [navigator.web :as a-web]
+  (:require [navigator.conf :as n-conf]
+            [navigator.cli :as n-cli]
+            [navigator.util :as n-util]
+            [navigator.sqldb-ddl :as n-sqldb-ddl]
+            [navigator.sqldb :as n-sqldb]
+            [navigator.web :as n-web]
             [saml20-clj.sp]))
 
 ;;; These are web configs unique to starting up jetty.
@@ -20,7 +20,7 @@
   "Spins up the database pool and gets it ready to accept queries."
   [system]
   (assoc system :sql-db-pool
-         (a-sqldb/default-connection! (get-in system [:conf :conf-sql-db]))))
+         (n-sqldb/default-connection! (get-in system [:conf :conf-sql-db]))))
 
 (defn stop-database!
   "Spins down the database pool and closes database connections."
@@ -32,7 +32,7 @@
   "Starts up the Jetty server."
   [system]
   (let [args (select-keys (get-in system [:conf :conf-web]) jetty-args)]
-    (assoc system :jetty-instance (a-web/run! args))))
+    (assoc system :jetty-instance (n-web/run! args))))
 
 (defn stop-http!
   "Stops the Jetty server."
@@ -89,7 +89,7 @@
   called has full access to the global state of the system (third arg
   passed becomes the first and only arg passed to the task fn.)"
   [sub-sys task system]
-  (a-util/output! true (str "Interactions with [" sub-sys "] executing [" task "]"))
+  (n-util/output! true (str "Interactions with [" sub-sys "] executing [" task "]"))
   ((get-in all-sub-systems [sub-sys task]) system))
 
 (defn process-ordered-interaction!
@@ -122,22 +122,22 @@
 
 (defn opts-and-conf-from-args
   [args]
-  (let [opts (a-cli/get-opts args)]
+  (let [opts (n-cli/get-opts args)]
     [opts
-     (a-conf/load-configs (:config-path opts))]))
+     (n-conf/load-configs (:config-path opts))]))
 
 (defn -main [& args]
   ;; work around dangerous default behaviour in Clojure
   (alter-var-root #'*read-eval* (constantly false))
 
-  (let [opts (a-cli/get-opts args)
-        conf (a-conf/load-configs (:config-path opts))
+  (let [opts (n-cli/get-opts args)
+        conf (n-conf/load-configs (:config-path opts))
         db (:conf-sql-db conf)
         system (system conf)]
-    (a-util/output! (:verbose opts) :opts opts :system system :conf conf :db db)
+    (n-util/output! (:verbose opts) :opts opts :system system :conf conf :db db)
 
     (cond
-      (:init-sql opts) (a-sqldb-ddl/init! db) 
-      (:zero-out-sql-db opts) (a-sqldb-ddl/print-drop-sql!) 
+      (:init-sql opts) (n-sqldb-ddl/init! db) 
+      (:zero-out-sql-db opts) (n-sqldb-ddl/print-drop-sql!) 
       :else (start! system))))
 

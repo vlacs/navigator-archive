@@ -1,6 +1,6 @@
 (ns navigator.handlers
-  (:require [navigator.templates :as a-tpl]
-            [navigator.util :as a-util]))
+  (:require [navigator.templates :as n-tpl]
+            [navigator.util :as n-util]))
 
 (def config-page-keys
   ;; List all the config keys we expect to receive from a particular
@@ -28,21 +28,21 @@
   (let [page (get-in ctx [:request :route-params :page])
         params (get-in ctx [:request :form-params])]
     (map (fn do-config-page! [[k v]]
-           (a-util/set-config! (str page "/" k) v))
+           (n-util/set-config! (str page "/" k) v))
          (whitelist-config-page-keys (keyword page) params))))
 
 ;; Page handlers
 ;; -----------------------
 (defn onboarding! [ctx]
-  (let [common-snippets (a-tpl/common-snippets ctx)
-        greeting (a-util/get-config! "onboarding/greeting")
-        greeting-msg (a-util/get-config! "onboarding/greeting-msg")
-        steps (a-util/split-paragraphs (a-util/get-config! "onboarding/steps"))]
-    (a-tpl/onboarding common-snippets greeting greeting-msg steps)))
+  (let [common-snippets (n-tpl/common-snippets ctx)
+        greeting (n-util/get-config! "onboarding/greeting")
+        greeting-msg (n-util/get-config! "onboarding/greeting-msg")
+        steps (n-util/split-paragraphs (n-util/get-config! "onboarding/steps"))]
+    (n-tpl/onboarding common-snippets greeting greeting-msg steps)))
 
 (defn admin! [ctx]
-  (let [common-snippets (a-tpl/common-snippets ctx)
-        greeting (a-util/get-config! "onboarding/greeting")
-        greeting-msg (a-util/get-config! "onboarding/greeting-msg")
-        steps-str (a-util/get-config! "onboarding/steps")]
-    (a-tpl/admin common-snippets greeting greeting-msg steps-str)))
+  (let [common-snippets (n-tpl/common-snippets ctx)
+        greeting (n-util/get-config! "onboarding/greeting")
+        greeting-msg (n-util/get-config! "onboarding/greeting-msg")
+        steps-str (n-util/get-config! "onboarding/steps")]
+    (n-tpl/admin common-snippets greeting greeting-msg steps-str)))

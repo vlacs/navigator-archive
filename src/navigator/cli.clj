@@ -1,6 +1,6 @@
 (ns navigator.cli
   (:require [clojure.tools.cli :as cli]
-            [navigator.util :as a-util]))
+            [navigator.util :as n-util]))
 
 (def cli-options
   [["-p" "--config-path" "Specify a non-default config directory"]

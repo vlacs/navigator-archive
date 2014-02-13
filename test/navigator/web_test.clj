@@ -1,5 +1,5 @@
 (ns navigator.web-test
-  (:require [navigator.web :as a-web]
+  (:require [navigator.web :as n-web]
             [clojure.test :refer :all]
             [ring.mock.request :as rmr]
             [navigator.web-test-config :refer :all]))

@@ -1,5 +1,5 @@
 (ns navigator.conf
-  (:require [navigator.util :as a-util]
+  (:require [navigator.util :as n-util]
             [clojure.edn :as edn])
   (:import [java.io File]))
 

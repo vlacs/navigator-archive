@@ -8,25 +8,25 @@
             [liberator.dev :refer [wrap-trace]]
             [compojure.core :refer [defroutes context ANY GET POST PUT]]
             [hiccup.page]
-            [navigator.templates :as a-tpl]
-            [navigator.sqldb :as a-sqldb]
-            [navigator.security :as a-sec]
-            [navigator.web.resources :as a-res]
+            [navigator.templates :as n-tpl]
+            [navigator.sqldb :as n-sqldb]
+            [navigator.security :as n-sec]
+            [navigator.web.resources :as n-res]
             [navigator.web.http :refer [wrap-host-urls]])
   (:gen-class))
 
 (defroutes admin-routes
-  (GET "/" [] a-res/admin!)
+  (GET "/" [] n-res/admin!)
   (ANY "/debug" req (prn-str req)))
 
 (defroutes config-routes
-  (PUT "/key/:key" [] a-res/config-key)
-  (POST "/page/:page" [] a-res/config-page!))
+  (PUT "/key/:key" [] n-res/config-key)
+  (POST "/page/:page" [] n-res/config-page!))
 
 (defroutes app-routes
   ;; just for now, send everybody to /welcome
   (ANY "/" [] (response/redirect "/welcome"))
-  (GET "/welcome" [] a-res/onboarding!)
+  (GET "/welcome" [] n-res/onboarding!)
   (context "/admin" [] admin-routes)
   (context "/config" [] config-routes)
   (ANY "/logout" [] "Nothing here yet but us chickens."))
@@ -39,7 +39,7 @@
       (file-info/wrap-file-info)  
       (wrap-params)
       (wrap-host-urls)
-      (a-sec/require-login)
+      (n-sec/require-login)
       ))
 
 (defn run!

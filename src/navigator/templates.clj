@@ -1,6 +1,6 @@
 (ns navigator.templates
   (:require [net.cgrand.enlive-html :as en]
-            [navigator.util :as a-util]))
+            [navigator.util :as n-util]))
 
 ;; Selectors
 ;; -----------------------

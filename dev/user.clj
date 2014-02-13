@@ -6,9 +6,9 @@
             [clojure.test :as test]
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
             [hickory.core :as hickory]
-            [navigator.core :as a-core]
-            [navigator.conf :as a-conf]
-            [navigator.templates :as a-tpl]
+            [navigator.core :as n-core]
+            [navigator.conf :as n-conf]
+            [navigator.templates :as n-tpl]
             [net.cgrand.enlive-html :as en]
             ))
 
@@ -21,20 +21,20 @@
         mydir (format "%s/.navigator" home)
         args ["--verbose"
               "--config-path" mydir]
-        [opts conf] (a-core/opts-and-conf-from-args args)]
-    (alter-var-root #'system (constantly (a-core/system conf)))
+        [opts conf] (n-core/opts-and-conf-from-args args)]
+    (alter-var-root #'system (constantly (n-core/system conf)))
     system))
 
 (defn start!
   "Starts the current development system."
   []
-  (alter-var-root #'system a-core/start!))
+  (alter-var-root #'system n-core/start!))
 
 (defn stop!
   "Shuts down and destroys the current development system."
   []
   (alter-var-root #'system
-                  (fn [s] (when s (a-core/stop! s)))))
+                  (fn [s] (when s (n-core/stop! s)))))
 
 (defn go
   "Initializes the current development system and starts it running."
@@ -56,4 +56,4 @@
 (defn renode
   "Take a rendered enlive template (html) and turn it back into a seq of enlive nodes"
   [template]
-  (en/html-snippet (a-tpl/render template)))
+  (en/html-snippet (n-tpl/render template)))

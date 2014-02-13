@@ -1,15 +1,15 @@
 (ns navigator.web.resources
   (:require [liberator.core :refer [defresource]]
-            [navigator.handlers :as a-hdl]))
+            [navigator.handlers :as n-hdl]))
 
 (defresource onboarding!
   :available-media-types ["text/html"]
-  :handle-ok a-hdl/onboarding!)
+  :handle-ok n-hdl/onboarding!)
 
 (defresource admin!
   :allowed-methods [:get]
   :available-media-types ["text/html"]
-  :handle-ok a-hdl/admin!)
+  :handle-ok n-hdl/admin!)
 
 (defresource config-key [key]
   :allowed-methods [:put]
@@ -26,7 +26,7 @@
 (defresource config-page!
   :allowed-methods [:post]
   :available-media-types ["text/html"]
-  :post! a-hdl/config-page!
+  :post! n-hdl/config-page!
   ;; TODO: Display a user-friendly "Your changes were saved" message.
   :post-redirect? (fn [_] {:location "/admin"}))
 

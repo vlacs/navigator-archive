@@ -1,5 +1,5 @@
 (ns navigator.web-test-config
-  (:require [navigator.web :as a-web]
+  (:require [navigator.web :as n-web]
             [clojure.test :refer :all]
             [ring.mock.request :as rmr]))
 
@@ -16,7 +16,7 @@
   ;; After we switch to datomic, it will be super-easy to populate a
   ;; datomic:mem DB for testing.
   ;; --moquist
-  #_(def onboarding-response (a-web/onboarding (rmr/request :get "/"))))
+  #_(def onboarding-response (n-web/onboarding (rmr/request :get "/"))))
   
 (defn teardown-test []
   (comment
