@@ -1,7 +1,6 @@
 # navigator
 [![Build Status](https://travis-ci.org/vlacs/navigator.png?branch=master)](https://travis-ci.org/vlacs/navigator)
 
-
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Navigator project running on *UX Environments.
 
