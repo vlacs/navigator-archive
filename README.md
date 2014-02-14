@@ -1,6 +1,10 @@
 # navigator
 [![Build Status](https://travis-ci.org/vlacs/navigator.png?branch=master)](https://travis-ci.org/vlacs/navigator)
 
+<img src="doc/Tapley_NPS.png" alt="Agnes Tapley: Navigating" width="200px" />
+
+[Agnes Tapley, navigating.](http://commons.wikimedia.org/wiki/File:Tapley_NPS.jpg) Navigator is part of VLACS' competencies mapping system.
+
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Navigator project running on *UX Environments.
 
