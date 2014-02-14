@@ -1,5 +1,4 @@
-# navigator
-[![Build Status](https://travis-ci.org/vlacs/navigator.png?branch=master)](https://travis-ci.org/vlacs/navigator)
+# navigator [![Build Status](https://travis-ci.org/vlacs/navigator.png?branch=master)](https://travis-ci.org/vlacs/navigator)
 
 <img src="doc/Tapley_NPS.png" alt="Agnes Tapley: Navigating" width="200px" />
 
