@@ -2,12 +2,25 @@
 ;; You can use :db/unique and :db/index together to define an
 ;; attribute to represent an external key." quoted from
 ;; http://docs.datomic.com/schema.html
-{:comp [[:id_sk "Shared key for 3rd parties" :string :one :identity :indexed]
-        [:name :string :one :indexed]
-        [:desc :string :one :indexed]
+[:comp {:attrs [[:id-sk "Shared key for 3rd parties" :string :identity :indexed]
+                [:name :string :indexed]    ; not null
+                [:desc :string :indexed]
 
-        ;; TODO: We need a fn here to ensure that #{:name :version} is unique
-        [:version :string :one]
-        [:status :enum [:active :archived] :one]
-        [:duration_rating_days :long :one]
-        [:date_created :instant :one]]}
+                ;; TODO: We need a fn here to ensure that #{:name :version} is unique
+                [:version :string]    ; not null
+                [:status :enum [:active :archived]]   ; not null
+                [:duration-rating-days :long]
+                [:date-created :instant]]   ; not null
+        ;; constraints: (name, version) unique
+        }
+ :comp-tag {:attrs [[:name :string :indexed]    ; not null
+                    [:description :string]
+                    [:version :string]    ; not null
+                    [:type :string]   ; not null
+                    [:isrequestable :boolean]   ; not null
+                    [:icon :uri]
+                    [:status :string]   ; not null
+                    [:isfinal :boolean]   ; not null
+                    [:date-finalized :instant]
+                    [:date-created :instant]]   ; not null
+            }]
