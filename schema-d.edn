@@ -2,25 +2,51 @@
 ;; You can use :db/unique and :db/index together to define an
 ;; attribute to represent an external key." quoted from
 ;; http://docs.datomic.com/schema.html
-[:comp {:attrs [[:id-sk "Shared key for 3rd parties" :string :identity :indexed]
+[:comp {:attrs [[:id-sk :string "Shared key for 3rd parties" :identity :indexed]
                 [:name :string :indexed]    ; not null
-                [:desc :string :indexed]
+                [:description :string :indexed]
 
                 ;; TODO: We need a fn here to ensure that #{:name :version} is unique
                 [:version :string]    ; not null
                 [:status :enum [:active :archived]]   ; not null
-                [:duration-rating-days :long]
-                [:date-created :instant]]   ; not null
-        ;; constraints: (name, version) unique
-        }
+                [:tags :ref :many]  ; indexed?
+                [:duration-rating-days :long]]}
  :comp-tag {:attrs [[:name :string :indexed]    ; not null
                     [:description :string]
+
+                    ;; TODO: We need a fn here to ensure that #{:name :version} is unique
                     [:version :string]    ; not null
-                    [:type :string]   ; not null
-                    [:isrequestable :boolean]   ; not null
+                    [:type :string :indexed]    ; not null
+                    [:isrequestable :boolean]   ; not null, default f
                     [:icon :uri]
-                    [:status :string]   ; not null
-                    [:isfinal :boolean]   ; not null
-                    [:date-finalized :instant]
-                    [:date-created :instant]]   ; not null
-            }]
+                    [:status :enum [:active :archived]]  ; not null
+                    [:isfinal :boolean]   ; not null, default f
+                    [:disp-ctxs :ref :many]
+                    ]}
+ ;; TODO: comp-tag2parent, how do we want to do this?
+ :comp-tag-disp-ctx {:attr [[:name :string]]}
+ :perf-asmt {:attrs [[:id-sk :string "Shared key for 3rd parties" :identity :indexed]
+                     [:name :string]
+                     [:version :string]     ; not null
+                     [:type :string]        ; not null
+                     ;; TODO: (:name :version :type) unique
+                     [:duration-rating-days :bigint]
+                     [:comp :ref :many]
+                     ]}
+ :user2comp {:attrs [[:sis-user-id :bigint :indexed]
+                     [:comp :ref :indexed]
+                     [:start-date :instant]
+                     [:iscomplete :boolean]     ; not null, default f
+                     [:isoverridden :boolean]   ; not null, default f
+                     [:completion-date :instant]
+                     [:proposed-completion-date :instant]
+                     [:current-score :string]
+                     [:final-score :string]
+                     [:score-denominator :bigint]
+                     [:score-type :enum [:numeric :letter :pass-fail :qualitative]]     ; enum is what we want here, yes?
+                     [:qualitative-notes :string]
+                     ]}
+ :config {:attrs [[:key :string :indexed]    ; not null
+                  [:value :string :indexed]
+                  ]}
+ ]
