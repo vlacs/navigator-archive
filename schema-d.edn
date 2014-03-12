@@ -22,8 +22,8 @@
                     [:status :enum [:active :archived]]  ; not null
                     [:isfinal :boolean]   ; not null, default f
                     [:disp-ctxs :ref :many]
+                    [:child-of :ref :many]  ; replaces comp_tag2parent
                     ]}
- ;; TODO: comp-tag2parent, how do we want to do this?
  :comp-tag-disp-ctx {:attr [[:name :string]]}
  :perf-asmt {:attrs [[:id-sk :string "Shared key for 3rd parties" :identity :indexed]
                      [:name :string]
