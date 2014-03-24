@@ -44,8 +44,8 @@
  [:user2comp {:attrs [[:sis-user-id :bigint :indexed]
                       [:comp :ref :indexed]
                       [:start-date :instant]
-                      [:iscomplete :boolean] ; not null, default f
-                      [:isoverridden :boolean] ; not null, default f
+                      [:iscomplete :boolean] ; default f
+                      [:isoverridden :boolean] ; default f
                       [:completion-date :instant]
                       [:proposed-completion-date :instant]
                       [:current-score :string]
