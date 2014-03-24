@@ -20,6 +20,7 @@
                  [digest "1.4.3"]
                  [saml20-clj "0.1.3"]
                  [com.taoensso/timbre "3.0.0" :exclusions [org.clojure/tools.macro]]
+                 [com.datomic/datomic-free "0.9.4572"]
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-ring "0.8.8" :exclusions [org.clojure/clojure]]
