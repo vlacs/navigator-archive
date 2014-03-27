@@ -16,10 +16,10 @@
                      ;; TODO: We need a fn here to ensure that #{:name :version} is unique
                      [:version :string]     ; not null
                      [:type :string :indexed] ; not null
-                     [:isrequestable :boolean] ; not null, default f
+                     [:isrequestable :boolean] ; default f
                      [:icon :uri]
                      [:status :enum [:active :archived]] ; not null
-                     [:isfinal :boolean] ; not null, default f
+                     [:isfinal :boolean] ; default f
                      [:disp-ctxs :ref :many]
                      [:child-of :ref :many] ; replaces comp_tag2parent
                      ]}]

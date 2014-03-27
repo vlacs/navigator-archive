@@ -21,6 +21,7 @@
                  [saml20-clj "0.1.3"]
                  [com.taoensso/timbre "3.0.0" :exclusions [org.clojure/tools.macro]]
                  [com.datomic/datomic-free "0.9.4572"]
+                 [datomic-schematode "0.1.0-RC1"]
                  ]
   :pedantic? :warn ; :abort
   :plugins [[lein-ring "0.8.8" :exclusions [org.clojure/clojure]]
@@ -28,7 +29,6 @@
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [ring-mock "0.1.5"]]}}
-
   :main ^{:skip-aot true} navigator.core
   :ring {:handler navigator.web/app}
   :repl-options {:init-ns user
