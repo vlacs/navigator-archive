@@ -8,8 +8,9 @@
 
                  ;; TODO: We need a fn here to ensure that #{:name :version} is unique
                  [:version :string]               ; not null
-                 [:status :enum [:active :archived]] ; not null
-                 [:tags :ref :many]]}]
+                 [:status :enum [:active :archived :preactive]] ; not null
+                 [:tags :ref :many]]
+         :dbfns [(ds-constraints/unique :comp :name :version)]}]
  [:comp-tag {:attrs [[:name :string :indexed] ; not null
                      [:description :string]
 
