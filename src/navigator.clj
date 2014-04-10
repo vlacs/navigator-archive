@@ -9,8 +9,10 @@
 (def updatable-fields
   {:comp [:comp/description :comp/status :comp/tags]})
 
-(def valid-fields
-  {:comp [:comp/id-sk :comp/name :comp/description :comp/version :comp/status :comp/tags]})
+(def write-once-fields
+  {:comp [:comp/id-sk :comp/name :comp/version]})
+
+(def valid-fields (merge-with concat write-once-fields updatable-fields))
 
 ;; TODO: use https://github.com/rkneufeld/conformity ... in schematode. But noting it here. :-)
 (defn init! [system]
