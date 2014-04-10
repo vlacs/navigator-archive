@@ -3,13 +3,6 @@
     :doc "This library knows how to work with competency data."}
   (:require [datomic.api :as d]))
 
-;; utitlities
-
-(defn prefix-keys
-  "Prefix all keys in a map with prefix"
-  [m prefix]
-  (into {} (for [[k v] m] [(keyword prefix (name k)) v])))
-
 ;; Get functions
 
 (defn get-entity
@@ -55,6 +48,7 @@
 
 ;; Creation/update functions
 
+;; TODO: schematode may have a thing that does this?
 (defn with-constraints
   "transact with schematode constraints"
   [conn tx]
@@ -72,11 +66,18 @@
 
 (def transact-competency
   ^{:private true}
-  (transact-entity-fn [:comp/id-sk :comp/name :comp/description :comp/version :comp/status :comp/tags :comp/duration-rating-days]))
+  (transact-entity-fn [:comp/id-sk :comp/name :comp/description :comp/version :comp/status :comp/tags]))
 
+;; TODO: can we update name-version?
+;; TODO: this?
 (def update-competency
-  ;; TODO: can we update name-version?
-  (update-entity-fn [:comp/description :comp/status :comp/duration-rating-days] transact-competency))
+  (update-entity-fn [:comp/description :comp/status] transact-competency))
+
+;; TODO: or this?   -- this seems better from a readability standpoint
+(defn update-competency2
+  [conn & {:keys {eid} :as entity}]
+  (let [updatable-fields [:comp/description :comp/status]]
+    (apply transact-competency conn eid (select-keys entity updateable-fields))))
 
 (defn create-competency
   "Create a new competency"
