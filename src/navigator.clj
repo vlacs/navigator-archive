@@ -1,7 +1,21 @@
-(ns navigator.data.competency
+(ns navigator
   ^{:author "David Zaharee <dzaharee@vlacs.org>"
     :doc "This library knows how to work with competency data."}
-  (:require [datomic.api :as d]))
+  (:require [clojure.edn :as edn]
+            [datomic.api :as d]
+            [datomic-schematode.core :as schematode]
+            [navigator.schema :as schema]))
+
+(def updatable-fields
+  {:comp [:comp/description :comp/status :comp/tags]})
+
+(def valid-fields
+  {:comp [:comp/id-sk :comp/name :comp/description :comp/version :comp/status :comp/tags]})
+
+;; TODO: use https://github.com/rkneufeld/conformity ... in schematode. But noting it here. :-)
+(defn init! [system]
+  [(schematode/init-schematode-constraints! (:db-conn system))
+   (schematode/load-schema! (:db-conn system) schema/schema)])
 
 ;; Get functions
 
@@ -21,7 +35,7 @@
               id-sk))
 
 (defn get-competency-by-name-version
-  "Get competency by shared key"
+  "Get competency by name+verion"
   [conn name version]
   (get-entity conn '[:find ?e
                      :in $ ?name ?version
@@ -49,35 +63,29 @@
 ;; Creation/update functions
 
 ;; TODO: schematode may have a thing that does this?
-(defn with-constraints
+(defn tx
   "transact with schematode constraints"
-  [conn tx]
-  (d/transact conn [[:schematode-tx [tx]]]))
+  [conn txs]
+  (schematode/tx conn :enforce txs))
 
-(defn- transact-entity-fn
-  [fields]
-  (fn [conn eid & {:as updates}]
-    (with-constraints conn (merge {:db/id eid} (select-keys updates fields)))))
+#_(defn- transact-entity-fn
+  [valid-fields]
+  (fn [conn eid & {:as fields}]
+    (tx conn (merge {:db/id eid} (select-keys fields valid-fields)))))
 
 (defn- update-entity-fn
   [updatable-fields transact-fn]
-  (fn [conn & {:keys {eid} :as entity}]
+  (fn [conn & {:keys [eid] :as entity}]
     (apply transact-fn conn eid (select-keys entity updatable-fields))))
 
-(def transact-competency
-  ^{:private true}
-  (transact-entity-fn [:comp/id-sk :comp/name :comp/description :comp/version :comp/status :comp/tags]))
+(defn- transact-competency
+  [conn eid & {:as entity}]
+  (tx conn [(merge {:db/id eid} (select-keys entity (:comp valid-fields)))]))
 
-;; TODO: can we update name-version?
-;; TODO: this?
-(def update-competency
-  (update-entity-fn [:comp/description :comp/status] transact-competency))
-
-;; TODO: or this?   -- this seems better from a readability standpoint
-(defn update-competency2
-  [conn & {:keys {eid} :as entity}]
-  (let [updatable-fields [:comp/description :comp/status]]
-    (apply transact-competency conn eid (select-keys entity updateable-fields))))
+(defn update-competency
+  "Consider using :comp/id-sk instead of the entity ID here, IF every :comp has a :comp/id-sk."
+  [conn & {:keys [eid] :as entity}]
+  (apply transact-competency conn eid (select-keys entity (:comp updatable-fields))))
 
 (defn create-competency
   "Create a new competency"
@@ -86,10 +94,12 @@
   (apply transact-competency conn (d/tempid :db.part/user)
          :comp/name name
          :comp/version version
+         :comp/status status
          (flatten (seq optional-fields))))
 
 (def transact-comp-tag
-  ^{:private true}
+  1
+  #_
   (transact-entity-fn [:comp-tag/name
                        :comp-tag/description
                        :comp-tag/version
@@ -121,6 +131,7 @@
          (flatten (seq optional-fields))))
 
 (def update-comp-tag-disp-ctx
+  #_
   (transact-entity-fn [:comp-tag-disp-ctx/name]))
 
 (defn create-comp-tag-disp-ctx
@@ -129,6 +140,7 @@
   (apply update-comp-tag-disp-ctx (d/tempid :db.part/user) :comp-tag-disp-ctx/name name))
 
 (def transact-perf-asmt
+  #_
   (transact-entity-fn [:perf-asmt/id-sk
                        :perf-asmt/name
                        :perf-asmt/version
@@ -151,7 +163,8 @@
          (flatten (seq optional-fields))))
 
 (def transact-user2comp
-  ^{:private true}
+  1
+  #_
   (transact-entity-fn [:user2comp/sis-user-id
                        :user2comp/comp
                        :user2comp/start-date
