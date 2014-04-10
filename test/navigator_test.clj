@@ -7,7 +7,7 @@
 
 (use-fixtures :once nt-config/testing-fixture)
 
-(deftest assert-comp
+(deftest create-comps
   (testing "raw assertion"
     (is (n-tl/ensure-tx (schematode/tx
                          (:db-conn nt-config/system)
@@ -29,6 +29,20 @@
                              "v1"
                              :comp.status/active
                              :comp/id-sk "jeep")))))
+
+(deftest update-comps
+  (is (n-tl/ensure-tx (navigator/create-competency
+                       (:db-conn nt-config/system)
+                       "can I update?"
+                       "v1"
+                       :comp.status/active
+                       :comp/id-sk "yeep")))
+  (is (n-tl/ensure-tx (navigator/update-competency
+                       (:db-conn nt-config/system)
+                       {:comp/name "can I update?"
+                        :comp/version "v1"
+                        :comp/status :comp.status/active
+                        :db/id [:comp/id-sk "yeep"]}))))
 
 (comment
   (map #(keys (deref %))
