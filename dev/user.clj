@@ -4,56 +4,53 @@
             [clojure.pprint :refer (pprint)]
             [clojure.repl :refer :all]
             [clojure.test :as test]
+            [datomic.api :as d]
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
-            [hickory.core :as hickory]
-            [navigator.core :as n-core]
-            [navigator.conf :as n-conf]
-            [navigator.templates :as n-tpl]
-            [net.cgrand.enlive-html :as en]
+            [navigator]
+            [navigator.test-config :as nt-config]
+            [datomic-schematode.core :as schematode]
+            [clojure.edn :as edn]
             ))
 
 ;; N.B.: (ns cljs.user (:use [clojure.zip :only [insert-child]])) (see http://stackoverflow.com/questions/12879027/cannot-use-in-clojurescript-repl)
 
-(def system nil)
-
-(defn init! []
-  (let [home (System/getProperty "user.home")
-        mydir (format "%s/.navigator" home)
-        args ["--verbose"
-              "--config-path" mydir]
-        [opts conf] (n-core/opts-and-conf-from-args args)]
-    (alter-var-root #'system (constantly (n-core/system conf)))
-    system))
-
-(defn start!
-  "Starts the current development system."
-  []
-  (alter-var-root #'system n-core/start!))
-
-(defn stop!
-  "Shuts down and destroys the current development system."
-  []
-  (alter-var-root #'system
-                  (fn [s] (when s (n-core/stop! s)))))
-
 (defn go
   "Initializes the current development system and starts it running."
   []
-  (init!)
-  (start!))
+  (nt-config/start!))
 
 (defn reset []
-  (stop!)
+  (nt-config/stop!)
   (refresh :after 'user/go))
 
-;; Utility fns
-;; -----------------------
-(defn html->hiccup [html]
-  (-> html
-      hickory/parse-fragment
-      (->> (map hickory/as-hiccup))))
+(defn touch-that
+  "Execute the specified query on the current DB and return the
+   results of touching each entity.
 
-(defn renode
-  "Take a rendered enlive template (html) and turn it back into a seq of enlive nodes"
-  [template]
-  (en/html-snippet (n-tpl/render template)))
+   The first binding must be to the entity.
+   All other bindings are ignored."
+  [query & data-sources]
+  (map #(d/touch
+         (d/entity
+          (d/db (:db-conn nt-config/system))
+          (first %)))
+       (apply d/q query (d/db (:db-conn nt-config/system)) data-sources)))
+
+(defn ptouch-that
+  "Example: (ptouch-that '[:find ?e :where [?e :user/username]])"
+  [query & data-sources]
+  (pprint (apply touch-that query data-sources)))
+
+(comment
+  ;; Utility fns
+  ;; -----------------------
+  (defn html->hiccup [html]
+    (-> html
+        hickory/parse-fragment
+        (->> (map hickory/as-hiccup))))
+
+  (defn renode
+    "Take a rendered enlive template (html) and turn it back into a seq of enlive nodes"
+    [template]
+    (en/html-snippet (n-tpl/render template))))
+
