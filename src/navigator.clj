@@ -85,9 +85,11 @@
   (tx conn [(merge {:db/id eid} (select-keys entity (:comp valid-fields)))]))
 
 (defn update-competency
+  ;; TODO: refactor me?
   "Consider using :comp/id-sk instead of the entity ID here, IF every :comp has a :comp/id-sk."
-  [conn & {:keys [eid] :as entity}]
-  (apply transact-competency conn eid (select-keys entity (:comp updatable-fields))))
+  [conn entity]
+  ;;[(:db/id entity) (select-keys entity (:comp updatable-fields))]
+  (apply transact-competency conn (:db/id entity) (flatten (seq (select-keys entity (:comp updatable-fields))))))
 
 (defn create-competency
   "Create a new competency"
