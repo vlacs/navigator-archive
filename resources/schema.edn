@@ -33,8 +33,8 @@
                       ;; TODO: (:name :version :type) unique
                       [:duration-rating-days :bigint]
                       [:comp :ref :many]
-                      [:credit-value-numerator :integer]
-                      [:credit-value-denominator :integer]]}]
+                      [:credit-value-numerator :bigint]
+                      [:credit-value-denominator :bigint]]}]
  [:task {:attrs [[:id-sk :string :db.unique/identity]
                  [:name :string]
                  [:version :string]
