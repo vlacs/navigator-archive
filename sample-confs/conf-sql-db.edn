@@ -1,5 +1,0 @@
-{:classname "com.postgres.jdbc.Driver"
- :subprotocol "postgresql"
- :subname "//hostname/dbname"
- :user "test"
- :password "secret"}

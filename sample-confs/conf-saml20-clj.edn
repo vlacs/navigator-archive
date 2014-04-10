@@ -1,5 +1,0 @@
-{:x509-cert "Put x.509 cert here."
- :idp-url "https://website-to-your-idp.com/idp/saml20"
- :format "saml:user-format:goes-here"
- :timeout 10 ;; minutes
- }
