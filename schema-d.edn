@@ -2,68 +2,68 @@
 ;; You can use :db/unique and :db/index together to define an
 ;; attribute to represent an external key." quoted from
 ;; http://docs.datomic.com/schema.html
-[:comp {:attrs [[:id-sk :string "Shared key for 3rd parties" :db.unique/identity]
-                [:name :string :indexed]    ; not null
-                [:description :string :indexed]
+[[:comp {:attrs [[:id-sk :string "Shared key for 3rd parties" :db.unique/identity]
+                 [:name :string :indexed] ; not null
+                 [:description :string :indexed]
 
-                ;; TODO: We need a fn here to ensure that #{:name :version} is unique
-                [:version :string]    ; not null
-                [:status :enum [:active :archived]]   ; not null
-                [:tags :ref :many]]}
- :comp-tag {:attrs [[:name :string :indexed]    ; not null
-                    [:description :string]
+                 ;; TODO: We need a fn here to ensure that #{:name :version} is unique
+                 [:version :string]               ; not null
+                 [:status :enum [:active :archived]] ; not null
+                 [:tags :ref :many]]}]
+ [:comp-tag {:attrs [[:name :string :indexed] ; not null
+                     [:description :string]
 
-                    ;; TODO: We need a fn here to ensure that #{:name :version} is unique
-                    [:version :string]    ; not null
-                    [:type :string :indexed]    ; not null
-                    [:isrequestable :boolean]   ; not null, default f
-                    [:icon :uri]
-                    [:status :enum [:active :archived]]  ; not null
-                    [:isfinal :boolean]   ; not null, default f
-                    [:disp-ctxs :ref :many]
-                    [:child-of :ref :many]  ; replaces comp_tag2parent
-                    ]}
- :comp-tag-disp-ctx {:attr [[:name :string]]}
- :perf-asmt {:attrs [[:id-sk :string "Shared key for 3rd parties" :db.unique/identity]
-                     [:name :string]
+                     ;; TODO: We need a fn here to ensure that #{:name :version} is unique
                      [:version :string]     ; not null
+                     [:type :string :indexed] ; not null
+                     [:isrequestable :boolean] ; not null, default f
+                     [:icon :uri]
+                     [:status :enum [:active :archived]] ; not null
+                     [:isfinal :boolean] ; not null, default f
+                     [:disp-ctxs :ref :many]
+                     [:child-of :ref :many] ; replaces comp_tag2parent
+                     ]}]
+ [:comp-tag-disp-ctx {:attr [[:name :string]]}]
+ [:perf-asmt {:attrs [[:id-sk :string "Shared key for 3rd parties" :db.unique/identity]
+                      [:name :string]
+                      [:version :string] ; not null
 
-                     ;; Example types: :project :course-competency
-                     [:type :string]        ; not null
-                     ;; TODO: (:name :version :type) unique
-                     [:duration-rating-days :bigint]
-                     [:comp :ref :many]
-                     [:credit-value-numerator :integer]
-                     [:credit-value-denominator :integer]]}
- :task {:attrs [[:id-sk :string :db.unique/identity]
-                [:name :string]
-                [:version :string]
+                      ;; Example types: :project :course-competency
+                      [:type :string] ; not null
+                      ;; TODO: (:name :version :type) unique
+                      [:duration-rating-days :bigint]
+                      [:comp :ref :many]
+                      [:credit-value-numerator :integer]
+                      [:credit-value-denominator :integer]]}]
+ [:task {:attrs [[:id-sk :string :db.unique/identity]
+                 [:name :string]
+                 [:version :string]
 
-                ;; TODO: is this correct?
-                [:comp :ref]]}
- :user2comp {:attrs [[:sis-user-id :bigint :indexed]
-                     [:comp :ref :indexed]
-                     [:start-date :instant]
-                     [:iscomplete :boolean]     ; not null, default f
-                     [:isoverridden :boolean]   ; not null, default f
-                     [:completion-date :instant]
-                     [:proposed-completion-date :instant]
-                     [:current-score :string]
-                     [:final-score :string]
-                     [:score-denominator :bigint]
-                     [:score-type :enum [:numeric :letter :pass-fail :qualitative]]     ; enum is what we want here, n'est-ce pas?
-                     [:qualitative-notes :string]]}
+                 ;; TODO: is this correct?
+                 [:comp :ref]]}]
+ [:user2comp {:attrs [[:sis-user-id :bigint :indexed]
+                      [:comp :ref :indexed]
+                      [:start-date :instant]
+                      [:iscomplete :boolean] ; not null, default f
+                      [:isoverridden :boolean] ; not null, default f
+                      [:completion-date :instant]
+                      [:proposed-completion-date :instant]
+                      [:current-score :string]
+                      [:final-score :string]
+                      [:score-denominator :bigint]
+                      [:score-type :enum [:numeric :letter :pass-fail :qualitative]] ; enum is what we want here, n'est-ce pas?
+                      [:qualitative-notes :string]]}]
 
- :user2perf-asmt {:attrs [[:user :ref]
-                          [:perf-asmt :ref]
-                          ;; TODO: finish this
-                          [:grade :boolean]]}
+ [:user2perf-asmt {:attrs [[:user :ref]
+                           [:perf-asmt :ref]
+                           ;; TODO: finish this
+                           [:grade :boolean]]}]
 
- :user2task {:attrs [[:user :ref]
-                     [:task :ref]
-                     ;; TODO: finish this
-                     [:progress :boolean]]}
+ [:user2task {:attrs [[:user :ref]
+                      [:task :ref]
+                      ;; TODO: finish this
+                      [:progress :boolean]]}]
 
- :config {:attrs [[:key :string :indexed]    ; not null
-                  [:value :string :indexed]]}
+ [:config {:attrs [[:key :string :indexed] ; not null
+                   [:value :string :indexed]]}]
  ]
