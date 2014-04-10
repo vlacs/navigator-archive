@@ -34,6 +34,7 @@
 (defn split-paragraphs
   "Split the given text into a vector of paragraphs."
   [text]
-  (filter #(not (str/blank? %))
-          (str/split text #"[\n\r]")))
+  (let [text (or text "default")]
+    (filter #(not (str/blank? %))
+            (str/split text #"[\n\r]"))))
 
