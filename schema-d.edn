@@ -28,7 +28,7 @@
                       [:name :string]
                       [:version :string] ; not null
 
-                      ;; Example types: :project :course-competency
+                      ;; Example types: :project :course-competency ... TODO: enum?
                       [:type :string] ; not null
                       ;; TODO: (:name :version :type) unique
                       [:duration-rating-days :bigint]
