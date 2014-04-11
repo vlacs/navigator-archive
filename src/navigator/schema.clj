@@ -33,15 +33,16 @@
                         [:type :string] ; not null
                         ;; TODO: (:name :version :type) unique
                         [:duration-rating-days :bigint]
-                        [:comp :ref :many]
+                        [:comps :ref :many]
                         [:credit-value-numerator :bigint]
                         [:credit-value-denominator :bigint]]}]
    [:task {:attrs [[:id-sk :string :db.unique/identity]
                    [:name :string]
                    [:version :string]
+                   [:description :string]
 
                    ;; TODO: is this correct?
-                   [:comp :ref]]}]
+                   [:comps :ref :many]]}]
    [:user2comp {:attrs [[:sis-user-id :bigint :indexed]
                         [:comp :ref :indexed]
                         [:start-date :instant]
@@ -68,3 +69,5 @@
    [:config {:attrs [[:key :string :indexed] ; not null
                      [:value :string :indexed]]}]
    ])
+
+(def schema-map (into {} schema))
