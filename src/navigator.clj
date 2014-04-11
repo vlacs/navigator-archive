@@ -80,6 +80,36 @@
   (fn [conn & {:keys [eid] :as entity}]
     (apply transact-fn conn eid (select-keys entity updatable-fields))))
 
+
+
+
+(defn update-competency2
+  [conn comp]
+  (tx conn [(select-keys entity (conj :db/id (:comp updatable-fields)))]))
+
+(defn filter-attrs
+  [entity entity-type]
+  (select-keys entity (conj :db/id (entity-type updatable-fields))))
+
+(defn update-competency3
+  [conn comp]
+  (tx conn [(filter-attrs comp :comp)]))
+
+(defn update-entity
+  [conn entity-type entity]
+  (tx conn [(filter-attrs entity entity-type)]))
+
+(defn create-competency2
+  "Create a new competency"
+  ;; TODO: where does id-sk come from?
+  [conn name version status & {:as optional-fields}]
+  (tx conn [(merge (select-keys optional-fields (:comp valid-fields))
+                   {:db/id (d/tempid :db.part/user)
+                    :comp/name name
+                    :comp/version version
+                    :comp/status status})]))
+
+
 (defn- transact-competency
   [conn eid & {:as entity}]
   (tx conn [(merge {:db/id eid} (select-keys entity (:comp valid-fields)))]))
