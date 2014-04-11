@@ -19,6 +19,24 @@
   [(schematode/init-schematode-constraints! (:db-conn system))
    (schematode/load-schema! (:db-conn system) schema/schema)])
 
+;; utitlities
+
+(defn slam
+  "Slams two keywords together into one namespaced keyword"
+  [ns n]
+  (keyword (name ns) (name n)))
+
+(defn prefix-keys
+  "Prefix all keys in a map with prefix"
+  [m prefix]
+  (into {} (for [[k v] m] [(slam prefix k) v])))
+
+(defn get-partition
+  "Get the db partition an entity is in"
+  [entity-type]
+  (or (get-in schema/schema-map [entity-type :part])
+      :db.part/user))
+
 ;; Get functions
 
 (defn get-entity
