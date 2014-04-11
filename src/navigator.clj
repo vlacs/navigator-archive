@@ -6,13 +6,17 @@
             [datomic-schematode.core :as schematode]
             [navigator.schema :as schema]))
 
-(def updatable-fields
-  {:comp [:comp/description :comp/status :comp/tags]})
+;; TODO: maybe we split up this file?
 
-(def write-once-fields
-  {:comp [:comp/id-sk :comp/name :comp/version]})
+(def updatable-attrs
+  {:comp [:comp/name :comp/version :comp/description :comp/status :comp/tags]
+   :task [:task/name :task/version :task/description :task/comps]})
 
-(def valid-fields (merge-with concat write-once-fields updatable-fields))
+(def write-once-attrs
+  {:comp [:comp/id-sk]
+   :task [:task/id-sk]})
+
+(def valid-attrs (merge-with concat write-once-attrs updatable-attrs))
 
 ;; TODO: use https://github.com/rkneufeld/conformity ... in schematode. But noting it here. :-)
 (defn init! [system]
