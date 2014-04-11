@@ -16,19 +16,22 @@
                            :comp/id-sk "i am a shared key"
                            :comp/name "COMP there it is"}]))))
   (testing "create-competency"
-    (is (n-tl/ensure-tx (navigator/create-competency
+    (is (n-tl/ensure-tx (navigator/tx-entity
                          (:db-conn nt-config/system)
-                         "I will keep typing"
-                         "v1"
-                         :comp.status/active
-                         :comp/id-sk "yeep"))))
+                         {:db/id (d/tempid :db.part/user)
+                          :comp/name "I will keep typing"
+                          :comp/version "v1"
+                          :comp/status :comp.status/active
+                          :comp/id-sk "yeep"}
+                         :comp))))
   (testing "create duplicate competency"
-    (is (n-tl/should-throw @(navigator/create-competency
+    (is (n-tl/should-throw @(navigator/tx-entity
                              (:db-conn nt-config/system)
-                             "I will keep typing"
-                             "v1"
-                             :comp.status/active
-                             :comp/id-sk "jeep")))))
+                             {:db/id (d/tempid :db.part/user)
+                              :comp/name "I will keep typing"
+                              :comp/version "v1"
+                              :comp/status :comp.status/active
+                              :comp/id-sk "jeep"})))))
 
 (deftest update-comps
   (is (n-tl/ensure-tx (navigator/create-competency
