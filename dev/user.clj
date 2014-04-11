@@ -42,6 +42,11 @@
   (pprint (apply touch-that query data-sources)))
 
 (comment
+
+  (navigator/create-competency (:db-conn nt-config/system) "I will keep typing" "v1" :comp.status/active :comp/id-sk "jeep")
+  (ptouch-that '[:find ?e :where [?e :comp/name]])
+
+  
   ;; Utility fns
   ;; -----------------------
   (defn html->hiccup [html]
