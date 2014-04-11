@@ -47,21 +47,21 @@
   "Gets an entity using query and bindings. The db conn is assumed to
   be the first binding of the query and doesn't need to be included in
   the bindings part of the arguments."
-  ([conn query & bindings]
-     (d/entity (d/db conn) (ffirst (apply d/q query (d/db conn) bindings)))))
+  ([db-conn query & bindings]
+     (d/entity (d/db db-conn) (ffirst (apply d/q query (d/db db-conn) bindings)))))
 
 (defn get-competency
   "Get competency by shared key"
-  [conn id-sk]
-  (get-entity conn '[:find ?e
+  [db-conn id-sk]
+  (get-entity db-conn '[:find ?e
                      :in $ ?id-sk
                      :where [?e :comp/id-sk ?id-sk]]
               id-sk))
 
 (defn get-competency-by-name-version
   "Get competency by name+verion"
-  [conn name version]
-  (get-entity conn '[:find ?e
+  [db-conn name version]
+  (get-entity db-conn '[:find ?e
                      :in $ ?name ?version
                      :where [?e :comp/name ?name]
                             [?e :comp/version ?version]]
