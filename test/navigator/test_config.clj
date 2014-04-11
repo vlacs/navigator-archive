@@ -11,7 +11,8 @@
 
 (defn stop-datomic! [system]
   (dissoc system :db-conn)
-  (d/delete-database datomic-uri))
+  (d/delete-database datomic-uri)
+  system)
 
 (defn start!
   "Starts the current development system."
