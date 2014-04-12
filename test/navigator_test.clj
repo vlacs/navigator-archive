@@ -33,6 +33,7 @@
                               :comp/status :comp.status/active
                               :comp/id-sk "jeep"})))))
 
+#_
 (deftest update-comps
   (is (n-tl/ensure-tx (navigator/create-competency
                        (:db-conn nt-config/system)
