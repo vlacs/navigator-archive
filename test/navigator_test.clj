@@ -33,20 +33,22 @@
                               :comp/status :comp.status/active
                               :comp/id-sk "jeep"})))))
 
-#_
 (deftest update-comps
-  (is (n-tl/ensure-tx (navigator/create-competency
+  (is (n-tl/ensure-tx (navigator/tx-entity
                        (:db-conn nt-config/system)
-                       "can I update?"
-                       "v1"
-                       :comp.status/active
-                       :comp/id-sk "yeep")))
-  (is (n-tl/ensure-tx (navigator/update-competency
+                       {:db/id (d/tempid :db.part/user)
+                        :comp/name "can I update?"
+                        :comp/version "v1"
+                        :comp/status :comp.status/active
+                        :comp/id-sk "yeep"}
+                       :comp)))
+  (is (n-tl/ensure-tx (navigator/tx-update-entity
                        (:db-conn nt-config/system)
                        {:comp/name "can I update?"
                         :comp/version "v1"
                         :comp/status :comp.status/active
-                        :db/id [:comp/id-sk "yeep"]}))))
+                        :db/id [:comp/id-sk "yeep"]}
+                       :comp))))
 
 (comment
   (map #(keys (deref %))
