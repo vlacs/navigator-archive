@@ -15,40 +15,44 @@
                          [{:db/id (d/tempid :db.part/user)
                            :comp/id-sk "i am a shared key"
                            :comp/name "COMP there it is"}]))))
-  (testing "create-competency"
-    (is (n-tl/ensure-tx (navigator/tx-entity
-                         (:db-conn nt-config/system)
-                         {:db/id (d/tempid :db.part/user)
-                          :comp/name "I will keep typing"
-                          :comp/version "v1"
-                          :comp/status :comp.status/active
-                          :comp/id-sk "yeep"}
-                         :comp))))
-  (testing "create duplicate competency"
-    (is (n-tl/should-throw @(navigator/tx-entity
-                             (:db-conn nt-config/system)
-                             {:db/id (d/tempid :db.part/user)
-                              :comp/name "I will keep typing"
-                              :comp/version "v1"
-                              :comp/status :comp.status/active
-                              :comp/id-sk "jeep"})))))
+  (let [comp {:comp/name "I will keep typing"
+              :comp/version "v1"
+              :comp/status :comp.status/active
+              :comp/id-sk "yeep"}]
+    (testing "create competency"
+      (is (n-tl/ensure-tx (navigator/tx-entity
+                           (:db-conn nt-config/system)
+                           (merge {:db/id (d/tempid :db.part/user)}
+                                  comp)
+                           :comp))))
+    (testing "get comp"
+      (is (= (sort comp)
+             (sort (into {} (navigator/get-competency (:db-conn nt-config/system) "yeep"))))))
+    (testing "create duplicate competency"
+      (is (n-tl/should-throw @(navigator/tx-entity
+                               (:db-conn nt-config/system)
+                               (merge {:db/id (d/tempid :db.part/user)}
+                                      (assoc comp :comp/id-sk "jeep"))))))))
 
 (deftest update-comps
-  (is (n-tl/ensure-tx (navigator/tx-entity
-                       (:db-conn nt-config/system)
-                       {:db/id (d/tempid :db.part/user)
-                        :comp/name "can I update?"
-                        :comp/version "v1"
-                        :comp/status :comp.status/active
-                        :comp/id-sk "yeep"}
-                       :comp)))
-  (is (n-tl/ensure-tx (navigator/tx-update-entity
-                       (:db-conn nt-config/system)
-                       {:comp/name "can I update?"
-                        :comp/version "v1"
-                        :comp/status :comp.status/active
-                        :db/id [:comp/id-sk "yeep"]}
-                       :comp))))
+  (let [comp {:comp/name "can I update?"
+              :comp/version "v1"
+              :comp/status :comp.status/active
+              :comp/id-sk "yeep"}
+        comp-archived (assoc comp :comp/status :comp.status/archived)]
+    (testing "update competency"
+      (is (n-tl/ensure-tx (navigator/tx-entity
+                           (:db-conn nt-config/system)
+                           (merge {:db/id (d/tempid :db.part/user)}
+                                  comp)
+                           :comp)))
+      (is (n-tl/ensure-tx (navigator/tx-update-entity
+                           (:db-conn nt-config/system)
+                           (merge {:db/id [:comp/id-sk "yeep"]}
+                                  comp-archived)
+                           :comp)))
+      (is (= (sort comp-archived)
+             (sort (into {} (navigator/get-competency (:db-conn nt-config/system) "yeep"))))))))
 
 (comment
   (map #(keys (deref %))
