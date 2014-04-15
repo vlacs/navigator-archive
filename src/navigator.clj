@@ -10,6 +10,10 @@
 
 (def updatable-attrs
   {:comp [:comp/name :comp/version :comp/description :comp/status :comp/tags]
+   :comp-tag [:comp-tag/name :comp-tag/description :comp-tag/version
+              :comp-tag/type :comp-tag/isrequestable :comp-tag/icon
+              :comp-tag/status :comp-tag/isfinal :comp-tag/:disp-ctxs
+              :comp-tag/child-of]
    :task [:task/name :task/version :task/description :task/comps]})
 
 (def write-once-attrs
