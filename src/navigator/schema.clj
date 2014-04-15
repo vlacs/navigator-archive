@@ -5,8 +5,6 @@
   [[:comp {:attrs [[:id-sk :string "Shared key for 3rd parties" :db.unique/identity]
                    [:name :string :indexed] ; not null
                    [:description :string :indexed]
-
-                   ;; TODO: We need a fn here to ensure that #{:name :version} is unique
                    [:version :string]               ; not null
                    [:status :enum [:active :archived :preactive]] ; not null
                    [:tags :ref :many]]
