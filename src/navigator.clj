@@ -4,46 +4,13 @@
   (:require [clojure.edn :as edn]
             [datomic.api :as d]
             [datomic-schematode.core :as schematode]
-            [navigator.schema :as schema]))
-
-;; TODO: maybe we split up this file?
-
-(def updatable-attrs
-  {:comp [:comp/name :comp/version :comp/description :comp/status :comp/tags]
-   :comp-tag [:comp-tag/name :comp-tag/description :comp-tag/version
-              :comp-tag/type :comp-tag/isrequestable :comp-tag/icon
-              :comp-tag/status :comp-tag/isfinal :comp-tag/:disp-ctxs
-              :comp-tag/child-of]
-   :task [:task/name :task/version :task/description :task/comps]})
-
-(def write-once-attrs
-  {:comp [:comp/id-sk]
-   :task [:task/id-sk]})
-
-(def valid-attrs (merge-with concat write-once-attrs updatable-attrs))
+            [navigator.schema :as schema]
+            [hatch]))
 
 ;; TODO: use https://github.com/rkneufeld/conformity ... in schematode. But noting it here. :-)
 (defn init! [system]
   [(schematode/init-schematode-constraints! (:db-conn system))
    (schematode/load-schema! (:db-conn system) schema/schema)])
-
-;; utitlities
-
-(defn slam
-  "Slams two keywords together into one namespaced keyword"
-  [ns n]
-  (keyword (name ns) (name n)))
-
-(defn prefix-keys
-  "Prefix all keys in a map with prefix"
-  [m prefix]
-  (into {} (for [[k v] m] [(slam prefix k) v])))
-
-(defn get-partition
-  "Get the db partition an entity is in"
-  [entity-type]
-  (or (get-in schema/schema-map [entity-type :part])
-      :db.part/user))
 
 ;; Get functions
 
@@ -90,34 +57,28 @@
 
 ;; Creation/update functions
 
-(defn tx
-  "transact with schematode constraints"
-  [db-conn txs]
-  (schematode/tx db-conn :enforce txs))
+(def partitions (hatch/schematode->partitions schema/schema))
 
-(defn filter-op-attrs*
-  [op entity entity-type]
-  (select-keys entity (conj (entity-type op) :db/id)))
+(def valid-attrs (hatch/schematode->attrs schema/schema))
 
-(def filter-update-attrs
-  (partial filter-op-attrs* updatable-attrs))
-
-;; TODO: should we rename this?
-(def filter-create-attrs
-  (partial filter-op-attrs* valid-attrs))
-
-(defn tx-update-entity
-  [db-conn entity entity-type]
-  (tx db-conn [(filter-update-attrs entity entity-type)]))
-
-(defn tx-entity
-  [db-conn entity entity-type]
-  (tx db-conn [(filter-create-attrs entity entity-type)]))
+(def tx-entity! (partial hatch/tx-clean-entity! partitions valid-attrs))
 
 ;; queue functions
 
 (defn task-in [db-conn message]
-  (tx-entity db-conn (merge {:db/id (d/tempid (get-partition :task))
-                          :task/id-sk (str (get-in message [:header :entity-id :task-id]))}
-                         (prefix-keys (get-in message [:payload :entity]) :task))
-             :task))
+  (tx-entity! db-conn :task (merge {:task/id-sk (str (get-in message [:header :entity-id :task-id]))}
+                                   (hatch/slam-all (get-in message [:payload :entity]) :task))))
+
+
+(comment
+
+  (navigator/task-in (:db-conn nt-config/system)
+                     {:payload
+                      {:entity
+                       {:competency-parents [1 2 3],
+                        :name "tie shoes (together)",
+                        :version "v3"}},
+                      :header
+                      {:entity-type "task", :operation "assert", :entity-id {:task-id 17}}})
+
+)

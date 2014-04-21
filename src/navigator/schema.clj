@@ -65,5 +65,3 @@
    [:config {:attrs [[:key :string :indexed] ; not null
                      [:value :string :indexed]]}]
    ])
-
-(def schema-map (into {} schema))
