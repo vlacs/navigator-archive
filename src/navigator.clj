@@ -3,14 +3,8 @@
     :doc "This library knows how to work with competency data."}
   (:require [clojure.edn :as edn]
             [datomic.api :as d]
-            [datomic-schematode.core :as schematode]
             [navigator.schema :as schema]
             [hatch]))
-
-;; TODO: use https://github.com/rkneufeld/conformity ... in schematode. But noting it here. :-)
-(defn init! [system]
-  [(schematode/init-schematode-constraints! (:db-conn system))
-   (schematode/load-schema! (:db-conn system) schema/schema)])
 
 ;; Get functions
 
