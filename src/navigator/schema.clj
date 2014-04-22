@@ -27,11 +27,11 @@
 
                         ;; Example types: :project :course-competency ... TODO: enum?
                         [:type :string] ; not null
-                        ;; TODO: (:name :version :type) unique
                         [:duration-rating-days :bigint]
                         [:comps :ref :many]
                         [:credit-value-numerator :bigint]
-                        [:credit-value-denominator :bigint]]}]
+                        [:credit-value-denominator :bigint]]
+               :dbfns [(constraints/unique :perf-asmt :name :version :type)]}]
    [:task {:attrs [[:id-sk :string :db.unique/identity]
                    [:name :string]
                    [:version :string]
