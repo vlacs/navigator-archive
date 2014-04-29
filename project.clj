@@ -7,7 +7,7 @@
                  [org.clojure/tools.cli "0.2.4"]
                  [com.datomic/datomic-free "0.9.4707"]
                  [datomic-schematode "0.1.0-RC1"]
-                 [org.vlacs/hatch "0.1.1"]]
+                 [org.vlacs/hatch "0.1.2"]]
   :pedantic? :warn ; :abort
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
