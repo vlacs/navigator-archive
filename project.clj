@@ -7,6 +7,8 @@
                  [org.clojure/tools.cli "0.2.4"]
                  [com.datomic/datomic-free "0.9.4707"]
                  [datomic-schematode "0.1.0-RC1"]
+                 ^{:voom {:repo "https://github.com/vlacs/timber"}}
+                 [org.vlacs/timber "0.1.2-20140429_021539-g5842210"]
                  [org.vlacs/hatch "0.1.2"]]
   :pedantic? :warn ; :abort
   :profiles {:dev {:source-paths ["dev"]
