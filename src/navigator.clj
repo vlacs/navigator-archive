@@ -2,9 +2,27 @@
   ^{:author "David Zaharee <dzaharee@vlacs.org>"
     :doc "This library knows how to work with competency data."}
   (:require [clojure.edn :as edn]
+            [helmsman.uri :as h-uri]
+            [helmsman.navigation :as h-nav]
             [datomic.api :as d]
             [navigator.schema :as schema]
+            [timber]
             [hatch]))
+
+;; front end
+
+(defn comp-map-handler
+  [request]
+  (timber/base-page
+   {:page-name "Competency Map"
+    :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
+    :user-name "Test User Name"
+    :main-menu nil
+    :user-menu nil
+    :page-content "Hello world."}))
+
+(def routes
+  [[:get "/comp-map/" comp-map-handler]])
 
 ;; Get functions
 
