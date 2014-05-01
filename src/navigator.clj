@@ -2,27 +2,22 @@
   ^{:author "David Zaharee <dzaharee@vlacs.org>"
     :doc "This library knows how to work with competency data."}
   (:require [clojure.edn :as edn]
-            [helmsman.uri :as h-uri]
-            [helmsman.navigation :as h-nav]
             [datomic.api :as d]
+            [liberator.core :refer [resource]]
             [navigator.schema :as schema]
-            [timber]
-            [hatch]))
+            [hatch]
+            [navigator.templates :as templates]))
 
 ;; front end
 
-(defn comp-map-handler
-  [request]
-  (timber/base-page
-   {:page-name "Competency Map"
-    :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
-    :user-name "Test User Name"
-    :main-menu nil
-    :user-menu nil
-    :page-content "Hello world."}))
+(def liberator-resources
+  "Core resources"
+  {:comp-map (resource :allowed-methods [:get]
+                       :available-media-types ["text/html"]
+                       :handle-ok (fn [ctx] (apply str (templates/view-comp-map ctx))))})
 
-(def routes
-  [[:get "/comp-map/" comp-map-handler]])
+(def helmsman-def
+  [[:any "/comp-map/" (:comp-map liberator-resources)]])
 
 ;; Get functions
 

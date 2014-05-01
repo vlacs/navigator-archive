@@ -19,9 +19,17 @@
   []
   (nt-config/start!))
 
-(defn reset []
-  (nt-config/stop!)
-  (refresh :after 'user/go))
+(defn go-jetty []
+  (nt-config/start! :jetty))
+
+(defn reset
+  ([] (reset 'user/go))
+  ([go-fn-symbol]
+     (nt-config/stop!)
+     (refresh :after go-fn-symbol)))
+
+(defn reset-jetty []
+  (reset 'user/go-jetty))
 
 (defn touch-that
   "Execute the specified query on the current DB and return the

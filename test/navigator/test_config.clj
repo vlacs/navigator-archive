@@ -1,10 +1,20 @@
 (ns navigator.test-config
   (:require [datomic.api :as d]
             [datomic-schematode.core :as schematode]
-            [navigator.schema :as schema]))
+            [navigator.schema :as schema]
+            [navigator]
+            [helmsman]
+            [timber.core :as timber]
+            [ring.adapter.jetty :as jetty]
+            [ring.middleware.params :refer [wrap-params]]))
 
 (def system {:datomic-uri "datomic:mem://navigator-test"})
 (def datomic-uri (:datomic-uri system))
+
+(def handler
+  (helmsman/compile-routes (into [] (concat timber/helmsman-assets
+                                            navigator/helmsman-def
+                                            [[wrap-params]]))))
 
 (defn start-datomic! [system]
   (d/create-database datomic-uri)
@@ -20,20 +30,29 @@
   (d/delete-database datomic-uri)
   system)
 
+(defn start-jetty! [system]
+  (assoc system :jetty (jetty/run-jetty #'handler {:port 8080 :join? false})))
+
+(defn stop-jetty! [system]
+  (if-let [jetty-server (:jetty system)]
+    (.stop jetty-server)
+    (dissoc system :jetty)))
+
 (defn start!
   "Starts the current development system."
-  []
+  [& options]
   (alter-var-root #'system start-datomic!)
   (load-schema! system)
-  #_
-  (navigator/init! system)
-  )
+  (if (some #(= :jetty %) options)
+    (alter-var-root #'system start-jetty!)))
 
 (defn stop!
   "Shuts down and destroys the current development system."
   []
   (alter-var-root #'system
-                  (fn [s] (when s (stop-datomic! s)))))
+                  (fn [s] (when s (-> s
+                                      (stop-datomic!)
+                                      (stop-jetty!))))))
 
 (defn testing-fixture [f]
   (start!)
