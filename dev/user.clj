@@ -15,11 +15,13 @@
 ;; N.B.: (ns cljs.user (:use [clojure.zip :only [insert-child]])) (see http://stackoverflow.com/questions/12879027/cannot-use-in-clojurescript-repl)
 
 (defn go
-  "Initializes the current development system and starts it running."
+  "Start with Datomic."
   []
   (nt-config/start!))
 
-(defn go-jetty []
+(defn go-jetty
+  "Start with Datomic and Jetty."
+  []
   (nt-config/start! :jetty))
 
 (defn reset
@@ -28,7 +30,9 @@
      (nt-config/stop!)
      (refresh :after go-fn-symbol)))
 
-(defn reset-jetty []
+(defn reset-jetty
+  "Convenience fn if you want to reset and have Jetty."
+  []
   (reset 'user/go-jetty))
 
 (defn touch-that
