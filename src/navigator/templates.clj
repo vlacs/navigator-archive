@@ -35,7 +35,7 @@
 
 (defn view-comp-map
   "Users view"
-  [ctx]
+  [comp-map ctx]
   (layout-main {:title "VLACS Navigator - Competency Map"
-                :content (pg-comp-map)
+                :content (str comp-map) ; (pg-comp-map)
                 :ctx ctx}))

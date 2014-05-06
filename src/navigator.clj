@@ -6,18 +6,15 @@
             [liberator.core :refer [resource]]
             [navigator.schema :as schema]
             [hatch]
-            [navigator.templates :as templates]))
+            [navigator.templates :as templates]
+            [navigator.data :as data]))
 
 ;; front end
 
-(def liberator-resources
-  "Core resources"
-  {:comp-map (resource :allowed-methods [:get]
-                       :available-media-types ["text/html"]
-                       :handle-ok (fn [ctx] (apply str (templates/view-comp-map ctx))))})
-
-(def helmsman-def
-  [[:any "/comp-map/" (:comp-map liberator-resources)]])
+(defn helmsman-def [db-conn]
+  [[:get "/comp-map/" (resource :allowed-methods [:get]
+                                :available-media-types ["text/html"]
+                                :handle-ok (fn [ctx] (apply str (templates/view-comp-map (data/get-comp-map db-conn ctx) ctx))))]])
 
 ;; Get functions
 
