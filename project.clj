@@ -5,11 +5,13 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/tools.cli "0.2.4"]
-                 [com.datomic/datomic-free "0.9.4707"]
-                 [liberator "0.10.0"]
+                 [com.datomic/datomic-free "0.9.4707"
+                  :exclusions [commons-codec]]
+                 [liberator "0.10.0" :exclusions [hiccup]]
                  [datomic-schematode "0.1.0-RC1"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
-                 [org.vlacs/timber "0.1.2-20140429_021539-g5842210"]
+                 [org.vlacs/timber "0.1.7-20140506_025337-g4be87cc"
+                  :exclusions [hiccup]]
                  [org.vlacs/hatch "0.1.2"]
                  [org.vlacs/helmsman "0.2.5"]]
   :resource-paths ["resources"]
