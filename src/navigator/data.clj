@@ -1,10 +1,24 @@
 (ns navigator.data
-  (:require [datomic.api :as d]))
+  (:require [monocular]
+            [datomic.api :as d]))
 
-;; TODO: make this POC real
+(def comp-monocular-map
+  {:keywords {:comp filter-comp
+              :competency filter-comp
+              :tag filter-tag}
+   :default filter-all})
+
+(def comp-searcher (monocular/searcher comp-monocular-map))
+
+(defn combine-search [searcher previous new-raw]
+  (concat previous (monocular/parse searcher new-raw)))
+
 (defn get-comp-map [db-conn ctx]
-  (apply str (interpose " " (map #(d/touch
-                                   (d/entity
-                                    (d/db db-conn)
-                                    (first %)))
-                                 (d/q '[:find ?e :where [?e :db/ident]] (d/db db-conn))))))
+  (merge ctx
+         (if-let [competencies (get-competencies db-conn)]
+           (let [previous (get-in ctx [:request :params :search])
+                 new-raw (get-in ctx [:request :params :search-raw])
+                 combined-search (combine-search comp-searcher previous new-raw)]
+             (if (empty? combined-search) {:competencies competencies}
+                 {:competencies ((monocular/transform comp-searcher combined-search) competencies)
+                  :monocular combined-search})))))
