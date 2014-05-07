@@ -9,8 +9,7 @@
                   :exclusions [commons-codec]]
                  [liberator "0.10.0" :exclusions [hiccup]]
                  [datomic-schematode "0.1.0-RC1"]
-                 ^{:voom {:repo "https://github.com/vlacs/timber"}}
-                 [org.vlacs/timber "0.1.7-20140506_025337-g4be87cc"
+                 [org.vlacs/timber "0.1.7"
                   :exclusions [hiccup]]
                  [org.vlacs/hatch "0.1.2"]
                  [org.vlacs/helmsman "0.2.5"]]

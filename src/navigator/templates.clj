@@ -9,7 +9,7 @@
   (timber/base-page
    {:page-name page-name
     :brand brand
-    :asset-uri-path (h-uri/relative-uri request (h-nav/id->uri-path request :timber/assets))
+    :asset-uri-path (h-nav/id->uri-path request :timber/assets)
     :user-name user-name
     :main-menu main-menu
     :user-menu user-menu
