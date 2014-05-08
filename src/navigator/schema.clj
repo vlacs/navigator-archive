@@ -21,7 +21,8 @@
                        [:child-of :ref :many]]
                :dbfns [(constraints/unique :comp-tag :name :version)]}]
    [:comp-tag-disp-ctx {:attr [[:name :string]]}]
-   [:perf-asmt {:attrs [[:id-sk :string "Shared key for 3rd parties" :db.unique/identity]
+   [:perf-asmt {:attrs [[:id-sk :string "Shared key from 3rd parties"]
+                        [:id-sk-origin :keyword] ; e.g., :moodle, :show-evidence, etc.
                         [:name :string]
                         [:version :string] ; not null
 
@@ -32,7 +33,8 @@
                         [:credit-value-numerator :bigint]
                         [:credit-value-denominator :bigint]]
                :dbfns [(constraints/unique :perf-asmt :name :version :type)]}]
-   [:task {:attrs [[:id-sk :string :db.unique/identity]
+   [:task {:attrs [[:id-sk :string]
+                   [:id-sk-origin :keyword] ; e.g., :moodle, :show-evidence, etc.
                    [:name :string]
                    [:version :string]
                    [:description :string]
