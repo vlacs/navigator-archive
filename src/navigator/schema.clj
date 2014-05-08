@@ -32,7 +32,8 @@
                         [:comps :ref :many]
                         [:credit-value-numerator :bigint]
                         [:credit-value-denominator :bigint]]
-               :dbfns [(constraints/unique :perf-asmt :name :version :type)]}]
+               :dbfns [(constraints/unique :perf-asmt :name :version :type)
+                       (constraints/unique :perf-asmt :id-sk :id-sk-origin)]}]
    [:task {:attrs [[:id-sk :string]
                    [:id-sk-origin :keyword] ; e.g., :moodle, :show-evidence, etc.
                    [:name :string]
@@ -40,7 +41,8 @@
                    [:description :string]
 
                    ;; TODO: is this correct?
-                   [:comps :ref :many]]}]
+                   [:comps :ref :many]]
+           :dbfns [(constraints/unique :perf-asmt :id-sk :id-sk-origin)]}]
    [:user2comp {:attrs [[:sis-user-id :bigint :indexed]
                         [:comp :ref :indexed]
                         [:start-date :instant]
