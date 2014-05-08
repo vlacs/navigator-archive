@@ -6,7 +6,8 @@
             [helmsman]
             [timber.core :as timber]
             [ring.adapter.jetty :as jetty]
-            [ring.middleware.params :refer [wrap-params]]))
+            [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.stacktrace :refer [wrap-stacktrace]]))
 
 (def system {:datomic-uri "datomic:mem://navigator-test"})
 (def datomic-uri (:datomic-uri system))
@@ -14,7 +15,8 @@
 (defn routes [db-conn]
   (helmsman/compile-routes (into [] (concat timber/helmsman-assets
                                             (navigator/helmsman-def db-conn)
-                                            [[wrap-params]]))))
+                                            [[wrap-params]
+                                             [wrap-stacktrace]]))))
 
 (defn start-datomic! [system]
   (d/create-database datomic-uri)

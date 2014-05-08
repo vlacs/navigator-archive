@@ -1,7 +1,8 @@
 (ns navigator.data
   (:require [monocular.core :as monocular]
             [datomic.api :as d]
-            [clojure.set :refer [union]]))
+            [clojure.set :refer [union]]
+            [clojure.edn :as edn]))
 
 (defn- get-comp [db eid]
   (let [comp (into {} (d/entity db eid))]
@@ -10,10 +11,10 @@
            (map #(d/entity db (:db/id %))
                 (:comp/tags comp)))))
 
-(defn get-competencies [db-conn]
+(defn get-active-competencies [db-conn]
   (let [db (d/db db-conn)]
     (map #(get-comp db (first %))
-         (d/q '[:find ?e :where [?e :comp/name]] db))))
+         (d/q '[:find ?e :where [?e :comp/status :comp.status/active]] db))))
 
 (defn re-find-nil [pattern string]
   (if string
@@ -34,8 +35,8 @@
             comps)))
 
 (defn filter-all [s comps]
-  (union (filter-comp s comps)
-         (filter-tag s comps)))
+  (union (set (filter-comp s comps))
+         (set (filter-tag s comps))))
 
 (def comp-monocular-map
   {:keywords {:comp filter-comp
@@ -45,15 +46,22 @@
 
 (def comp-searcher (monocular/searcher comp-monocular-map))
 
-(defn combine-search [searcher previous new-raw]
-  (concat previous (monocular/parse searcher new-raw)))
+(defn combine-search [searcher previous search]
+  (into [] (concat previous
+                   (if (not-empty search)
+                     (monocular/parse searcher search)
+                     []))))
+
+(defn parse-search [ctx]
+  (merge ctx
+         {:monocular (or (combine-search comp-searcher
+                                         (edn/read-string (get-in ctx [:request :params "previous"]))
+                                         (get-in ctx [:request :params "search"]))
+                         [])}))
 
 (defn get-comp-map [db-conn ctx]
-  (merge ctx
-         (if-let [competencies (get-competencies db-conn)]
-           (let [previous (get-in ctx [:request :params :search])
-                 new-raw (get-in ctx [:request :params :search-raw])
-                 combined-search (combine-search comp-searcher previous new-raw)]
-             (if (empty? combined-search) {:competencies competencies}
-                 {:competencies ((monocular/transform comp-searcher combined-search) competencies)
-                  :monocular combined-search})))))
+  (merge ctx {:competencies (let [competencies (get-active-competencies db-conn)
+                                  search (:monocular ctx)]
+                              (if (empty? search)
+                                competencies
+                                ((monocular/transform comp-searcher search) competencies)))}))

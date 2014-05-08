@@ -13,12 +13,12 @@
                   :exclusions [hiccup]]
                  [org.vlacs/hatch "0.1.2"]
                  [org.vlacs/helmsman "0.2.5"]
-                 ^{:voom {:repo "https://github.com/vlacs/monocular" :branch "parse"}}
-                 [monocular "0.1.0-20140403_211902-g8bd15e3"]]
+                 ^{:voom {:repo "https://github.com/vlacs/monocular" :branch "master"}}
+                 [monocular "0.1.0-20140508_164213-gc75c8bf"]
+                 [ring "1.2.2"]]
   :resource-paths ["resources"]
   :pedantic? :warn ; :abort
   :profiles {:dev {:source-paths ["dev"]
-                   :dependencies [[org.clojure/tools.namespace "0.2.4"]
-                                  [ring "1.2.2"]]}}
+                   :dependencies [[org.clojure/tools.namespace "0.2.4"]]}}
   :repl-options {:init-ns user
                  :welcome (println "Anchors aweigh, and push the boat out. Please no panic stations.")})
