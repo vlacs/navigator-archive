@@ -55,6 +55,7 @@
 
 (comment
 
+  ;; TODO: put working examples here
   (navigator/create-competency (:db-conn nt-config/system) "I will keep typing" "v1" :comp.status/active :comp/id-sk "jeep")
   (ptouch-that '[:find ?e :where [?e :comp/name]])
 
