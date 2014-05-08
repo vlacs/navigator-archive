@@ -1,6 +1,41 @@
 (ns navigator.data
-  (:require [monocular]
-            [datomic.api :as d]))
+  (:require [monocular.core :as monocular]
+            [datomic.api :as d]
+            [clojure.set :refer [union]]))
+
+(defn- get-comp [db eid]
+  (let [comp (into {} (d/entity db eid))]
+    (assoc comp
+           :comp/tags
+           (map #(d/entity db (:db/id %))
+                (:comp/tags comp)))))
+
+(defn get-competencies [db-conn]
+  (let [db (d/db db-conn)]
+    (map #(get-comp db (first %))
+         (d/q '[:find ?e :where [?e :comp/name]] db))))
+
+(defn re-find-nil [pattern string]
+  (if string
+    (re-find pattern string)))
+
+(defn filter-comp [s comps]
+  (let [pattern (re-pattern (str "(?i)" s))]
+    (filter #(or (re-find-nil pattern (:comp/name %))
+                 (re-find-nil pattern (:comp/description %)))
+            comps)))
+
+(defn filter-tag [s comps]
+  (let [pattern (re-pattern (str "(?i)" s))]
+    (remove (fn filter-tag- [c]
+              (empty? (remove #(not (or (re-find-nil pattern (:comp-tag/name %))
+                                        (re-find-nil pattern (:comp-tag/description %))))
+                              (:comp/tags c))))
+            comps)))
+
+(defn filter-all [s comps]
+  (union (filter-comp s comps)
+         (filter-tag s comps)))
 
 (def comp-monocular-map
   {:keywords {:comp filter-comp

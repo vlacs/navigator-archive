@@ -15,7 +15,7 @@
   [[:get "/comp-map/" (resource :allowed-methods [:get]
                                 :available-media-types ["text/html"]
                                 :handle-ok (fn [ctx] (->> ctx
-                                                          (data/get-comp-map db-conn)
+                                                          #_(data/get-comp-map db-conn)
                                                           (templates/view-comp-map)
                                                           (apply str))))]])
 

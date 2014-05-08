@@ -12,7 +12,9 @@
                  [org.vlacs/timber "0.1.7"
                   :exclusions [hiccup]]
                  [org.vlacs/hatch "0.1.2"]
-                 [org.vlacs/helmsman "0.2.5"]]
+                 [org.vlacs/helmsman "0.2.5"]
+                 ^{:voom {:repo "https://github.com/vlacs/monocular" :branch "parse"}}
+                 [monocular "0.1.0-20140403_211902-g8bd15e3"]]
   :resource-paths ["resources"]
   :pedantic? :warn ; :abort
   :profiles {:dev {:source-paths ["dev"]
