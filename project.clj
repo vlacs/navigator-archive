@@ -12,7 +12,8 @@
                  [org.vlacs/timber "0.1.7"
                   :exclusions [hiccup]]
                  [org.vlacs/hatch "0.1.2"]
-                 [org.vlacs/helmsman "0.2.5"]]
+                 [org.vlacs/helmsman "0.2.5"]
+                 [valip "0.2.0"]]
   :resource-paths ["resources"]
   :pedantic? :warn ; :abort
   :profiles {:dev {:source-paths ["dev"]
