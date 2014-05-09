@@ -14,7 +14,6 @@
   [task]
   (validate task
             [:task/id-sk        present? "must be present"]
-            [:task/id-sk        digits?  "must consist of digits"]
             [:task/id-sk-origin present? "must be present"]
             [:task/name         present? "must be present"]
             [:task/version      present? "must be present"]
@@ -24,7 +23,6 @@
   [comp]
   (validate comp
             [:comp/id-sk       present? "must be present"]
-            [:comp/id-sk       digits?  "must consist of digits"]
             [:comp/name        present? "must be present"]
             [:comp/description present? "must be present"]
             [:comp/version     present? "must be present"]
@@ -49,7 +47,6 @@
   [perf-asmt]
   (validate perf-asmt
             [:perf-asmt/id-sk                    present? "must be present"]
-            [:perf-asmt/id-sk                    digits?  "must consist of digits"]
             [:perf-asmt/id-sk-origin             present? "must be present"]
             [:perf-asmt/name                     present? "must be present"]
             [:perf-asmt/version                  present? "must be present"]
