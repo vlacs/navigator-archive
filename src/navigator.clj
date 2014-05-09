@@ -92,7 +92,7 @@
 
 (defn perf-asmt-in [db-conn message]
   (let [perf-asmt (merge {:perf-asmt/id-sk (str (get-in message [:header :entity-id :perf-asmt-id]))}
-                                         (hatch/slam-all (get-in message [:paylod :entity]) :perf-asmt))]
+                                         (hatch/slam-all (get-in message [:payload :entity]) :perf-asmt))]
     (if (valid? validate-perf-asmt-in perf-asmt)
       (tx-entity! db-conn :perf-asmt perf-asmt)
       false)))

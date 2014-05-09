@@ -1,6 +1,6 @@
 (ns navigator.validation
   (:require [valip.core :refer [validate]]
-            [valip.predicates :refer [digits? present?]]))
+            [valip.predicates :refer [url? present?]]))
 
 
 (defn valid?
@@ -36,10 +36,8 @@
             [:comp-tag/description   present? "must be present"]
             [:comp-tag/version       present? "must be present"]
             [:comp-tag/type          present? "must be present"]
-            [:comp-tag/isrequestable present? "must be present"]
-            [:comp-tag/icon          present? "must be present"]
+            [:comp-tag/icon          url?     "must be a url"]
             [:comp-tag/status        present? "must be present"]
-            [:comp-tag/isfinal       present? "must be present"]
             [:comp-tag/disp-ctxs     present? "must be present"]
             [:comp-tag/child-of      present? "must be present"]))
 
@@ -51,10 +49,7 @@
             [:perf-asmt/name                     present? "must be present"]
             [:perf-asmt/version                  present? "must be present"]
             [:perf-asmt/type                     present? "must be present"]
-            [:perf-asmt/duration-rating-days     present? "must be present"]
-            [:perf-asmt/comps                    present? "must be present"]
-            [:perf-asmt/credit-value-numerator   present? "must be present"]
-            [:perf-asmt/credit-value-denominator present? "must be present"]))
+            [:perf-asmt/comps                    present? "must be present"]))
 
 (defn validate-user2comp-in
   [user2comp]
@@ -65,12 +60,10 @@
             [:user2comp/proposed-completion-date present? "must be present"]
             [:user2comp/current-score            present? "must be present"]
             [:user2comp/final-score              present? "must be present"]
-            [:user2comp/score-denominator        present? "must be present"]
             [:user2comp/score-type               present? "must be present"]))
 
 (defn validate-user2perf-asmt-in
   [user2perf-asmt]
   (validate user2perf-asmt
             [:user2perf-asmt/user      present? "must be present"]
-            [:user2perf-asmt/perf-asmt present? "must be present"]
-            [:user2perf-asmt/grade     present? "must be present"]))
+            [:user2perf-asmt/perf-asmt present? "must be present"]))
