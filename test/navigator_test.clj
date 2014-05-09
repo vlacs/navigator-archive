@@ -40,6 +40,98 @@
       (is (= (sort comp-archived)
              (sort (into {} (navigator/get-competency (:db-conn nt-config/system) "yeep"))))))))
 
+;;queue functions
+
+(deftest task-in-test
+  (let [message {:payload
+                 {:entity
+                  {;;hmm valip won't validate a keyword...
+                   :id-sk-origin "show-evidence"
+                   :name "name"
+                   :version "v1"
+                   :description "description"}}
+                 :header
+                 {:entity-type "task" :operation "assert" :entity-id {:task-id 32}}}]
+    (testing "task-in"
+      (is (not= (navigator/task-in (:db-conn nt-config/system) message) false)))))
+
+(deftest comp-in-test
+  (let [message {:payload
+                 {:entity
+                  {:name "name"
+                   :description "description"
+                   :version "v1"
+                   :status "active"
+                   :tags "tag"}}
+                 :header
+                 {:entity-type "comp" :operation "assert" :entity-id {:comp-id 3280}}}]
+    (testing "comp-in"
+      (is (not= (navigator/comp-in (:db-conn nt-config/system) message) false)))))
+
+(deftest comp-tag-in-test
+  (let [message {:payload
+                 {:entity
+                  {:name "name"
+                   :description "description"
+                   :version "v1"
+                   :type "active"
+                   :isrequestable true
+                   :icon "http://icon-url.com"
+                   :status "active"
+                   :isfinal false
+                   :disp-ctxs "carp"
+                   :child-of "flarp"}}
+                 :header
+                 {:entity-type "comp-tag" :operation "assert"}}]
+    (testing "comp-tag-in"
+      (is (not= (navigator/comp-tag-in (:db-conn nt-config/system) message) false)))))
+
+(deftest perf-asmt-in-test
+  (let [message {:payload
+                 {:entity
+                  {:id-sk-origin "show-evidence"
+                   :name "name"
+                   :version "v1"
+                   :type "project"
+                   :duration-rating-days 35
+                   :comps "comp comp comp"
+                   :credit-value-numerator 10
+                   :credit-value-denominator 11}}
+                 :header
+                 {:entity-type "perf-asmt" :operation "assert" :entity-id {:perf-asmt-id 33}}}]
+    (testing "perf-asmt-in"
+      (is (not= (navigator/perf-asmt-in (:db-conn nt-config/system) message) false)))))
+
+(deftest user2comp-in-test
+  (let [message {:payload
+                 {:entity
+                  {:sis-user-id "234234"
+                   :comp "comp"
+                   :iscomplete true
+                   :isoverridden false
+                   :start-date "12/01/2014"
+                   :proposed-completion-date "12/01/2015"
+                   :current-score "100"
+                   :final-score "100"
+                   :score-denominator 200
+                   :score-type "numeric"
+                   :qualitative-notes "here are some notes for yah"}}
+                 :header
+                 {:entity-type "user2comp" :operation "assert"}}]
+    (testing "user2comp-in"
+      (is (not= (navigator/user2comp-in (:db-conn nt-config/system) message) false)))))
+
+(deftest user2perf-asmt-in-test
+  (let [message {:payload
+                 {:entity
+                  {:user "234234"
+                   :perf-asmt "2834"
+                   :grade true}
+                 :header
+                 {:entity-type "user2perf-asmt" :operation "assert"}}}]
+    (testing "user2perf-asmt-in"
+      (is (not= (navigator/user2perf-asmt-in (:db-conn nt-config/system) message) false)))))
+
 (comment
   (map #(keys (deref %))
        (ds-core/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
