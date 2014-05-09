@@ -74,15 +74,15 @@
                                    (hatch/slam-all (get-in message [:payload :entity]) :task))))
 
 (defn comp-in [db-conn message]
-  (tx-entity! db-conn :comp (merge {:comp/id-sk (str (get-in message [:header :entity-id :comp-id]))
-                                    (hatch/slam-all (get-in message [:payload :entity]) :comp)})))
+  (tx-entity! db-conn :comp (merge {:comp/id-sk (str (get-in message [:header :entity-id :comp-id]))}
+                                    (hatch/slam-all (get-in message [:payload :entity]) :comp))))
 
 (defn comp-tag-in [db-conn message]
   (tx-entity! db-conn :comp-tag (hatch/slam-all (get-in message [:payload :entity]) :comp-tag)))
 
 (defn perf-asmt-in [db-conn message]
-  (tx-entity! db-conn :perf-asmt (merge {:perf-asmt/id-sk (str (get-in message [:header :entity-id :perf-asmt-id]))
-                                         (hatch/slam-all (get-in message [:paylod :entity]) :perf-asmt)})))
+  (tx-entity! db-conn :perf-asmt (merge {:perf-asmt/id-sk (str (get-in message [:header :entity-id :perf-asmt-id]))}
+                                         (hatch/slam-all (get-in message [:paylod :entity]) :perf-asmt))))
 (defn user2comp-in [db-conn message]
   (tx-entity! db-conn :user2comp (hatch/slam-all (get-in message [:payload :entity]) :user2comp)))
 
