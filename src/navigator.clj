@@ -7,7 +7,8 @@
             [navigator.schema :as schema]
             [hatch]
             [navigator.templates :as templates]
-            [navigator.data :as data]))
+            [navigator.data :as data]
+            [navigator.validation :refer :all]))
 
 ;; front end
 
@@ -70,24 +71,43 @@
 ;; queue functions
 
 (defn task-in [db-conn message]
-  (tx-entity! db-conn :task (merge {:task/id-sk (str (get-in message [:header :entity-id :task-id]))}
-                                   (hatch/slam-all (get-in message [:payload :entity]) :task))))
+  (let [task (merge {:task/id-sk (str (get-in message [:header :entity-id :task-id]))}
+                                   (hatch/slam-all (get-in message [:payload :entity]) :task))]
+    (if (valid? validate-task-in task)
+      (tx-entity! db-conn :task task)
+      false)))
 
 (defn comp-in [db-conn message]
-  (tx-entity! db-conn :comp (merge {:comp/id-sk (str (get-in message [:header :entity-id :comp-id]))}
-                                    (hatch/slam-all (get-in message [:payload :entity]) :comp))))
+  (let [comp (merge {:comp/id-sk (str (get-in message [:header :entity-id :comp-id]))}
+                                    (hatch/slam-all (get-in message [:payload :entity]) :comp))]
+    (if (valid? validate-comp-in comp)
+      (tx-entity! db-conn :comp comp)
+      false)))
 
 (defn comp-tag-in [db-conn message]
-  (tx-entity! db-conn :comp-tag (hatch/slam-all (get-in message [:payload :entity]) :comp-tag)))
+  (let [comp-tag (hatch/slam-all (get-in message [:payload :entity]) :comp-tag)]
+    (if (valid? validate-comp-tag-in comp-tag)
+      (tx-entity! db-conn :comp-tag comp-tag)
+      false)))
 
 (defn perf-asmt-in [db-conn message]
-  (tx-entity! db-conn :perf-asmt (merge {:perf-asmt/id-sk (str (get-in message [:header :entity-id :perf-asmt-id]))}
-                                         (hatch/slam-all (get-in message [:paylod :entity]) :perf-asmt))))
+  (let [perf-asmt (merge {:perf-asmt/id-sk (str (get-in message [:header :entity-id :perf-asmt-id]))}
+                                         (hatch/slam-all (get-in message [:paylod :entity]) :perf-asmt))]
+    (if (valid? validate-perf-asmt-in perf-asmt)
+      (tx-entity! db-conn :perf-asmt perf-asmt)
+      false)))
+
 (defn user2comp-in [db-conn message]
-  (tx-entity! db-conn :user2comp (hatch/slam-all (get-in message [:payload :entity]) :user2comp)))
+  (let [user2comp (hatch/slam-all (get-in message [:payload :entity]) :user2comp)]
+    (if (valid? validate-user2comp-in user2comp)
+      (tx-entity! db-conn :user2comp user2comp)
+      false)))
 
 (defn user2perf-asmt-in [db-conn message]
-  (tx-entity! db-conn :user2perf-asmt (hatch/slam-all (get-in message [:payload :entity]) :user2perf-asmt)))
+  (let [user2perf-asmt (hatch/slam-all (get-in message [:payload :entity]) :user2perf-asmt)]
+    (if (valid? validate-user2perf-asmt-in user2perf-asmt)
+      (tx-entity! db-conn :user2perf-asmt user2perf-asmt)
+      false)))
 
 (comment
 
