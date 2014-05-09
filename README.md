@@ -1,4 +1,4 @@
-# navigator [![Build Status](https://travis-ci.org/vlacs/navigator.png?branch=master)](https://travis-ci.org/vlacs/navigator)
+# navigator [![Build Status](https://travis-ci.org/vlacs/navigator.png?branch=master)](https://travis-ci.org/vlacs/navigator) [![Coverage](http://img.shields.io/coveralls/vlacs/navigator/master.svg)](http://coveralls.io/r/vlacs/navigator)
 
 <img src="doc/Tapley_NPS.png" alt="Agnes Tapley: Navigating" width="200px" />
 
@@ -15,7 +15,7 @@ The following instructions provide the steps needed to get the Navigator project
 - PostgresSQL Server: http://www.postgresql.org/
 - Leiningen Runtime: http://leiningen.org/
 
-####<b>TODO</b> - Provide other Linux/Unix prerequisites - 
+####<b>TODO</b> - Provide other Linux/Unix prerequisites -
 It is assumed that your environment has VI or a comparable Text Editor installed
 
 ### 1. Setting up the Test Datastore
@@ -30,7 +30,7 @@ Now run the following command<sup>(M$)</sup>:
 $ bash dev-set-up.sh
 ```
 
-This shell script will create a local directory on the target machine and will copy the following configurations files from the projects '/sample-confs' directory.  
+This shell script will create a local directory on the target machine and will copy the following configurations files from the projects '/sample-confs' directory.
 Once copied, a VI editor will be launched, allowing you to edit the following files:
 - conf-sql-db.edn
 - conf-web.edn
@@ -118,9 +118,9 @@ $ cat test.sql | psql yourdb
 - comp_tag
 - comp2comp_tag
 - comp_tag2parent
-      
-      
-### 4. Running the Navigator Project    
+
+
+### 4. Running the Navigator Project
 Start a REPL(ReadEvalPrintLoop)<sup>(M$)</sup>
 ```bash
 $ lein repl
@@ -133,7 +133,7 @@ Type the following command to 'start' the environment.
 (reset)
 ```
 
-The ```(reset)``` command is a convenience function which will initialize the connections to your PostgresSQL and Jetty instances. 
+The ```(reset)``` command is a convenience function which will initialize the connections to your PostgresSQL and Jetty instances.
 You'll want to ```(reset)``` any time you change your clj code to make sure that your latest changes are loaded and evaluated.
 
 
@@ -151,7 +151,7 @@ At this point you should have a development environment running the Navigator pr
 
 
 ## Customizing your Development Environment
-Open up dev/user.clj. This file is the place to add all the dev/debugging tools that you wish to customize your development environment with. 
+Open up dev/user.clj. This file is the place to add all the dev/debugging tools that you wish to customize your development environment with.
 It's evaluated automatically every time you open a REPL, and you're already in its namespace, so any tooling you put in user.clj
  is always available in your REPL without any extra effort.
 
@@ -163,7 +163,7 @@ background on this workflow.
 
 ## Getting Help
 
-Run the following command to see all of the current usage documentation available<sup>(M$)</sup>.  
+Run the following command to see all of the current usage documentation available<sup>(M$)</sup>.
 This is a work in progress and will be fully documented at a later date.
 ```clojure
 ./run dev --help

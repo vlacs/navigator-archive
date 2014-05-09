@@ -16,6 +16,7 @@
                  [valip "0.2.0"]]
   :resource-paths ["resources"]
   :pedantic? :warn ; :abort
+  :plugins [[lein-cloverage "1.0.2"]]
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [ring "1.2.2"]]}}

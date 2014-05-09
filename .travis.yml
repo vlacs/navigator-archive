@@ -3,3 +3,5 @@ lein: lein2
 script: lein2 test
 jdk:
   - openjdk7
+after_script:
+  - bash -ex test/coveralls.sh
