@@ -112,7 +112,7 @@
                        (d/tempid (:comp-tag navigator/partitions) -3)
                        (d/tempid (:comp-tag navigator/partitions) -6)]}
           {:comp/id-sk "5"
-           :comp/name "Can write resaurant criticism"
+           :comp/name "Can write restaurant criticism"
            :comp/version "v1"
            :comp/status :comp.status/active
            :comp/tags [(d/tempid (:comp-tag navigator/partitions) -10)
