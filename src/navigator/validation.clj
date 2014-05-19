@@ -1,69 +1,62 @@
 (ns navigator.validation
-  (:require [valip.core :refer [validate]]
-            [valip.predicates :refer [url? present?]]))
+  (:require [bouncer
+             [core :as b]
+             [validators :as v]]))
 
-
-(defn valid?
-  [validator input]
-  (let [res (validator input)]
-    (if (nil? res)
-      true
-      false)))
-
-(defn validate-task-in
+(defn task-in
   [task]
-  (validate task
-            [:task/id-sk        present? "must be present"]
-            [:task/id-sk-origin present? "must be present"]
-            [:task/name         present? "must be present"]
-            [:task/version      present? "must be present"]
-            [:task/description  present? "must be present"]))
+  (b/validate task
+              :task/id-sk        v/required
+              :task/id-sk-origin v/required
+              :task/name         v/required
+              :task/version      v/required
+              :task/description  v/required))
 
-(defn validate-comp-in
+(defn comp-in
   [comp]
-  (validate comp
-            [:comp/id-sk       present? "must be present"]
-            [:comp/name        present? "must be present"]
-            [:comp/description present? "must be present"]
-            [:comp/version     present? "must be present"]
-            [:comp/status      present? "must be present"]
-            [:comp/tags        present? "must be present"]))
+  (b/validate comp
+              :comp/id-sk       v/required
+              :comp/name        v/required
+              :comp/description v/required
+              :comp/version     v/required
+              :comp/status      v/required
+              :comp/tags        v/required))
 
-(defn validate-comp-tag-in
+(defn comp-tag-in
   [comp-tag]
-  (validate comp-tag
-            [:comp-tag/name          present? "must be present"]
-            [:comp-tag/description   present? "must be present"]
-            [:comp-tag/version       present? "must be present"]
-            [:comp-tag/type          present? "must be present"]
-            [:comp-tag/icon          url?     "must be a url"]
-            [:comp-tag/status        present? "must be present"]
-            [:comp-tag/disp-ctxs     present? "must be present"]
-            [:comp-tag/child-of      present? "must be present"]))
+  (b/validate comp-tag
+              :comp-tag/name        v/required
+              :comp-tag/description v/required
+              :comp-tag/version     v/required
+              :comp-tag/type        v/required
+              :comp-tag/icon        v/required
+              :comp-tag/status      v/required
+              :comp-tag/disp-ctxs   v/required
+              :comp-tag/child-of    v/required))
 
-(defn validate-perf-asmt-in
+(defn perf-asmt-in
   [perf-asmt]
-  (validate perf-asmt
-            [:perf-asmt/id-sk                    present? "must be present"]
-            [:perf-asmt/id-sk-origin             present? "must be present"]
-            [:perf-asmt/name                     present? "must be present"]
-            [:perf-asmt/version                  present? "must be present"]
-            [:perf-asmt/type                     present? "must be present"]
-            [:perf-asmt/comps                    present? "must be present"]))
+  (b/validate perf-asmt
+              :perf-asmt/id-sk        v/required
+              :perf-asmt/id-sk-origin v/required
+              :perf-asmt/name         v/required
+              :perf-asmt/version      v/required
+              :perf-asmt/type         v/required
+              :perf-asmt/comps        v/required))
 
-(defn validate-user2comp-in
+(defn user2comp-in
   [user2comp]
-  (validate user2comp
-            [:user2comp/sis-user-id              present? "must be present"]
-            [:user2comp/comp                     present? "must be present"]
-            [:user2comp/start-date               present? "must be present"]
-            [:user2comp/proposed-completion-date present? "must be present"]
-            [:user2comp/current-score            present? "must be present"]
-            [:user2comp/final-score              present? "must be present"]
-            [:user2comp/score-type               present? "must be present"]))
+  (b/validate user2comp
+              :user2comp/sis-user-id              v/required
+              :user2comp/comp                     v/required
+              :user2comp/start-date               v/required
+              :user2comp/proposed-completion-date v/required
+              :user2comp/current-score            v/required
+              :user2comp/final-score              v/required
+              :user2comp/score-type               v/required))
 
-(defn validate-user2perf-asmt-in
+(defn user2perf-asmt-in
   [user2perf-asmt]
-  (validate user2perf-asmt
-            [:user2perf-asmt/user      present? "must be present"]
-            [:user2perf-asmt/perf-asmt present? "must be present"]))
+  (b/validate user2perf-asmt
+              :user2perf-asmt/user      v/required
+              :user2perf-asmt/perf-asmt v/required))
