@@ -69,32 +69,23 @@
 
 ;; queue functions
 
-(defn task-in [db-conn message]
-  (let [task (merge {:task/id-sk (str (get-in message [:header :entity-id :task-id]))}
-                    (hatch/slam-all (get-in message [:payload :entity]) :task))]
-    (tx-entity! db-conn :task task)))
+(defn task-in [db-conn task]
+  (tx-entity! db-conn :task task))
 
-(defn comp-in [db-conn message]
-  (let [comp (merge {:comp/id-sk (str (get-in message [:header :entity-id :comp-id]))}
-                    (hatch/slam-all (get-in message [:payload :entity]) :comp))]
-    (tx-entity! db-conn :comp comp)))
+(defn comp-in [db-conn comp]
+  (tx-entity! db-conn :comp comp))
 
-(defn comp-tag-in [db-conn message]
-  (let [comp-tag (hatch/slam-all (get-in message [:payload :entity]) :comp-tag)]
-    (tx-entity! db-conn :comp-tag comp-tag)))
+(defn comp-tag-in [db-conn comp-tag]
+  (tx-entity! db-conn :comp-tag comp-tag))
 
-(defn perf-asmt-in [db-conn message]
-  (let [perf-asmt (merge {:perf-asmt/id-sk (str (get-in message [:header :entity-id :perf-asmt-id]))}
-                         (hatch/slam-all (get-in message [:payload :entity]) :perf-asmt))]
-    (tx-entity! db-conn :perf-asmt perf-asmt)))
+(defn perf-asmt-in [db-conn perf-asmt]
+  (tx-entity! db-conn :perf-asmt perf-asmt))
 
-(defn user2comp-in [db-conn message]
-  (let [user2comp (hatch/slam-all (get-in message [:payload :entity]) :user2comp)]
-    (tx-entity! db-conn :user2comp user2comp)))
+(defn user2comp-in [db-conn user2comp]
+  (tx-entity! db-conn :user2comp user2comp))
 
-(defn user2perf-asmt-in [db-conn message]
-  (let [user2perf-asmt (hatch/slam-all (get-in message [:payload :entity]) :user2perf-asmt)]
-    (tx-entity! db-conn :user2perf-asmt user2perf-asmt)))
+(defn user2perf-asmt-in [db-conn user2perf-asmt]
+  (tx-entity! db-conn :user2perf-asmt user2perf-asmt))
 
 (comment
 
