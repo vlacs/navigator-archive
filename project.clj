@@ -1,4 +1,4 @@
-(defproject org.vlacs/navigator "0.1.1-SNAPSHOT"
+(defproject org.vlacs/navigator "0.1.2-SNAPSHOT"
   :description "Navigator supports VLACS' vision for competency-based virtual education."
   :url "https://github.com/vlacs/navigator"
   :license {:name "Eclipse Public License"
