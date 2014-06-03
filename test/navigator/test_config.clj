@@ -11,9 +11,9 @@
 (def system {:datomic-uri "datomic:mem://navigator-test"})
 (def datomic-uri (:datomic-uri system))
 
-(defn routes [db-conn]
+(defn routes [system]
   (helmsman/compile-routes (into [] (concat timber/helmsman-assets
-                                            (navigator/helmsman-def db-conn)
+                                            (navigator/helmsman-def system)
                                             [[wrap-params]]))))
 
 (defn start-datomic! [system]
@@ -31,7 +31,7 @@
   system)
 
 (defn start-jetty! [system]
-  (assoc system :jetty (jetty/run-jetty (routes (:db-conn system)) {:port 8081 :join? false})))
+  (assoc system :jetty (jetty/run-jetty (routes system) {:port 8081 :join? false})))
 
 (defn stop-jetty! [system]
   (if-let [jetty-server (:jetty system)]
