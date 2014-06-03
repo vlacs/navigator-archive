@@ -11,10 +11,11 @@
 
 ;; front end
 
-(defn helmsman-def [db-conn]
-  [[:get "/comp-map/" (resource :allowed-methods [:get]
-                                :available-media-types ["text/html"]
-                                :handle-ok (fn [ctx] (apply str (templates/view-comp-map (data/get-comp-map db-conn ctx) ctx))))]])
+(defn helmsman-def [system]
+  (let [db-conn (:db-conn system)]
+    [[:get "/comp-map/" (resource :allowed-methods [:get]
+                                  :available-media-types ["text/html"]
+                                  :handle-ok (fn [ctx] (apply str (templates/view-comp-map (data/get-comp-map db-conn ctx) ctx))))]]))
 
 ;; Get functions
 
