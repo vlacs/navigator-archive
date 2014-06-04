@@ -18,7 +18,9 @@
                        [:status :enum [:active :archived]] ; not null
                        [:isfinal :boolean] ; default f
                        [:disp-ctxs :ref :many]
-                       [:child-tags :ref :many]]
+                       [:child-tags :ref :many]
+                       [:child-perf-asmts :ref :many]
+                       [:child-comps :ref :many]]
                :dbfns [(constraints/unique :comp-tag :name :version)]}]
    [:comp-tag-disp-ctx {:attr [[:name :string]]}]
    [:perf-asmt {:attrs [[:id-sk :string "Shared key from 3rd parties"]
