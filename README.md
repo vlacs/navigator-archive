@@ -4,6 +4,8 @@
 
 [Agnes Tapley, navigating.](http://commons.wikimedia.org/wiki/File:Tapley_NPS.jpg) Navigator is part of VLACS' competencies mapping system.
 
+This is the validation-station brach, it is unstable.
+
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Navigator project running on *UX Environments.
 
