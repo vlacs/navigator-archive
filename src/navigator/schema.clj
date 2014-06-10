@@ -25,6 +25,7 @@
    [:comp-tag-disp-ctx {:attr [[:name :string]]}]
    [:perf-asmt {:attrs [[:id-sk :string "Shared key from 3rd parties"]
                         [:id-sk-origin :keyword] ; e.g., :moodle, :show-evidence, etc.
+                        [:id-sk-with-origin :string "Combined id-sk and id-sk-origin" :db.unique/identity]
                         [:name :string]
                         [:version :string] ; not null
 
@@ -38,6 +39,7 @@
                        (constraints/unique :perf-asmt :id-sk :id-sk-origin)]}]
    [:task {:attrs [[:id-sk :string]
                    [:id-sk-origin :keyword] ; e.g., :moodle, :show-evidence, etc.
+                   [:id-sk-with-origin :string "Combined id-sk and id-sk-origin" :db.unique/identity]
                    [:name :string]
                    [:version :string]
                    [:description :string]
