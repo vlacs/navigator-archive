@@ -3,17 +3,17 @@
             [datomic.api :as d]
             [navigator.test-config :as nt-config]
             [navigator.testslib :as n-tl]
-            [datomic-schematode.core :as schematode]))
+            [datomic-schematode :as dst]))
 
 (use-fixtures :once nt-config/testing-fixture)
 
 (deftest create-comps
   (testing "raw assertion"
-    (is (n-tl/ensure-tx (schematode/tx (:db-conn nt-config/system)
-                                       :enforce
-                                       [{:db/id (d/tempid :db.part/user)
-                                         :comp/id-sk "i am a shared key"
-                                         :comp/name "COMP there it is"}]))))
+    (is (n-tl/ensure-tx (dst/tx (:db-conn nt-config/system)
+                                :enforce
+                                [{:db/id (d/tempid :db.part/user)
+                                  :comp/id-sk "i am a shared key"
+                                  :comp/name "COMP there it is"}]))))
   (let [comp {:comp/name "I will keep typing"
               :comp/version "v1"
               :comp/status :comp.status/active
