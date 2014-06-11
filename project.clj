@@ -14,7 +14,7 @@
                  [org.vlacs/timber "0.1.7"]
 
                  [bouncer "0.3.1-beta1"]
-                 [datomic-schematode "0.1.0-RC1"]
+                 [datomic-schematode "0.1.0-RC3"]
                  [com.datomic/datomic-free "0.9.4707" :exclusions [commons-codec]]
                  [liberator "0.10.0" :exclusions [hiccup]]]
 
