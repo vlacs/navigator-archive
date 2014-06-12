@@ -1,8 +1,10 @@
-# navigator [![Build Status](https://travis-ci.org/vlacs/navigator.png?branch=master)](https://travis-ci.org/vlacs/navigator) [![Coverage](http://img.shields.io/coveralls/vlacs/navigator/master.svg)](http://coveralls.io/r/vlacs/navigator)
+# navigator [Build Status](https://codeship.io/projects/d10dbc00-d464-0131-d880-3ea79a4fc40b/status) [![Coverage](http://img.shields.io/coveralls/vlacs/navigator/master.svg)](http://coveralls.io/r/vlacs/navigator)
 
 <img src="doc/Tapley_NPS.png" alt="Agnes Tapley: Navigating" width="200px" />
 
 [Agnes Tapley, navigating.](http://commons.wikimedia.org/wiki/File:Tapley_NPS.jpg) Navigator is part of VLACS' competencies mapping system.
+
+This is the validation-station brach, it is unstable.
 
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Navigator project running on *UX Environments.
