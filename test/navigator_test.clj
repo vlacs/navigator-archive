@@ -3,22 +3,13 @@
             [datomic.api :as d]
             [navigator.test-config :as nt-config]
             [navigator.testslib :as n-tl]
-<<<<<<< HEAD
-<<<<<<< HEAD
-            [datomic-schematode
-             :as schematode]))
-=======
-            [datomic-schematode.core :as schematode]))
->>>>>>> 594d80b... update validation
-=======
-            [datomic-schematode :as schematode]))
->>>>>>> 1209eca... add validator, update tests
+            [datomic-schematode :as dst]))
 
 (use-fixtures :once nt-config/testing-fixture)
 
 (deftest create-comps
   (testing "raw assertion"
-    (is (n-tl/ensure-tx (schematode/tx (:db-conn nt-config/system)
+    (is (n-tl/ensure-tx (dst/tx (:db-conn nt-config/system)
                                        :enforce
                                        [{:db/id (d/tempid :db.part/user)
                                          :comp/id-sk "i am a shared key"
@@ -52,15 +43,7 @@
 
 (comment
   (map #(keys (deref %))
-<<<<<<< HEAD
-<<<<<<< HEAD
-       (schematode/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
-=======
-       (ds-core/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
->>>>>>> 594d80b... update validation
-=======
-       (ds/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
->>>>>>> 1209eca... add validator, update tests
+       (dst/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
   '((:db-before :db-after :tx-data :tempids) (:db-before :db-after :tx-data :tempids)))
 
 (comment

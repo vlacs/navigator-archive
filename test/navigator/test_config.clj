@@ -1,6 +1,6 @@
 (ns navigator.test-config
   (:require [datomic.api :as d]
-            [datomic-schematode :as schematode]
+            [datomic-schematode :as dst]
             [navigator.schema :as schema]
             [navigator]
             [helmsman]
@@ -22,8 +22,8 @@
          (d/connect datomic-uri)))
 
 (defn load-schema! [system]
-  [(schematode/init-schematode-constraints! (:db-conn system))
-   (schematode/load-schema! (:db-conn system) schema/schema)])
+  [(dst/init-schematode-constraints! (:db-conn system))
+   (dst/load-schema! (:db-conn system) schema/schema)])
 
 (defn stop-datomic! [system]
   (dissoc system :db-conn)
