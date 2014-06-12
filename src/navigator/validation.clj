@@ -33,9 +33,12 @@
 
 (defn validate
   [entity-type data]
-  (s/validate
-   (entity-type validations)
-   data))
+  (let [validation (entity-type validations)]
+    (try
+      (s/validate
+       validation
+       data)
+      (catch Exception e (.getMessage e)))))
 
 (comment
 
