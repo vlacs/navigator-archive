@@ -31,15 +31,6 @@
                     :task  s/Str
                     :grade s/Bool}})
 
-(defn validate
-  [entity-type data]
-  (let [validation (entity-type validations)]
-    (try
-      (s/validate
-       validation
-       data)
-      (catch Exception e (.getMessage e)))))
-
 (comment
 
   (defn comp-tag-in
