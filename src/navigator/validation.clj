@@ -2,21 +2,7 @@
   (:require [schema.core :as s]))
 
 (def validations
-  {:task           {:id-sk        s/Str
-                    :id-sk-origin s/Keyword
-                    :name         s/Str
-                    :version      s/Str
-                    :description  s/Str}
-   :perf-asmt      {:id-sk                    s/Str
-                    :id-sk-origin             s/Keyword
-                    (s/optional-key :name)    s/Str
-                    :version                  s/Str
-                    :type                     s/Keyword
-                    :duration-rating-days     s/Int
-                    :comps                    [s/Str]
-                    :credit-value-numerator   s/Int
-                    :credit-value-denominator s/Int}
-   :user2comp      {:sis-user-id                        s/Int
+  {:user2comp      {:sis-user-id                        s/Int
                     :comp                               s/Str
                     :start-date                         s/Str
                     (s/optional-key :iscomplete)        s/Bool
@@ -26,10 +12,7 @@
                     (s/optional-key :current-score)     s/Str
                     (s/optional-key :final-score)       s/Str
                     (s/optional-key :score-denominator) s/Int
-                    (s/optional-key :score-type)        s/Keyword}
-   :user2perf-asmt {:user  s/Str
-                    :task  s/Str
-                    :grade s/Bool}})
+                    (s/optional-key :score-type)        s/Keyword}})
 
 (defn validator
   [entity-type data]
