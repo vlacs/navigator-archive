@@ -7,7 +7,7 @@
                  [org.clojure/tools.cli "0.2.4"]
 
                  ^{:voom {:repo "https://github.com/vlacs/hatch"}}
-                 [org.vlacs/hatch "0.2.1-20140611_202148-g5a77b1e"]
+                 [org.vlacs/hatch "0.2.1-20140611_202148-g5a77b1e" :exclusions [com.datomic/datomic-free]]
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6-20140508_004555-g5275ae2"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
