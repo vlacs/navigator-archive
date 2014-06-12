@@ -8,9 +8,7 @@
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
             [navigator]
             [navigator.test-config :as nt-config]
-            [datomic-schematode :as schematode]
-            [clojure.edn :as edn]
-            ))
+            [clojure.edn :as edn]))
 
 ;; N.B.: (ns cljs.user (:use [clojure.zip :only [insert-child]])) (see http://stackoverflow.com/questions/12879027/cannot-use-in-clojurescript-repl)
 
