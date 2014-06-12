@@ -7,14 +7,14 @@
                  [org.clojure/tools.cli "0.2.4"]
 
                  ^{:voom {:repo "https://github.com/vlacs/hatch"}}
-                 [org.vlacs/hatch "0.2.1-20140611_202148-g5a77b1e"]
+                 [org.vlacs/hatch "0.1.2"]
                  ^{:voom {:repo "https://github.com/vlacs/helmsman"}}
                  [org.vlacs/helmsman "0.2.6-20140508_004555-g5275ae2"]
                  ^{:voom {:repo "https://github.com/vlacs/timber"}}
                  [org.vlacs/timber "0.1.7-20140603_205620-gd255b55"]
 
                  [bouncer "0.3.1-beta1"]
-                 [datomic-schematode "0.1.0-RC3"]
+                 [datomic-schematode "0.1.0-RC1"]
                  [com.datomic/datomic-free "0.9.4707" :exclusions [commons-codec]]
                  [liberator "0.10.0" :exclusions [hiccup]]
                  [prismatic/schema "0.2.2"]]
