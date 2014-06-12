@@ -80,5 +80,4 @@
 
    {:namespace :config
     :attrs [[:key :string :indexed] ; not null
-            [:value :string :indexed]]}
-   ])
+            [:value :string :indexed]]}])
