@@ -3,8 +3,12 @@
             [datomic.api :as d]
             [navigator.test-config :as nt-config]
             [navigator.testslib :as n-tl]
+<<<<<<< HEAD
             [datomic-schematode
              :as schematode]))
+=======
+            [datomic-schematode.core :as schematode]))
+>>>>>>> 594d80b... update validation
 
 (use-fixtures :once nt-config/testing-fixture)
 
@@ -44,7 +48,11 @@
 
 (comment
   (map #(keys (deref %))
+<<<<<<< HEAD
        (schematode/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
+=======
+       (ds-core/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
+>>>>>>> 594d80b... update validation
   '((:db-before :db-after :tx-data :tempids) (:db-before :db-after :tx-data :tempids)))
 
 (comment
