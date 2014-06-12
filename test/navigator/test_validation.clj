@@ -2,26 +2,18 @@
   (:require [clojure.test :refer :all]
             [navigator.validation :refer :all]))
 
-(deftest vtask-in-test
-  (testing "task-in"
-    (is (= (task-in {}) '[{:task/description ("description must be present"), :task/version ("version must be present"), :task/name ("name must be present"), :task/id-sk-origin ("id-sk-origin must be present"), :task/id-sk ("id-sk must be present")} {:bouncer.core/errors {:task/description ("description must be present"), :task/version ("version must be present"), :task/name ("name must be present"), :task/id-sk-origin ("id-sk-origin must be present"), :task/id-sk ("id-sk must be present")}}]))))
+(deftest validate-task-test
+  (testing "task validation"
+    (is (= (validate :task {}) "Value does not match schema: {:description missing-required-key, :version missing-required-key, :name missing-required-key, :id-sk-origin missing-required-key, :id-sk missing-required-key}"))))
 
-(deftest comp-in-test
-  (testing "comp-in"
-    (is (= (comp-in {}) '[{:comp/tags ("tags must be present"), :comp/status ("status must be present"), :comp/version ("version must be present"), :comp/description ("description must be present"), :comp/name ("name must be present"), :comp/id-sk ("id-sk must be present")} {:bouncer.core/errors {:comp/tags ("tags must be present"), :comp/status ("status must be present"), :comp/version ("version must be present"), :comp/description ("description must be present"), :comp/name ("name must be present"), :comp/id-sk ("id-sk must be present")}}]))))
+(deftest validate-perf-asmt-test
+  (testing "perf-asmt validation"
+    (is (= (validate :perf-asmt {}) "Value does not match schema: {:version missing-required-key, :comps missing-required-key, :credit-value-numerator missing-required-key, :id-sk missing-required-key, :type missing-required-key, :duration-rating-days missing-required-key, :credit-value-denominator missing-required-key, :id-sk-origin missing-required-key}"))))
 
-(deftest comp-tag-in-test
-  (testing "comp-tag-in"
-    (is (= (comp-tag-in {}) '[{:comp-tag/child-of ("child-of must be present"), :comp-tag/disp-ctxs ("disp-ctxs must be present"), :comp-tag/status ("status must be present"), :comp-tag/icon ("icon must be present"), :comp-tag/type ("type must be present"), :comp-tag/version ("version must be present"), :comp-tag/description ("description must be present"), :comp-tag/name ("name must be present")} {:bouncer.core/errors {:comp-tag/child-of ("child-of must be present"), :comp-tag/disp-ctxs ("disp-ctxs must be present"), :comp-tag/status ("status must be present"), :comp-tag/icon ("icon must be present"), :comp-tag/type ("type must be present"), :comp-tag/version ("version must be present"), :comp-tag/description ("description must be present"), :comp-tag/name ("name must be present")}}]))))
+(deftest validate-user2comp-test
+  (testing "user2comp validation"
+    (is (= (validate :user2comp {}) "Value does not match schema: {:sis-user-id missing-required-key, :comp missing-required-key, :start-date missing-required-key, :proposed-completion-date missing-required-key}"))))
 
-(deftest perf-asmt-in-test
-  (testing "perf-asmt-in"
-    (is (= (perf-asmt-in {}) '[{:perf-asmt/comps ("comps must be present"), :perf-asmt/type ("type must be present"), :perf-asmt/version ("version must be present"), :perf-asmt/name ("name must be present"), :perf-asmt/id-sk-origin ("id-sk-origin must be present"), :perf-asmt/id-sk ("id-sk must be present")} {:bouncer.core/errors {:perf-asmt/comps ("comps must be present"), :perf-asmt/type ("type must be present"), :perf-asmt/version ("version must be present"), :perf-asmt/name ("name must be present"), :perf-asmt/id-sk-origin ("id-sk-origin must be present"), :perf-asmt/id-sk ("id-sk must be present")}}]))))
-
-(deftest user2comp-in-test
-  (testing "user2comp-in"
-    (is (= (user2comp-in {}) '[{:user2comp/score-type ("score-type must be present"), :user2comp/final-score ("final-score must be present"), :user2comp/current-score ("current-score must be present"), :user2comp/proposed-completion-date ("proposed-completion-date must be present"), :user2comp/start-date ("start-date must be present"), :user2comp/comp ("comp must be present"), :user2comp/sis-user-id ("sis-user-id must be present")} {:bouncer.core/errors {:user2comp/score-type ("score-type must be present"), :user2comp/final-score ("final-score must be present"), :user2comp/current-score ("current-score must be present"), :user2comp/proposed-completion-date ("proposed-completion-date must be present"), :user2comp/start-date ("start-date must be present"), :user2comp/comp ("comp must be present"), :user2comp/sis-user-id ("sis-user-id must be present")}}]))))
-
-(deftest user2perf-asmt-in-test
-  (testing "user2perf-asmt-in"
-    (is (= (user2perf-asmt-in {}) '[{:user2perf-asmt/perf-asmt ("perf-asmt must be present"), :user2perf-asmt/user ("user must be present")} {:bouncer.core/errors {:user2perf-asmt/perf-asmt ("perf-asmt must be present"), :user2perf-asmt/user ("user must be present")}}]))))
+(deftest user2perf-asmt-test
+  (testing "user2perf-asmt validation"
+    (is (= (validate :user2perf-asmt {}) "Value does not match schema: {:grade missing-required-key, :task missing-required-key, :user missing-required-key}"))))
