@@ -44,14 +44,6 @@
               name version))
 ;; TODO: we probably want other ways to get competency(s)
 
-(defn get-perf-asmt
-  "Get perf-asmt by shared key"
-  [db-conn id-sk]
-  (get-entity db-conn '[:find ?e
-                     :in $ ?id-sk
-                     :where [?e :perf-asmt/id-sk ?id-sk]]
-              id-sk))
-
 (defn get-user2comp
   "Get user2comp by sis-user-id and comp"
   [db-conn sis-user-id comp-eid]
@@ -70,33 +62,11 @@
 
 ;; queue functions
 
-(defn task-in [db-conn task]
-  (tx-entity! db-conn :task task))
-
 (defn comp-in [db-conn comp]
   (tx-entity! db-conn :comp comp))
 
 (defn comp-tag-in [db-conn comp-tag]
   (tx-entity! db-conn :comp-tag comp-tag))
 
-(defn perf-asmt-in [db-conn perf-asmt]
-  (tx-entity! db-conn :perf-asmt perf-asmt))
-
 (defn user2comp-in [db-conn user2comp]
   (tx-entity! db-conn :user2comp user2comp))
-
-(defn user2perf-asmt-in [db-conn user2perf-asmt]
-  (tx-entity! db-conn :user2perf-asmt user2perf-asmt))
-
-(comment
-
-  (navigator/task-in (:db-conn nt-config/system)
-                     {:payload
-                      {:entity
-                       {:competency-parents [1 2 3],
-                        :name "tie shoes (together)",
-                        :version "v3"}},
-                      :header
-                      {:entity-type "task", :operation "assert", :entity-id {:task-id 17}}})
-
-)
