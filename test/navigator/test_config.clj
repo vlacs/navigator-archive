@@ -1,6 +1,6 @@
 (ns navigator.test-config
   (:require [datomic.api :as d]
-            [datomic-schematode.core :as schematode]
+            [datomic-schematode :as schematode]
             [navigator.schema :as schema]
             [navigator]
             [helmsman]

@@ -8,7 +8,7 @@
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
             [navigator]
             [navigator.test-config :as nt-config]
-            [datomic-schematode.core :as schematode]
+            [datomic-schematode :as schematode]
             [clojure.edn :as edn]
             ))
 
