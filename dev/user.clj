@@ -8,7 +8,7 @@
             [clojure.tools.namespace.repl :refer (refresh refresh-all)]
             [navigator]
             [navigator.test-config :as nt-config]
-            [datomic-schematode.core :as schematode]
+            [datomic-schematode :as schematode]
             [clojure.edn :as edn]
             ))
 
@@ -59,7 +59,7 @@
   (navigator/create-competency (:db-conn nt-config/system) "I will keep typing" "v1" :comp.status/active :comp/id-sk "jeep")
   (ptouch-that '[:find ?e :where [?e :comp/name]])
 
-  
+
   ;; Utility fns
   ;; -----------------------
   (defn html->hiccup [html]
@@ -71,4 +71,3 @@
     "Take a rendered enlive template (html) and turn it back into a seq of enlive nodes"
     [template]
     (en/html-snippet (n-tpl/render template))))
-

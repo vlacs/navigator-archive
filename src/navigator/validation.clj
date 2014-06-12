@@ -31,6 +31,12 @@
                     :task  s/Str
                     :grade s/Bool}})
 
+(defn validate
+  [entity-type data]
+  (s/validate
+   (entity-type validations)
+   data))
+
 (comment
 
   (defn comp-tag-in
