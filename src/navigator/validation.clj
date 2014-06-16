@@ -14,15 +14,6 @@
                     (s/optional-key :score-denominator) s/Int
                     (s/optional-key :score-type)        s/Keyword}})
 
-(defn validator
-  [entity-type data]
-  (let [validation (entity-type validations)]
-    (try
-      (s/validate
-       validation
-       data)
-      (catch Exception e (.getMessage e)))))
-
 (comment
 
   (defn comp-tag-in
