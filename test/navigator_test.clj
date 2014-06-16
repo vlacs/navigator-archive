@@ -43,7 +43,7 @@
 
 (comment
   (map #(keys (deref %))
-       (ds/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
+       (dst/load-schema! (d/connect config/db-url) [[:u {:attrs [[:a :string]]}]]))
   '((:db-before :db-after :tx-data :tempids) (:db-before :db-after :tx-data :tempids)))
 
 (comment
