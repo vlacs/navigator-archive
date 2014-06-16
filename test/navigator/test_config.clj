@@ -2,8 +2,10 @@
   (:require [datomic.api :as d]
             [datomic-schematode :as dst]
             [navigator.schema :as schema]
+            [navigator.validation :refer [validations]]
             [navigator]
             [helmsman]
+            [schema.core :as s]
             [timber.core :as timber]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.params :refer [wrap-params]]))
@@ -53,6 +55,17 @@
                   (fn [s] (when s (-> s
                                       (stop-datomic!)
                                       (stop-jetty!))))))
+
+(defn validator
+  [entity-type data]
+  (let [validation (entity-type validations)]
+    (if validation
+      (try
+        (s/validate
+         validation
+         data)
+        (catch Exception e (.getMessage e)))
+      data)))
 
 (defn testing-fixture [f]
   (start!)

@@ -1,6 +1,6 @@
 (ns navigator.test-validation
   (:require [clojure.test :refer :all]
-            [navigator.validation :refer :all]))
+            [navigator.test-config :refer [validator]]))
 
 (deftest user2comp-validation-test
   (testing "user2comp validation"
