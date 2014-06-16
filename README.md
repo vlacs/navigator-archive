@@ -4,8 +4,6 @@
 
 [Agnes Tapley, navigating.](http://commons.wikimedia.org/wiki/File:Tapley_NPS.jpg) Navigator is part of VLACS' competencies mapping system.
 
-This is the validation-station brach, it is unstable.
-
 ## Project Environment Set-Up
 The following instructions provide the steps needed to get the Navigator project running on *UX Environments.
 
@@ -19,6 +17,11 @@ The following instructions provide the steps needed to get the Navigator project
 
 ####<b>TODO</b> - Provide other Linux/Unix prerequisites -
 It is assumed that your environment has VI or a comparable Text Editor installed
+
+## Running Tests
+You can build the necessary dependencies and run the tests all with one command.
+
+'''$ ./test.sh'''
 
 ### 1. Setting up the Test Datastore
 Set up a PostgreSQL DB for your dev/testing instance of Navigator.
