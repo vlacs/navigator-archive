@@ -21,7 +21,7 @@ It is assumed that your environment has VI or a comparable Text Editor installed
 ## Running Tests
 You can build the necessary dependencies and run the tests all with one command.
 
-'''$ sh test.sh'''
+```$ sh test.sh```
 
 ### 1. Setting up the Test Datastore
 Set up a PostgreSQL DB for your dev/testing instance of Navigator.
